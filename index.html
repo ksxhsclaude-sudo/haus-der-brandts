@@ -109,7 +109,7 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 #fx.on{opacity:1}
 #fx::after{content:'';position:absolute;inset:-50%;background-image:var(--grain);opacity:.1;animation:grain .45s steps(3) infinite}
 @keyframes grain{33%{transform:translate(-3%,2%)}66%{transform:translate(2%,-3%)}}
-#brief{flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.93);padding:28px 20px;overflow:auto;text-align:center}
+#brief{flex-direction:column;align-items:center;justify-content:flex-start;background:rgba(0,0,0,.93);padding:28px 20px;overflow:auto;text-align:center}
 #brief .big{font-size:clamp(40px,6vw,72px);color:var(--ink);max-width:none}
 #bgoal{font:italic 21px var(--serif);color:#c9bca8;margin:14px 0 28px;max-width:46ch}
 #bgoal b{color:var(--gold);font-weight:400}
@@ -142,10 +142,36 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 #mapov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.75);z-index:3;flex-direction:column}
 #mapc{box-shadow:0 0 50px #000;width:min(75vh,88vw)}
 #touch{position:fixed;inset:0;z-index:2;pointer-events:none}
-#joy{position:absolute;left:30px;bottom:90px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04)}
-#knob{position:absolute;left:40px;top:40px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.2)}
-#tb{position:absolute;right:14px;bottom:80px;display:grid;grid-template-columns:repeat(2,64px);gap:8px;pointer-events:auto}
-#tb button{width:64px;height:64px;border-radius:50%;background:rgba(40,10,10,.5);border:1px solid rgba(255,255,255,.25);color:#ddd;font:500 9px var(--mono);letter-spacing:.12em}
+#joy{position:absolute;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;border:1.5px solid rgba(233,223,207,.28);background:rgba(0,0,0,.18);opacity:0;transition:opacity .15s}
+#joy.on{opacity:1}
+#knob{position:absolute;left:37px;top:37px;width:46px;height:46px;border-radius:50%;background:rgba(233,223,207,.32);box-shadow:0 0 12px rgba(0,0,0,.5)}
+#joy.run #knob{background:rgba(224,72,58,.55)}
+#joyhint{position:absolute;left:14%;bottom:20%;font:500 10px var(--mono);letter-spacing:.3em;color:rgba(233,223,207,.35);text-transform:uppercase;transform:translateX(-50%);transition:opacity .4s}
+.tbtn{all:unset;position:absolute;pointer-events:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:50%;background:rgba(10,8,7,.45);border:1.5px solid rgba(233,223,207,.3);color:var(--ink);font:500 8.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;touch-action:none;-webkit-tap-highlight-color:transparent}
+.tbtn svg{width:26px;height:26px}
+.tbtn:active,.tbtn.on{background:rgba(233,223,207,.22);border-color:var(--ink)}
+.tbtn i{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--red);font:500 11px/20px var(--mono);font-style:normal;letter-spacing:0;text-align:center}
+#t-flash{right:calc(22px + env(safe-area-inset-right));bottom:calc(26px + env(safe-area-inset-bottom));width:78px;height:78px}
+#t-sneak{right:calc(112px + env(safe-area-inset-right));bottom:calc(22px + env(safe-area-inset-bottom));width:62px;height:62px}
+#t-use{right:calc(30px + env(safe-area-inset-right));bottom:calc(122px + env(safe-area-inset-bottom));width:84px;height:84px;border-color:var(--gold);color:var(--gold)}
+#t-pause{top:calc(14px + env(safe-area-inset-top));right:190px;width:40px;height:40px;font-size:13px;letter-spacing:0}
+#brief>:first-child{margin-top:auto}#brief>:last-child{margin-bottom:auto}
+body.touch #mini{width:112px;height:112px}
+body.touch:not(.ingame) #touch{display:none}
+body.touch #t-pause{right:142px}
+@media (max-height:520px){
+  #brief{padding:14px}#brief .big{font-size:34px}#bgoal{font-size:16px;margin:6px 0 12px}.bcard{padding:10px;grid-template-columns:64px 1fr;gap:12px}.bcard img{width:64px;height:86px}.bcard h4{font-size:19px;margin-bottom:4px}.bcard p{font-size:11px;margin-bottom:4px}.bnote{margin-top:10px;font-size:10px}#brief .nav{margin-top:8px}
+  .logo{margin-bottom:18px}.logo .l1{font-size:52px}.logo .l2{font-size:30px}.nav button{padding:7px 0}.foot{bottom:12px}
+  .panel{padding:22px 24px}.panel h3{font-size:26px;margin-bottom:16px}.rule{margin-bottom:12px}.opt{margin-bottom:16px}#mp-codebig{font-size:40px}
+  .big{font-size:40px}.stats{margin:16px 0 14px}.line{margin-top:10px;font-size:16px}
+}
+body.touch #bars{top:84px;bottom:auto;left:20px;width:150px}
+body.touch #team{top:150px}
+body.touch #inv,body.touch #prompt,body.touch #joyhint.gone{display:none}
+body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
+#rotate{position:fixed;inset:0;z-index:30;background:#000;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:30px;font:italic 22px var(--serif);color:var(--ink)}
+#rotate small{max-width:80vw;line-height:1.9;font:500 10px var(--mono);letter-spacing:.3em;color:var(--dim);text-transform:uppercase}
+@media (orientation:portrait){body.touch.ingame:not(.portraitok) #rotate{display:flex}}
 </style>
 </head>
 <body>
@@ -167,8 +193,13 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
   <div id="inv"></div>
 </div>
 <div id="mapov" class="hide"><canvas id="mapc" width="320" height="320"></canvas><p style="margin-top:14px;font:500 10px var(--mono);letter-spacing:.3em;color:var(--dim)">M — SCHLIESSEN</p></div>
-<div id="touch" class="hide"><div id="joy"><div id="knob"></div></div>
-  <div id="tb"><button data-a="e">BENUTZEN</button><button data-a="f">LICHT</button><button data-a="q">BLITZ</button><button data-h="ShiftLeft">RENNEN</button><button data-h="KeyC">LEISE</button></div>
+<div id="touch" class="hide"><div id="joy"><div id="knob"></div></div><div id="joyhint">Hier wischen zum Laufen</div>
+  <button class="tbtn" id="t-flash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Blitz<i id="t-film">2</i></button>
+  <button class="tbtn" id="t-sneak"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="8" cy="8" rx="2.6" ry="4"/><ellipse cx="15.5" cy="13" rx="2.6" ry="4"/><rect x="6.4" y="12.6" width="3.2" height="2.4" rx="1"/><rect x="13.9" y="17.6" width="3.2" height="2.4" rx="1"/></svg>Leise</button>
+  <button class="tbtn hide" id="t-use"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M12 3v18M9 7h1M9 9h1M14 7h1M14 9h1"/></svg><span id="t-uset">Verstecken</span></button>
+  <button class="tbtn" id="t-pause">II</button>
+</div>
+<div id="rotate">Dreh dein Gerät quer.<small>Querformat spielt sich viel besser</small><button class="tog" id="rot-ok">Trotzdem hochkant</button></div>
 </div>
 <div id="splash" class="scr on">
   <p class="hp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 15v-3a8 8 0 0116 0v3"/><rect x="3" y="14" width="4" height="7" rx="1"/><rect x="17" y="14" width="4" height="7" rx="1"/></svg> Mit Kopfhörern spielen</p>
@@ -193,7 +224,8 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#b3241a" stroke-width="1.4"><path d="M10 38V18c0-8 5-13 11-13s11 5 11 13v20"/><path d="M14 17l4 2M28 17l-4 2"/><path d="M15 27c2 3 10 3 12 0M17 27v2M21 28v2M25 27v2"/></svg><div><b>Er</b><span>Blitz blendet ihn. Im Spind bist du sicher, solange er dich nicht reingehen sieht.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#e9dfcf" stroke-width="1.4"><circle cx="21" cy="13" r="8"/><circle cx="18" cy="12" r="1.3" fill="#e9dfcf"/><circle cx="24" cy="12" r="1.3" fill="#e9dfcf"/><path d="M19 17h4M14 38l3-16h8l3 16z"/></svg><div><b>Die Puppen</b><span>Solange du sie anschaust, erstarren sie. Drehst du dich weg, kommen sie näher. Roter Rand am Bildschirm = eine ist hinter dir. Q zerbricht sie.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#9fb4b8" stroke-width="1.4"><ellipse cx="21" cy="14" rx="7" ry="9"/><path d="M14 12h14v4H14z" fill="#9fb4b8" fill-opacity=".25"/><path d="M19 20v3M23 20v3M13 40l3-17h10l3 17M15 25l-6 13M27 25l6 13"/></svg><div><b>Der Blinde <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 2</small></b><span>Sieht nichts, hört alles. Rennen hört er von weit weg. Halte C und schleich vorbei, aber fass ihn nicht an. Der Blitz bringt bei ihm nichts.</span></div></div>
-  <div class="keys">
+  <div class="keys touchonly" style="grid-template-columns:1fr"><span>Linker Daumen: wischen = laufen (ganz nach vorne = rennen)</span><span>Rechter Daumen: wischen = umschauen</span><span>BLITZ-Knopf: blendet das Monster, zerbricht Puppen</span><span>LEISE-Knopf: schleichen an/aus</span><span>Am Spind erscheint ein VERSTECKEN-Knopf</span><span>Minikarte antippen = große Karte</span></div>
+  <div class="keys deskonly">
     <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Laufen</span>
     <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></span><span>Ohne Maus: laufen und drehen</span>
     <span><kbd>Shift</kbd></span><span>Rennen</span>
@@ -242,7 +274,7 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 <div id="win" class="scr"><div class="kicker" style="color:var(--vio)" id="wk">Entkommen</div><div class="big" id="wbig">Du bist frei.</div><p class="line" id="wline"></p><div class="stats" id="wstats"></div>
   <nav class="nav row late"><button data-go="next" id="bnext">Weiter</button><button data-go="again">Nochmal</button><button data-go="share" id="share">Teilen</button><button data-go="mplobby" class="mph">Zur Lobby</button><button data-go="quit" id="wquit">Hauptmenü</button></nav></div>
 <div id="brief" class="scr"><div class="kicker" id="bk"></div><div class="big" id="bt"></div><p id="bgoal"></p><div class="bgrid" id="bgrid"></div>
-  <p class="bnote"><span id="blives">Du hast 2 Leben</span> · Spinde (E) schützen dich · Roter Bildschirmrand = Gefahr aus dieser Richtung · M = große Karte</p>
+  <p class="bnote" id="bnote"><span id="blives">Du hast 2 Leben</span> · Spinde (E) schützen dich · Roter Bildschirmrand = Gefahr aus dieser Richtung · M = große Karte</p>
   <nav class="nav row"><button data-go="go" id="bgo">Los geht's</button></nav></div>
 <div id="card"><p></p><small></small></div>
 <div id="fx"></div>
@@ -630,7 +662,10 @@ function loadCP(){
 function placeMonsterFar(){const D=bfsDist(Math.floor(P.x),Math.floor(P.y));let best=null,bd=-1;for(let k=0;k<80;k++){const c=randCell(0,0,0),d=D[Math.floor(c.y)*MW+Math.floor(c.x)];const sc=-Math.abs(d-18);if(d>0&&sc>bd){bd=sc;best=c}}if(best){M.x=best.x;M.y=best.y}}
 
 // ================= UI =================
-function msg(t,d=3){const m=$('msg');m.textContent=t;m.style.opacity=1;msgT=d}
+// Auf Touch-Geräten Tastennamen durch Knopf-Namen ersetzen
+function tx(t){if(!isTouch)return t;return t.replace(/<kbd>C<\/kbd> halten = schleichen/g,'LEISE-Knopf = schleichen').replace(/Halte C zum Schleichen/g,'Tippe LEISE zum Schleichen').replace(/Halte C, um lautlos zu schleichen/g,'Tippe LEISE, um lautlos zu schleichen').replace(/C halten = schleichen/g,'LEISE-Knopf = schleichen')
+  .replace(/<kbd>Q<\/kbd>/g,'BLITZ').replace(/<kbd>E<\/kbd> im Spind/g,'Im Spind').replace(/Q = blenden/g,'BLITZ = blenden').replace(/Q = zerbrechen/g,'BLITZ = zerbrechen').replace(/E am Spind = verstecken/g,'Spind = verstecken').replace(/Q zerbricht/g,'BLITZ zerbricht').replace(/Spinde \(E\)/g,'Spinde').replace(/ · M = große Karte/g,' · Minikarte antippen = große Karte')}
+function msg(t,d=3){const m=$('msg');m.textContent=tx(t);m.style.opacity=1;msgT=d}
 function objective(){$('obj').innerHTML=(finale?'<span class="fin">Das Portal ist offen — lauf</span>':LVLS[LVL].item+Array.from({length:EYES_N},(_,i)=>`<i class="pip${i<P.eyes?' f':''}"></i>`).join(''))+'<span class="lv">Leben'+Array.from({length:maxLives()},(_,i)=>`<i class="lf${i<lives?'':' x'}"></i>`).join('')+'</span>'}
 
 // ================= GAMEPLAY =================
@@ -804,7 +839,7 @@ function update(dt){
     P.a+=((K.ArrowRight?1:0)-(K.ArrowLeft?1:0))*2.4*dt;
     const len=Math.hypot(f,s);if(len>1){f/=len;s/=len}
     const moving=len>.1;
-    P.crouch=!!K.KeyC;P.sprinting=moving&&!P.crouch&&(K.ShiftLeft||K.ShiftRight)&&P.sta>0&&f>0;
+    P.crouch=!!K.KeyC||touch.sneak;P.sprinting=moving&&!P.crouch&&(K.ShiftLeft||K.ShiftRight||touch.run)&&P.sta>0&&f>0;
     const sp=P.sprinting?3.9:P.crouch?1.15:2.3,ca=Math.cos(P.a),sa=Math.sin(P.a);moveEnt(P,(ca*f-sa*s)*sp*dt,(sa*f+ca*s)*sp*dt,.22);
     P.moving+=((moving?1:0)-P.moving)*Math.min(1,dt*8);
     if(moving){P.bob+=dt*(P.sprinting?13:P.crouch?5:9);P.stepT-=dt;if(P.stepT<=0){P.stepT=P.sprinting?.3:P.crouch?.7:.48;if(!P.crouch){sfx.step();noise(P.x,P.y,P.sprinting?12:4.2,P.sprinting?7.5:0)}}}
@@ -839,7 +874,8 @@ function updHud(){
   if((miniT-=1)<=0){miniT=6;drawMap('mini')}
   $('bb').style.width=P.bat+'%';$('bs').style.width=P.sta+'%';$('nbar').classList.toggle('hide',LVL!==2);$('bn').style.width=(P.noise||0)+'%';
   $('inv').innerHTML=`BLITZ<b>${P.film}</b>`;
-  const t=findTarget();$('prompt').innerHTML=t?'<kbd>E</kbd> Verstecken':'';
+  const t=findTarget();$('prompt').innerHTML=t?'<kbd>E</kbd> Verstecken':'';if(isTouch)$('hidetxt').textContent='Im Spind';
+  touchHud();
   $('crouch').classList.toggle('hide',!P.crouch&&!P.spec);$('crouch').textContent=P.spec?'Du schaust zu':'Schleichen';teamHud();
   const ht=$('hidetxt');if(P.hidden){ht.classList.remove('hide');ht.classList.toggle('danger',M.active&&dist(M,P)<4)}else ht.classList.add('hide');
 }
@@ -964,14 +1000,14 @@ for(const k of['sens','vol','bri'])$('o-'+k).oninput=e=>{CFG[k]=+e.target.value;
 $('o-bob').onclick=()=>{CFG.bob=!CFG.bob;sfx.hover();applyCfg()};
 $('o-easy').onclick=$('o-easy2').onclick=()=>{CFG.easy=!CFG.easy;sfx.hover();applyCfg()};
 const scrOn=id=>$(id).classList.contains('on'),panelOpen=()=>['how','set','lvl','mp'].some(p=>!$(p).classList.contains('hide'));
-function show(id){document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id===id));$('fx').classList.toggle('on',!!id&&id!=='splash');panel(null)}
+function show(id){document.body.classList.toggle('ingame',!id&&state==='play');document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id===id));$('fx').classList.toggle('on',!!id&&id!=='splash');panel(null)}
 function panel(id){for(const p of['how','set','lvl','mp'])$(p).classList.toggle('hide',p!==id)}
 function stats(el,rows){$(el).innerHTML=rows.map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join('')}
 function card(a,b){const c=$('card');c.querySelector('p').textContent=a;c.querySelector('small').textContent=b;c.classList.remove('on');void c.offsetWidth;c.classList.add('on')}
 function showDeath(){const over=lives<=0;$('dk').textContent=over?'Keine Leben mehr':'Du bist gestorben';$('bretry').classList.toggle('hide',over&&!NET);$('bagain').classList.toggle('hide',!over||!!NET);$('bretry').textContent=NET&&over?'Zuschauen':`Weiter · ${lives} Leben`;mpButtons();
   const DL=LVLS[LVL].death;
   $('dt').textContent=deathKind==='blind'?'Der Blinde hat dich gehört.':deathKind==='doll'?'Die Puppe hat dich.':deathKind==='locker'?'Er hat dich im Spind gefunden.':'Er hat dich.';
-  $('ds').textContent=deathKind==='blind'?'Tipp: Halte C zum Schleichen. Dann hört er dich nicht. Nur nicht anfassen!':deathKind==='doll'?'Tipp: Schau Puppen an, dann erstarren sie. Q zerbricht sie.':over?'Alles von vorne.':DL[Math.random()*DL.length|0];stats('dstats',[[LVLS[LVL].item,`${P.eyes}/${EYES_N}`],['Zeit',fmt(playT)],['Tode',deaths]]);show('dead')}
+  $('ds').textContent=tx(deathKind==='blind'?'Tipp: Halte C zum Schleichen. Dann hört er dich nicht. Nur nicht anfassen!':deathKind==='doll'?'Tipp: Schau Puppen an, dann erstarren sie. Q zerbricht sie.':over?'Alles von vorne.':DL[Math.random()*DL.length|0]);stats('dstats',[[LVLS[LVL].item,`${P.eyes}/${EYES_N}`],['Zeit',fmt(playT)],['Tode',deaths]]);show('dead')}
 function fmt(t){return`${t/60|0}:${String(t%60|0).padStart(2,'0')}`}
 const bestKey=n=>n===1?'brandt_best':'brandt_best_'+n;
 function getBest(n){try{return +localStorage.getItem(bestKey(n))||0}catch(e){return 0}}
@@ -986,7 +1022,7 @@ function winGame(){state='win';if(document.pointerLockElement)document.exitPoint
   let best=getBest(LVL)||null;try{if(!best||playT<best){localStorage.setItem(bestKey(LVL),playT);best=playT}localStorage.setItem('brandt_unl',Math.max(unlocked(),LVL+1))}catch(e){}
   $('wk').textContent=`Level ${LVL} geschafft`;$('wline').textContent=LVLS[LVL].win;$('bnext').classList.toggle('hide',!LVLS[LVL+1]);if(LVLS[LVL+1])$('bnext').textContent='Weiter: '+LVLS[LVL+1].name;
   stats('wstats',[['Zeit',fmt(playT)],['Tode',deaths]].concat(best?[['Bestzeit',fmt(best)]]:[]));$('share').textContent='Teilen';mpButtons();show('win')}
-function startPlay(){state='play';objective();$('hud').classList.remove('hide');show(null);lockPointer()}
+function startPlay(){touch.paused=false;state='play';objective();$('hud').classList.remove('hide');show(null);lockPointer()}
 // Einleitung vor jedem Level: Ziel + jeder Gegner mit Bild, worauf er achtet und seiner Schwäche
 const portrait=(img,sx,sy,sw,sh)=>mk(96,128,c=>{c.drawImage(img,sx,sy,sw,sh,0,0,96,128)}).toDataURL();
 let PORTRAITS=null;
@@ -998,16 +1034,15 @@ const BRIEF={
   2:{goal:'Sammle <b>5 Röntgenbilder</b>. Folge dem elektrischen Brummen. Danach öffnet sich das <b>Portal</b>.<br>Hier gibt es nur <b>2 Blinde</b>, sonst nichts. Merk dir nur: <b>C halten = schleichen</b>.',
      foes:[['blind','Der Blinde','Er <b>hört</b> dich. Rennen hört er von weit weg, Laufen aus der Nähe.','<kbd>C</kbd> halten = schleichen, dann bist du lautlos. Nicht anfassen! Der Blitz bringt nichts.'],
           ]}};
-function showBrief(n){const B=BRIEF[n],P_=portraits();$('bk').textContent='Level '+n;$('bt').textContent=LVLS[n].name;$('bgoal').innerHTML=B.goal;
-  $('bgrid').innerHTML=B.foes.map(([k,nm,w,st])=>`<div class="bcard"><img src="${P_[k]}" alt=""><div><h4>${nm}</h4><p class="w"><i>Achtet auf</i>${w}</p><p class="s"><i>Schwäche</i>${st}</p></div></div>`).join('');
-  $('blives').textContent=`Du hast ${maxLives()} Leben`+(EASY()?' (Leicht)':'');
-  show('brief');setTimeout(()=>$('bgo').focus({preventScroll:true}),50)}
+function showBrief(n){const B=BRIEF[n],P_=portraits();$('bk').textContent='Level '+n;$('bt').textContent=LVLS[n].name;$('bgoal').innerHTML=tx(B.goal);
+  $('bgrid').innerHTML=B.foes.map(([k,nm,w,st])=>`<div class="bcard"><img src="${P_[k]}" alt=""><div><h4>${nm}</h4><p class="w"><i>Achtet auf</i>${w}</p><p class="s"><i>Schwäche</i>${tx(st)}</p></div></div>`).join('');$('bnote').innerHTML=tx($('bnote').dataset.t||($('bnote').dataset.t=$('bnote').innerHTML));
+  show('brief');$('blives').textContent=`Du hast ${maxLives()} Leben`+(EASY()?' (Leicht)':'');setTimeout(()=>$('bgo').focus({preventScroll:true}),50)}
 function startLevel(n){initAudio();applyCfg();LVL=n;deaths=0;lives=maxLives();newGame();state='brief';$('hud').classList.add('hide');showBrief(n)}
 function beginLevel(){startPlay();card(LVLS[LVL].title,LVLS[LVL].sub)}
 const newRun=()=>startLevel(LVL);
 function toMenu(keep){if(!keep)mpLeave();state='menu';lives=maxLives();LVL=1;P.spec=false;$('hud').classList.add('hide');mapOpen=false;$('mapov').classList.add('hide');if(amb.tense)amb.tense.gain.value=0;
   if(document.pointerLockElement)document.exitPointerLock();newGame();attract();bestTxt();show('menu')}
-const ACT={go:beginLevel,mp:()=>{mpOpen()},mpcreate:()=>mpCreate(),mpstart:()=>mpStart(),mpleave:()=>{mpLeave();panel(null)},mplobby:()=>{if(NET&&NET.host){bc({t:'lobbyBack'});backToLobby()}},levels:()=>{lvlList();panel($('lvl').classList.contains('hide')?'lvl':null)},next:()=>{if(!NET)return startLevel(LVL+1);if(NET.host){NET.lvl=LVL+1;mpStart()}},again:()=>{if(!NET)return newRun();if(NET.host)mpStart()},quit:()=>toMenu(),resume:()=>lockPointer(),back:()=>panel(null),
+const ACT={go:beginLevel,mp:()=>{mpOpen()},mpcreate:()=>mpCreate(),mpstart:()=>mpStart(),mpleave:()=>{mpLeave();panel(null)},mplobby:()=>{if(NET&&NET.host){bc({t:'lobbyBack'});backToLobby()}},levels:()=>{lvlList();panel($('lvl').classList.contains('hide')?'lvl':null)},next:()=>{if(!NET)return startLevel(LVL+1);if(NET.host){NET.lvl=LVL+1;mpStart()}},again:()=>{if(!NET)return newRun();if(NET.host)mpStart()},quit:()=>toMenu(),resume:()=>{if(isTouch){touch.paused=false;show(null)}else lockPointer()},back:()=>panel(null),
   how:()=>panel($('how').classList.contains('hide')?'how':null),set:()=>panel($('set').classList.contains('hide')?'set':null),
   retry:()=>{if(NET)return mpRespawn();if(lives<=0)return newRun();loadCP();startPlay();card(lives===1?'Letztes Leben.':`Noch ${lives} Leben.`,'Letzter Checkpoint')},
   share:()=>{const t=`Ich habe Level ${LVL} (${LVLS[LVL].name}) von Das Haus der Brandts in ${fmt(playT)} geschafft (${deaths} Tode). Traust du dich?`;
@@ -1058,6 +1093,7 @@ const r2=v=>Math.round(v*100)/100;
 function bc(m){if(!NET||!NET.conns)return;for(const id in NET.conns){const c=NET.conns[id];if(c.open)try{c.send(m)}catch(e){}}}
 function netTo(id,m){const c=NET&&NET.conns&&NET.conns[id];if(c&&c.open)try{c.send(m)}catch(e){}}
 function netSend(m){if(NET&&NET.conn&&NET.conn.open)try{NET.conn.send(m)}catch(e){}}
+function netErr(e){console.error(e);if(!netErr.shown){netErr.shown=1;msg('Netzwerkfehler: '+(e&&e.message||e),6)}}
 function mpStatus(t){$('mp-status').textContent=t||''}
 function myName(){const v=$('mp-name').value.trim().slice(0,14)||'Spieler';try{localStorage.setItem('brandt_name',v)}catch(e){}return v}
 function mpOpen(){try{$('mp-name').value=$('mp-name').value||localStorage.getItem('brandt_name')||''}catch(e){}mpRoomUI();panel('mp')}
@@ -1083,7 +1119,7 @@ function mpCreate(){
   const code=newCode(),peer=new Peer('hdb-'+code);
   NET={host:true,peer,code,conns:{},name:myName(),game:false,lvl:1,ready:false,acc:0};
   peer.on('open',()=>{NET.ready=true;mpStatus('');mpRoomUI()});
-  peer.on('connection',conn=>{conn.on('data',m=>hostMsg(conn,m));conn.on('close',()=>hostDrop(conn.peer));conn.on('error',()=>hostDrop(conn.peer))});
+  peer.on('connection',conn=>{conn.on('data',m=>{try{hostMsg(conn,m)}catch(e){netErr(e)}});conn.on('close',()=>hostDrop(conn.peer));conn.on('error',()=>hostDrop(conn.peer))});
   peer.on('error',e=>{if(e.type==='unavailable-id')return mpCreate();if(NET&&NET.peer===peer)mpStatus('Fehler: '+e.type)});
   peer.on('disconnected',()=>{try{peer.reconnect()}catch(e){}});
 }
@@ -1092,9 +1128,9 @@ function mpJoin(){
   const code=$('mp-code').value.trim().toUpperCase();if(code.length<4)return mpStatus('Gib den Raum-Code ein.');
   mpLeave();mpStatus('Verbinde …');
   const peer=new Peer();NET={host:false,peer,code,name:myName(),game:false,acc:0};const me=NET;
-  peer.on('open',()=>{const conn=peer.connect('hdb-'+code,{reliable:true});me.conn=conn;
+  peer.on('open',()=>{const conn=peer.connect('hdb-'+code,{reliable:true,serialization:'json'});me.conn=conn;
     conn.on('open',()=>conn.send({t:'hello',n:me.name}));
-    conn.on('data',clientMsg);
+    conn.on('data',m=>{try{clientMsg(m)}catch(e){netErr(e)}});
     conn.on('close',()=>{if(NET===me)mpLost('Die Verbindung zum Host ist weg.')})});
   peer.on('error',e=>{if(NET===me){mpLeave();mpStatus(e.type==='peer-unavailable'?'Raum nicht gefunden. Stimmt der Code?':'Verbindung fehlgeschlagen ('+e.type+').')}});
   setTimeout(()=>{if(NET===me&&!me.id){mpLeave();mpStatus('Keine Antwort vom Raum. Stimmt der Code?')}},12000);
@@ -1109,7 +1145,7 @@ function hostMsg(conn,m){
   if(m.t==='hello'){if(NET.game||Object.keys(RP).length>=5){conn.send({t:'full',busy:NET.game});setTimeout(()=>conn.close(),400);return}
     NET.conns[id]=conn;RP[id]={n:String(m.n||'Spieler').slice(0,14),c:freeColor(),al:false,x:0,y:0,a:0,lk:-1,lv:2};conn.send({t:'welcome',id,c:RP[id].c});lobbyBroadcast();return}
   if(!r)return;
-  if(m.t==='p'){Object.assign(r,{x:+m.x||0,y:+m.y||0,a:+m.a||0,cr:m.cr,lk:m.lk|0,l:m.l,sp:m.sp,al:!!m.al,lv:m.lv|0});if(Array.isArray(m.sd))for(const i of m.sd)if(DOLLS[i])DOLLS[i].seenR=T}
+  if(m.t==='p'){r.rx=performance.now();Object.assign(r,{x:+m.x||0,y:+m.y||0,a:+m.a||0,cr:m.cr,lk:m.lk|0,l:m.l,sp:m.sp,al:!!m.al,lv:m.lv|0});if(Array.isArray(m.sd))for(const i of m.sd)if(DOLLS[i])DOLLS[i].seenR=T}
   else if(m.t==='pk'){const o=objs[m.i];if(o&&!o.gone){o.gone=true;if(o.type==='eye')eyeGot()}}
   else if(m.t==='hd'){const o=objs[m.i];if(o)hideReact(r,o,false)}
   else if(m.t==='fl')flashAt(r,false);
@@ -1152,8 +1188,9 @@ function mpButtons(){document.querySelectorAll('.mph').forEach(b=>b.classList.to
   if(NET&&!NET.host){$('bnext').classList.add('hide');document.querySelector('#win [data-go="again"]').classList.add('hide')}
   else document.querySelector('#win [data-go="again"]').classList.remove('hide')}
 function myState(){return{x:r2(P.x),y:r2(P.y),a:r2(P.a),cr:P.crouch?1:0,lk:P.hidden?P.hidden.i:-1,l:lightOn()?1:0,sp:P.sprinting?1:0,al:state==='play'&&!P.spec?1:0,lv:lives}}
+setInterval(()=>{if(NET&&NET.game)try{netTick(1/15)}catch(e){netErr(e)}},1000/15);
 function netTick(dt){
-  NET.acc+=dt;if(NET.acc<1/15)return;NET.acc=0;const me=myState();
+  const me=myState();
   if(!NET.host){netSend(Object.assign({t:'p',sd:DOLLS.map((d,i)=>T-d.seen<.15?i:-1).filter(i=>i>=0)},me));return}
   bc({t:'s',pl:[{id:'host',n:NET.name,c:0,...me},...Object.entries(RP).map(([id,r])=>({id,n:r.n,c:r.c,x:r.x,y:r.y,a:r.a,cr:r.cr,lk:r.lk,l:r.l,al:r.al?1:0}))],
     m:[M.active?1:0,r2(M.x),r2(M.y),r2(M.a),M.frame,STC.indexOf(M.state),M.enraged?1:0],
@@ -1165,7 +1202,7 @@ function netTick(dt){
 // Client: Zustand vom Host übernehmen (weich nachziehen) + Geräusche selbst erzeugen
 function setRemote(id,q){let r=RP[id];if(!r)r=RP[id]={x:q.x,y:q.y,f:0,anim:0,stT:0};Object.assign(r,{n:String(q.n).slice(0,14),c:q.c|0,tx:q.x,ty:q.y,a:q.a,cr:q.cr,lk:q.lk,l:q.l,al:!!q.al})}
 function applyState(m){
-  if(!NET||!NET.game)return;const seen={};
+  if(!NET||!NET.game)return;NET.rx=performance.now();const seen={};
   for(const q of m.pl){if(q.id===NET.id)continue;seen[q.id]=1;setRemote(q.id,q)}for(const id in RP)if(!seen[id])delete RP[id];
   const[ma,mx,my,mA,mf,ms,me]=m.m;if(ma&&!M.active){M.x=mx;M.y=my;sfx.bang();flickT=2;shakeT=.6;later(1.3,()=>msg('Das Monster ist wach! Q = blenden · E am Spind = verstecken',5))}
   Object.assign(M,{active:!!ma,tx:mx,ty:my,a:mA,frame:mf,state:STC[ms]||'wander',enraged:!!me});
@@ -1188,14 +1225,15 @@ function remoteFx(dt){
 function animRemote(dt){for(const id in RP){const r=RP[id];const mv=ISCLIENT()?lerpEnt(r,dt):Math.hypot(r.x-(r.px??r.x),r.y-(r.py??r.y));r.px=r.x;r.py=r.y;
   r.anim=(r.anim||0)+mv*2.2;r.f=(r.anim|0)%2;r.stT=(r.stT||0)+mv;if(r.stT>1&&r.al&&!r.cr){r.stT=0;const sp=spatial(r);if(sp.v>.03)nz({f:350,type:'lowpass',vol:.04*sp.v,dec:.07,pan:sp.pan})}}}
 function teamHud(){if(!NET||!NET.game){if(teamHud.h){teamHud.h='';$('team').innerHTML=''}return}
-  const L=[{n:NET.name,c:NET.host?0:NET.c|0,al:state==='play'&&!P.spec,me:1},...Object.values(RP).map(r=>({n:r.n,c:r.c,al:r.al}))];
-  const h=L.map(p=>`<div class="${p.al?'':'dead'}"><i class="dot" style="background:${PCOL[p.c%PCOL.length]}"></i>${esc(p.n)}${p.me?' (du)':''}</div>`).join('');if(h!==teamHud.h){teamHud.h=h;$('team').innerHTML=h}}
+  const now=performance.now(),lost=r=>NET.host?now-(r.rx||0)>3000:now-(NET.rx||0)>3000;
+  const L=[{n:NET.name,c:NET.host?0:NET.c|0,al:state==='play'&&!P.spec,me:1},...Object.values(RP).map(r=>({n:r.n,c:r.c,al:r.al,lost:lost(r)}))];
+  const h=L.map(p=>`<div class="${p.al?'':'dead'}"><i class="dot" style="background:${PCOL[p.c%PCOL.length]}"></i>${esc(p.n)}${p.me?' (du)':''}${p.lost?' · keine Verbindung':''}</div>`).join('');if(h!==teamHud.h){teamHud.h=h;$('team').innerHTML=h}}
 
 // ================= INPUT =================
-const K={},touch={fy:0,sx:0};
+const K={},touch={fy:0,sx:0,run:false,sneak:false,paused:false};
 const isTouch=matchMedia('(pointer:coarse)').matches;
 function lockPointer(){if(!isTouch&&!TEST&&cv.requestPointerLock)try{const p=cv.requestPointerLock();p&&p.catch&&p.catch(()=>{})}catch(e){}}
-const paused=()=>!isTouch&&!TEST&&state==='play'&&!document.pointerLockElement;
+const paused=()=>!TEST&&state==='play'&&(isTouch?touch.paused:!document.pointerLockElement);
 document.addEventListener('pointerlockchange',()=>{if(paused())show('pause');else if(scrOn('pause'))show(null)});
 cv.addEventListener('mousedown',e=>{if(state!=='play')return;if(!document.pointerLockElement){lockPointer();return}if(e.button===2)useFlash()});
 addEventListener('contextmenu',e=>e.preventDefault());
@@ -1213,24 +1251,37 @@ addEventListener('keydown',e=>{
 addEventListener('keyup',e=>{K[e.code]=false});
 addEventListener('blur',()=>{for(const k in K)K[k]=false});
 if(isTouch){
-  $('touch').classList.remove('hide');let jid=null,lid=null,jx=0,jy=0,lx=0,ly=0;
-  addEventListener('touchstart',e=>{if(state!=='play')return;for(const t of e.changedTouches){if(t.target.closest('#tb'))continue;if(t.clientX<innerWidth*.4&&jid===null){jid=t.identifier;jx=t.clientX;jy=t.clientY}else if(lid===null){lid=t.identifier;lx=t.clientX;ly=t.clientY}}},{passive:true});
-  addEventListener('touchmove',e=>{for(const t of e.changedTouches){if(t.identifier===jid){const dx=clamp((t.clientX-jx)/50,-1,1),dy=clamp((t.clientY-jy)/50,-1,1);touch.sx=dx;touch.fy=-dy;$('knob').style.transform=`translate(${dx*40}px,${dy*40}px)`}else if(t.identifier===lid&&state==='play'){P.a+=(t.clientX-lx)*.007*CFG.sens;P.pitch=clamp(P.pitch-(t.clientY-ly)*.0055*CFG.sens,-PMAX,PMAX);lx=t.clientX;ly=t.clientY}}},{passive:true});
-  const end=e=>{for(const t of e.changedTouches){if(t.identifier===jid){jid=null;touch.sx=touch.fy=0;$('knob').style.transform=''}if(t.identifier===lid)lid=null}};
+  // Linke Bildschirmhälfte: Joystick erscheint da, wo der Daumen hinkommt. Rechte Hälfte: umschauen.
+  document.body.classList.add('touch');$('touch').classList.remove('hide');
+  let jid=null,lid=null,jx=0,jy=0,lx=0,ly=0;const joy=$('joy'),R=50;
+  addEventListener('touchstart',e=>{if(state!=='play'||touch.paused)return;for(const t of e.changedTouches){if(t.target.closest('.tbtn,#mini,#mapov'))continue;
+    if(t.clientX<innerWidth*.45&&jid===null){jid=t.identifier;jx=t.clientX;jy=t.clientY;joy.style.left=jx+'px';joy.style.top=jy+'px';joy.classList.add('on');$('joyhint').classList.add('gone')}
+    else if(lid===null){lid=t.identifier;lx=t.clientX;ly=t.clientY}}},{passive:true});
+  addEventListener('touchmove',e=>{for(const t of e.changedTouches){
+    if(t.identifier===jid){let dx=(t.clientX-jx)/R,dy=(t.clientY-jy)/R;const l=Math.hypot(dx,dy);if(l>1){dx/=l;dy/=l}
+      touch.sx=dx;touch.fy=-dy;touch.run=-dy>.92&&l>1.5;joy.classList.toggle('run',touch.run);$('knob').style.transform=`translate(${dx*37}px,${dy*37}px)`}
+    else if(t.identifier===lid&&state==='play'){P.a+=(t.clientX-lx)*.0075*CFG.sens;P.pitch=clamp(P.pitch-(t.clientY-ly)*.0055*CFG.sens,-PMAX,PMAX);lx=t.clientX;ly=t.clientY}}},{passive:true});
+  const end=e=>{for(const t of e.changedTouches){if(t.identifier===jid){jid=null;touch.sx=touch.fy=0;touch.run=false;joy.classList.remove('on','run');$('knob').style.transform=''}if(t.identifier===lid)lid=null}};
   addEventListener('touchend',end);addEventListener('touchcancel',end);
-  document.querySelectorAll('#tb button').forEach(b=>{
-    b.addEventListener('touchstart',e=>{e.preventDefault();const a=b.dataset.a,h=b.dataset.h;if(h)K[h]=true;
-      if(a==='e')interact();if(a==='f'&&!P.hidden){P.light=!P.light;sfx.click()}if(a==='q')useFlash()});
-    b.addEventListener('touchend',e=>{e.preventDefault();if(b.dataset.h)K[b.dataset.h]=false})});
-  $('mini').style.pointerEvents='auto';$('mini').addEventListener('touchstart',toggleMap);$('mapov').addEventListener('touchstart',toggleMap);
+  const tap=(id,f)=>$(id).addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();f()},{passive:false});
+  tap('t-flash',()=>useFlash());
+  tap('t-sneak',()=>{touch.sneak=!touch.sneak;$('t-sneak').classList.toggle('on',touch.sneak);sfx.click()});
+  tap('t-use',()=>interact());
+  tap('t-pause',()=>{if(state!=='play')return;touch.paused=true;show('pause')});
+  $('rot-ok').addEventListener('click',()=>document.body.classList.add('portraitok'));
+  $('mini').style.pointerEvents='auto';$('mini').addEventListener('touchstart',e=>{e.preventDefault();toggleMap()},{passive:false});$('mapov').addEventListener('touchstart',e=>{e.preventDefault();toggleMap()},{passive:false});
 }
+// Touch-Knöpfe an die Situation anpassen (Blitz nur wo er hilft, Verstecken nur am Spind)
+function touchHud(){if(!isTouch)return;document.body.classList.toggle('ingame',state==='play');
+  const near=!!findTarget(),hid=!!P.hidden;$('t-use').classList.toggle('hide',!(near||hid)||P.spec);$('t-uset').textContent=hid?'Raus':'Verstecken';
+  $('t-flash').classList.toggle('hide',LVL===2||hid||!!P.spec);$('t-film').textContent=P.film;$('t-sneak').classList.toggle('hide',hid||!!P.spec)}
 
 // ================= LOOP =================
 let last=performance.now();
 function frame(now){
   const dt=clamp((now-last)/1000,0,.05);last=now;
   if(state==='menu'){T+=dt;menuRender(dt)}else{update(dt);if(NET&&NET.host&&NET.game&&state!=='play')worldTick(dt);if(state==='dying'){render();drawJumpscare(jsT)}else if(state!=='dead'&&state!=='win')render()}
-  if(NET&&NET.game){animRemote(dt);try{netTick(dt)}catch(e){}}
+  if(NET&&NET.game)animRemote(dt);
   requestAnimationFrame(frame);
 }
 newGame();attract();applyCfg();bestTxt();
@@ -1244,7 +1295,7 @@ else if(TEST==='#test-how'){show('menu');panel('how')}
 else if(TEST==='#test-dead'){startPlay();P.eyes=2;playT=137;deaths=3;deathKind='doll';state='dead';$('hud').classList.add('hide');showDeath()}
 else if(TEST==='#test-pause'){show('pause')}
 else if(TEST==='#test-lvl'){show('menu');ACT.levels()}
-else if(TEST==='#test-l2'){startLevel(2)}
+else if(TEST==='#test-l2'){startLevel(2);beginLevel()}
 else if(TEST==='#test-blind'){startLevel(2);beginLevel();const b=BL[0];faceOpen();b.x=P.x+Math.cos(P.a)*2.2;b.y=P.y+Math.sin(P.a)*2.2;b.state='search';b.searchT=99}
 else if(TEST==='#test-jb'){startLevel(2);beginLevel();die('blind')}
 else if(TEST==='#test-hud'){startPlay();P.eyes=2;objective()}
