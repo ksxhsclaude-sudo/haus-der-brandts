@@ -153,6 +153,7 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 .tbtn:active,.tbtn.on{background:rgba(233,223,207,.22);border-color:var(--ink)}
 .tbtn i{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:var(--red);font:500 11px/20px var(--mono);font-style:normal;letter-spacing:0;text-align:center}
 #t-flash{right:calc(22px + env(safe-area-inset-right));bottom:calc(26px + env(safe-area-inset-bottom));width:78px;height:78px}
+#t-light{right:calc(122px + env(safe-area-inset-right));bottom:calc(96px + env(safe-area-inset-bottom));width:56px;height:56px}
 #t-sneak{right:calc(112px + env(safe-area-inset-right));bottom:calc(22px + env(safe-area-inset-bottom));width:62px;height:62px}
 #t-use{right:calc(30px + env(safe-area-inset-right));bottom:calc(122px + env(safe-area-inset-bottom));width:84px;height:84px;border-color:var(--gold);color:var(--gold)}
 #t-pause{top:calc(14px + env(safe-area-inset-top));right:190px;width:40px;height:40px;font-size:13px;letter-spacing:0}
@@ -196,6 +197,7 @@ body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
 <div id="mapov" class="hide"><canvas id="mapc" width="320" height="320"></canvas><p style="margin-top:14px;font:500 10px var(--mono);letter-spacing:.3em;color:var(--dim)">M — SCHLIESSEN</p></div>
 <div id="touch" class="hide"><div id="joy"><div id="knob"></div></div><div id="joyhint">Hier wischen zum Laufen</div>
   <button class="tbtn" id="t-flash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Blitz<i id="t-film">2</i></button>
+  <button class="tbtn on" id="t-light"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 9h9l5-4v14l-5-4H4z"/><path d="M20 9.5l2-1M20 14.5l2 1M20.5 12h2"/></svg>Licht</button>
   <button class="tbtn" id="t-sneak"><svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="8" cy="8" rx="2.6" ry="4"/><ellipse cx="15.5" cy="13" rx="2.6" ry="4"/><rect x="6.4" y="12.6" width="3.2" height="2.4" rx="1"/><rect x="13.9" y="17.6" width="3.2" height="2.4" rx="1"/></svg>Leise</button>
   <button class="tbtn hide" id="t-use"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M12 3v18M9 7h1M9 9h1M14 7h1M14 9h1"/></svg><span id="t-uset">Verstecken</span></button>
   <button class="tbtn" id="t-pause">II</button>
@@ -226,7 +228,7 @@ body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#e9dfcf" stroke-width="1.4"><circle cx="21" cy="13" r="8"/><circle cx="18" cy="12" r="1.3" fill="#e9dfcf"/><circle cx="24" cy="12" r="1.3" fill="#e9dfcf"/><path d="M19 17h4M14 38l3-16h8l3 16z"/></svg><div><b>Die Puppen</b><span>Solange du sie anschaust, erstarren sie. Drehst du dich weg, kommen sie näher. Roter Rand am Bildschirm = eine ist hinter dir. Q zerbricht sie.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#9fb4b8" stroke-width="1.4"><ellipse cx="21" cy="14" rx="7" ry="9"/><path d="M14 12h14v4H14z" fill="#9fb4b8" fill-opacity=".25"/><path d="M19 20v3M23 20v3M13 40l3-17h10l3 17M15 25l-6 13M27 25l6 13"/></svg><div><b>Der Blinde <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 2</small></b><span>Sieht nichts, hört alles. Rennen hört er von weit weg. Halte C und schleich vorbei, aber fass ihn nicht an. Der Blitz bringt bei ihm nichts.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="#0a0810" stroke="#5a5a7a" stroke-width="1"><path d="M13 40l3-22c0-8 3-12 5-12s5 4 5 12l3 22z"/><circle cx="18.5" cy="15" r="1.3" fill="#e8ecff"/><circle cx="23.5" cy="15" r="1.3" fill="#e8ecff"/></svg><div><b>Der Schatten <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 3</small></b><span>Kommt im Dunkeln. Leuchte ihn an, dann flieht er. An brennenden Laternen bist du sicher.</span></div></div>
-  <div class="keys touchonly" style="grid-template-columns:1fr"><span>Linker Daumen: wischen = laufen (ganz nach vorne = rennen)</span><span>Rechter Daumen: wischen = umschauen</span><span>BLITZ-Knopf: blendet das Monster, zerbricht Puppen</span><span>LEISE-Knopf: schleichen an/aus</span><span>Am Spind erscheint ein VERSTECKEN-Knopf</span><span>Minikarte antippen = große Karte</span></div>
+  <div class="keys touchonly" style="grid-template-columns:1fr"><span>Linker Daumen: wischen = laufen (ganz nach vorne = rennen)</span><span>Rechter Daumen: wischen = umschauen</span><span>BLITZ-Knopf: blendet das Monster, zerbricht Puppen</span><span>LEISE-Knopf: schleichen an/aus</span><span>LICHT-Knopf: Taschenlampe an/aus</span><span>Am Spind erscheint ein VERSTECKEN-Knopf</span><span>Minikarte antippen = große Karte</span></div>
   <div class="keys deskonly">
     <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Laufen</span>
     <span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd></span><span>Ohne Maus: laufen und drehen</span>
@@ -308,7 +310,7 @@ const LVLS={
      win:'Das Portal zieht dich nach unten. Immer weiter nach unten.',fin:'Das Portal ist offen. Die Schatten werden wild. Bleib im Licht!',
      death:['Der Wald ist wieder still.','Das Licht war so nah.','Die Schatten haben dich verschluckt.','Niemand hört dich hier schreien.']},
   4:{name:'Die Unterwelt',item:'Herzen',title:'Die Unterwelt.',sub:'Hol dir drei Herzen · Alle sind hier',hint:'Hörst du das Pochen? Da sind die Herzen.',
-     win:'Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne. Die Spieluhr spielt.',fin:'Alle wissen jetzt, wo du bist. LAUF ZUM PORTAL!',
+     win:'Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne. Die Spieluhr spielt.',fin:'Das Portal ist offen. Das Monster ist los! +2 Blitze. LAUF!',
      death:['Die Unterwelt behält dich.','So kurz vor dem Ende.','Sie haben zusammengearbeitet.','Alle haben dich gefunden.']}};
 let grid=new Uint8Array(MW*MH),texIdx=new Uint8Array(MW*MH),ROOMS=[],START={x:2.5,y:2.5},PORTAL={x:30.5,y:30.5};
 // Level 1: 0 Haus, 1 Keller, 2 Hecken  ·  Level 2: 3 Station, 4 Leichenhalle
@@ -316,7 +318,7 @@ let grid=new Uint8Array(MW*MH),texIdx=new Uint8Array(MW*MH),ROOMS=[],START={x:2.
 let ZMAP=new Uint8Array(MW*MH),TREES=[];
 const zoneAt=(x,y)=>LVL>=3?(ZMAP[y*MW+x]??5):LVL===2?(x>=21&&y>=24?4:3):x>=22?2:y>=20?1:0;
 function cell(x,y){x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=MW||y>=MH)return 1;return grid[y*MW+x]}
-const solid=(x,y)=>cell(x,y)!==0;
+const solid=(x,y)=>{const v=cell(x,y);if(v!==2)return v!==0;const fx=x-Math.floor(x)-.5,fy=y-Math.floor(y)-.5;return fx*fx+fy*fy<.033};
 function bfsDist(sx,sy){const D=new Int16Array(MW*MH).fill(-1),s=sy*MW+sx;D[s]=0;const q=[s];for(let i=0;i<q.length;i++){const c=q[i],cx=c%MW,cy=c/MW|0;for(const[dx,dy]of DIRS){const nx=cx+dx,ny=cy+dy,n=ny*MW+nx;if(!cell(nx,ny)&&D[n]<0){D[n]=D[c]+1;q.push(n)}}}return D}
 // Krankenhaus: lange Flure (2 breit) mit Zimmern links und rechts
 function genHospital(r,open){
@@ -417,7 +419,7 @@ function bfs(sx,sy,tx,ty){
     for(const[dx,dy]of DIRS){const nx=cx+dx,ny=cy+dy,n=ny*MW+nx;if(!cell(nx,ny)&&prev[n]<0){prev[n]=c;q.push(n)}}}
   if(prev[t]<0)return null;const path=[];for(let c=t;c!==s;c=prev[c])path.push({x:c%MW,y:c/MW|0});return path.reverse();
 }
-const inHome=(e,x,y)=>LVL!==4||finale||e.home===undefined||zoneAt(Math.floor(x),Math.floor(y))===e.home;
+const inHome=(e,x,y)=>LVL!==4||(finale&&e===M)||e.home===undefined||zoneAt(Math.floor(x),Math.floor(y))===e.home;
 function homeCell(e,cx,cy,rad){for(let i=0;i<60;i++){const c=randCell(cx,cy,rad);if(inHome(e,c.x,c.y))return c}for(let i=0;i<300;i++){const c=randCell(0,0,0);if(inHome(e,c.x,c.y))return c}return{x:e.x,y:e.y}}
 function randCell(cx,cy,rad){for(let i=0;i<120;i++){const x=Math.random()*MW|0,y=Math.random()*MH|0;if(!cell(x,y)&&(!rad||Math.hypot(x+.5-cx,y+.5-cy)<rad))return{x:x+.5,y:y+.5}}return{x:cx,y:cy}}
 
@@ -497,7 +499,7 @@ SPR.lampOn=mk(32,48,c=>{let g=c.createRadialGradient(16,28,1,16,28,18);g.addColo
 SPR.heart=mk(32,40,c=>{let g=c.createRadialGradient(16,20,2,16,20,18);g.addColorStop(0,'rgba(255,40,40,.55)');g.addColorStop(1,'rgba(200,0,0,0)');c.fillStyle=g;c.fillRect(0,0,32,40);
   g=c.createRadialGradient(13,17,1,16,21,11);g.addColorStop(0,'#ff6a5a');g.addColorStop(.6,'#a8121a');g.addColorStop(1,'#4a0408');c.fillStyle=g;c.beginPath();c.moveTo(16,33);c.bezierCurveTo(4,25,5,11,12,11);c.bezierCurveTo(14,11,16,13,16,15);c.bezierCurveTo(16,13,18,11,21,11);c.bezierCurveTo(28,11,28,25,16,33);c.fill();
   c.strokeStyle='#6a0810';c.lineWidth=2.4;c.beginPath();c.moveTo(13,12);c.lineTo(12,4);c.moveTo(18,12);c.quadraticCurveTo(19,5,23,4);c.stroke();c.strokeStyle='rgba(60,0,10,.7)';c.lineWidth=.8;c.beginPath();c.moveTo(16,16);c.quadraticCurveTo(12,22,15,30);c.moveTo(18,15);c.quadraticCurveTo(23,20,19,27);c.stroke()});
-for(let v=0;v<3;v++)SPR['tree'+v]=mk(64,128,c=>{const R=rng(77+v);const tx=32+(v-1)*4;c.fillStyle='#1d140d';c.beginPath();c.moveTo(tx-5,128);c.lineTo(tx-3,40);c.lineTo(tx+3,40);c.lineTo(tx+6,128);c.fill();
+for(let v=0;v<3;v++)SPR['tree'+v]=mk(64,128,c=>{const R=rng(77+v);const tx=32+(v-1)*4;c.fillStyle='#1d140d';c.beginPath();c.moveTo(tx-8,128);c.lineTo(tx-4,40);c.lineTo(tx+4,40);c.lineTo(tx+8,128);c.fill();
   c.fillStyle='#120c08';c.fillRect(tx-1,60,2,60);c.strokeStyle='#1d140d';c.lineWidth=2;for(let i=0;i<5;i++){c.beginPath();c.moveTo(tx,70-i*8);c.lineTo(tx+(R()-.5)*40,50-i*10);c.stroke()}
   for(let i=0;i<70;i++){const x=tx+(R()-.5)*(54-i*.2),y=8+R()*62,r=4+R()*7;c.fillStyle=`rgb(${8+R()*10|0},${18+R()*22|0},${8+R()*10|0})`;c.beginPath();c.arc(x,y,r,0,7);c.fill()}});
 const SH={};for(const k in SPR)SH[k]=shades(SPR[k]);
@@ -710,7 +712,7 @@ function makeObjs(r){
   const add=(type,p,extra)=>{if(p)objs.push(Object.assign({i:objs.length,type,x:p.x,y:p.y,gone:false,img:type,h:.3},extra))};
   const inZone=(z,minD)=>i=>zoneAt(i%MW,i/MW|0)===z&&D[i]>=minD;
   ({1:[2,2,1,1,0],2:[3,3,3,4,4],3:[5,5,5,5,5],4:[0,3,5]})[LVL].forEach(z=>add('eye',pick(inZone(z,10))||pick(i=>D[i]>=10),{h:.6,lift:0}));
-  for(let k=0;k<(LVL>=3?14:9);k++)add('battery',pick(i=>D[i]>=4,15));
+  for(let k=0;k<(LVL===3?5:9);k++)add('battery',pick(i=>D[i]>=4,15));
   for(let k=0;k<5;k++)add('film',pick(i=>D[i]>=5,15));
   const lockerAt=(x,y)=>{for(const[dx,dy]of DIRS)if(cell(x+dx,y+dy)){objs.push({i:objs.length,type:'locker',x:x+.5+dx*.28,y:y+.5+dy*.28,face:Math.atan2(-dy,-dx),gone:false,img:'locker',h:1});return}};
   for(const o of ROOMS){if(LVL===2&&r()<.55)continue;const c=[];for(let y=o.y;y<o.y+o.h;y++)for(let x=o.x;x<o.x+o.w;x++)if((x===o.x||y===o.y||x===o.x+o.w-1||y===o.y+o.h-1)&&DIRS.some(([dx,dy])=>cell(x+dx,y+dy)))c.push([x,y]);if(c.length){const[x,y]=c[r()*c.length|0];lockerAt(x,y)}}
@@ -724,7 +726,7 @@ function makeObjs(r){
     [3,4].forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14,80);if(p)BL.push({x:p.x,y:p.y,a:0,state:'wander',target:null,path:[],pathT:0,frame:0,anim:0,stepT:0,breathT:Math.random()*2,searchT:0})});
   }
   ({1:[2,2,1],3:[5,5],4:[7]})[LVL]?.forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14&&farBox(i),80)||pick(inZone(z,14));if(p)DOLLS.push({x:p.x,y:p.y,pose:0,seen:-9,path:[],pathT:0,active:false,moving:false,scrT:0})});
-  ({3:[5,5],4:[5]})[LVL]?.forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14&&farBox(i),80);if(p)SHD.push({x:p.x,y:p.y,a:0,state:'wander',target:null,path:[],pathT:0,frame:0,anim:0,fleeT:0,hissT:3,enr:false})});
+  ({3:[5,5,5],4:[5]})[LVL]?.forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14&&farBox(i),80);if(p)SHD.push({x:p.x,y:p.y,a:0,state:'wander',target:null,path:[],pathT:0,frame:0,anim:0,fleeT:0,hissT:3,enr:false})});
   if(LVL===4){BL.forEach(b=>b.home=3);DOLLS.forEach(d=>d.home=7);SHD.forEach(z=>z.home=5)}
   objs.push({i:objs.length,type:'portal',x:PORTAL.x,y:PORTAL.y,gone:false,h:1.15});
 }
@@ -788,7 +790,7 @@ function pickSfx(){({2:sfx.xpick,3:sfx.ignite,4:sfx.hpick})[LVL]?.()??sfx.eye()}
 function openPortal(){
   finale=true;sfx.portal();shakeT=1.8;flickT=2.5;
   if(LVL===3){for(const z of SHD)z.enr=true;later(1.2,()=>msg(LVLS[3].fin,5));objective();saveCP();return}
-  if(LVL===4){for(const z of SHD)z.enr=true;later(1.2,()=>hearNoise(P.x,P.y,99))}
+  if(LVL===4){P.film+=2}
   if(LVL===2){later(1.2,()=>{hearNoise(P.x,P.y,99);msg('Das Portal kreischt. Die Blinden kommen hierher. Schleich weg!',5)});objective();saveCP();return}
   if(!M.active){M.active=true;placeMonsterFar()}M.state='hunt';M.enraged=true;M.stun=0;M.locker=null;
   later(1.2,()=>{sfx.sting();sfx.growl(.9,0);msg(LVL===4?LVLS[4].fin:'Das Portal ist offen. Er weiß, wo du bist.',5)});objective();saveCP();
@@ -800,7 +802,7 @@ function useFlash(){
   if(ISCLIENT())netSend({t:'fl'});else flashAt({x:P.x,y:P.y,a:P.a},true);
 }
 function flashAt(p,mine){hearNoise(p.x,p.y,8);
-  for(const z of SHD){if(dist(z,p)<8&&angDiff(p.a,Math.atan2(z.y-p.y,z.x-p.x))<.5&&los(p,z)){z.state='flee';z.fleeT=4;fx('hiss',z);if(mine)later(.2,()=>msg('Der Schatten flieht vor dem Licht!',2.5))}}
+  for(const z of SHD){if(dist(z,p)<8&&angDiff(p.a,Math.atan2(z.y-p.y,z.x-p.x))<.5&&los(p,z)){z.state='flee';z.fleeT=3;fx('hiss',z);if(mine)later(.2,()=>msg('Der Schatten flieht vor dem Licht!',2.5))}}
   for(const d of DOLLS){if(d.dead)continue;const dd=dist(d,p);if(dd<7.5&&angDiff(p.a,Math.atan2(d.y-p.y,d.x-p.x))<.5&&los(p,d)){d.dead=true;fx('shatter',d);if(mine){shakeT=.3;later(.2,()=>msg('Die Puppe zerspringt!',2.5))}}}
   if(M.active&&M.state!=='stun'){const d=dist(M,p),an=angDiff(p.a,Math.atan2(M.y-p.y,M.x-p.x));
     if(d<7.5&&an<.5&&los(p,M)){M.state='stun';M.stun=M.enraged?3.5:5;fx('shriek',M);if(mine)msg('Der Blitz blendet ihn! LAUF!',2.5)}}
@@ -823,8 +825,8 @@ function findTarget(){
   return best;
 }
 function moveEnt(e,dx,dy,r){
-  const nx=e.x+dx;if(!solid(nx+(dx>0?r:-r),e.y-r)&&!solid(nx+(dx>0?r:-r),e.y+r))e.x=nx;
-  const ny=e.y+dy;if(!solid(e.x-r,ny+(dy>0?r:-r))&&!solid(e.x+r,ny+(dy>0?r:-r)))e.y=ny;
+  const nx=e.x+dx,ex=nx+(dx>0?r:-r);if(!solid(ex,e.y-r)&&!solid(ex,e.y)&&!solid(ex,e.y+r))e.x=nx;
+  const ny=e.y+dy,ey=ny+(dy>0?r:-r);if(!solid(e.x-r,ey)&&!solid(e.x,ey)&&!solid(e.x+r,ey))e.y=ny;
 }
 function die(kind){if(state!=='play')return;mapOpen=false;$('mapov').classList.add('hide');P.hidden=null;state='dying';deathKind=kind;jsT=0;deaths++;lives--;sfx.scream();shakeT=1;$('hud').classList.add('hide');if(document.pointerLockElement)document.exitPointerLock()}
 
@@ -840,7 +842,7 @@ function updMonster(dt){
   const sees=!!seen;
   if(sees){if(M.state!=='hunt'){sfx.sting();sfx.growl(.6,sp.pan);M.growlT=3}M.state='hunt';M.lastSeen=T;M.target={x:seen.x,y:seen.y}}
   let speed=1.3;const vis=M.enraged&&nearestPl(M,p=>!p.hid);
-  if(M.state==='hunt'){speed=(M.enraged?3.05:2.75)*ES();if(vis)M.target={x:vis.x,y:vis.y};
+  if(M.state==='hunt'){speed=(M.enraged?(LVL===4?2.7:3.05):2.75)*ES();if(vis)M.target={x:vis.x,y:vis.y};
     else if(!sees&&T-M.lastSeen>2.5){M.state='search';M.searchT=7}}
   if(M.state==='search'){speed=1.9;M.searchT-=dt;if(M.searchT<=0){M.state='wander';M.target=null}}
   if(M.state==='locker'){speed=2.3;M.target={x:M.locker.x+Math.cos(M.locker.face)*.5,y:M.locker.y+Math.sin(M.locker.face)*.5};
@@ -899,11 +901,11 @@ function updShadow(dt){
     const ps=PLAYERS().filter(p=>!p.hid),sp=spatial(z);
     z.hissT-=dt;if(z.hissT<=0){z.hissT=4+Math.random()*4;if(sp.v>.05)sfx.whisper(sp.pan)}
     if(!flags.hShd&&state==='play'&&dist(z,P)<8&&los(z,P)){flags.hShd=1;later(.2,()=>msg('Ein Schatten! Leuchte ihn an, dann flieht er.',6))}
-    if(z.state!=='flee'&&ps.some(p=>litBy(p,z))){z.state='flee';z.fleeT=1.6;fx('hiss',z)}
+    if(z.state!=='flee'&&ps.some(p=>litBy(p,z))){z.state='flee';z.fleeT=1.1;fx('hiss',z)}
     let tgt=null,speed=.8;
     if(z.state==='flee'){z.fleeT-=dt;speed=3.2;const n=nearestPl(z);if(n){const a=Math.atan2(z.y-n.y,z.x-n.x);z.target={x:z.x+Math.cos(a)*3,y:z.y+Math.sin(a)*3}}if(z.fleeT<=0){z.state='wander';z.target=null}}
-    else{for(const p of ps)if(inHome(z,p.x,p.y)&&!safeAt(p.x,p.y)&&(z.enr||dist(z,p)<11&&los(z,p))&&(!tgt||dist(z,p)<dist(z,tgt)))tgt=p;
-      if(tgt){z.state='stalk';speed=(z.enr?2.6:2.05)*ES();z.target={x:tgt.x,y:tgt.y}}else{if(z.state==='stalk')z.state='wander';if(!z.target||dist(z,z.target)<.6)z.target=homeCell(z,z.x,z.y,9)}}
+    else{for(const p of ps)if(inHome(z,p.x,p.y)&&!safeAt(p.x,p.y)&&(z.enr||dist(z,p)<13&&los(z,p))&&(!tgt||dist(z,p)<dist(z,tgt)))tgt=p;
+      if(tgt){z.state='stalk';speed=(z.enr?2.9:2.4)*ES();z.target={x:tgt.x,y:tgt.y}}else{if(z.state==='stalk')z.state='wander';if(!z.target||dist(z,z.target)<.6)z.target=homeCell(z,z.x,z.y,9)}}
     if(!z.target)z.target=homeCell(z,z.x,z.y,9);
     const tc=Math.floor(z.target.x)+Math.floor(z.target.y)*MW;if(T>z.pathT||tc!==z.pathC){z.path=bfs(z.x,z.y,z.target.x,z.target.y)||[];z.pathT=T+.5;z.pathC=tc}
     while(z.path.length&&Math.hypot(z.path[0].x+.5-z.x,z.path[0].y+.5-z.y)<.2)z.path.shift();
@@ -974,7 +976,7 @@ function update(dt){
   P.noise=P.hidden||P.crouch||P.moving<.3?0:P.sprinting?100:35;
   P.eye=(P.eye||.5)+((P.crouch?.3:.5)-(P.eye||.5))*Math.min(1,dt*10);
   if(LVL===2)neon=Math.random()<.015?.25:Math.min(1,neon+dt*3);
-  if(lightOn())P.bat=Math.max(0,P.bat-(LVL===3?1.3:.7)*dt);
+  if(lightOn())P.bat=Math.max(0,P.bat-(LVL===3?1.6:.7)*dt);
   if(safeAt(P.x,P.y)){P.bat=Math.min(100,P.bat+8*dt);if(!flags.hCharge&&P.bat<90){flags.hCharge=1;msg('Am Licht der Laterne lädt deine Taschenlampe.',3)}}
   for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const x=Math.floor(P.x)+dx,y=Math.floor(P.y)+dy;if(x>=0&&y>=0&&x<MW&&y<MH)visited[y*MW+x]=1}
   if(ISCLIENT())remoteFx(dt);else{worldTick(dt);if(state!=='play')return}
@@ -1164,7 +1166,7 @@ const BRIEF={
   3:{goal:'Zünde <b>5 Laternen</b> an. Folge dem leisen Glockenspiel. Danach öffnet sich das <b>Portal</b>.<br>Brennende Laternen sind <b>sichere Orte</b> und laden deine Taschenlampe.',
      foes:[['shd','Der Schatten','Kommt im <b>Dunkeln</b> näher. Du siehst nur seine Augen.','<b>Anleuchten</b> mit der Taschenlampe, dann flieht er. <kbd>Q</kbd> Blitz verjagt ihn länger. Bei Laternen bist du sicher.'],
            ['doll','Die Puppen','Bewegen sich nur, wenn du <b>nicht hinschaust</b>.','Anschauen, dann erstarren sie. <kbd>Q</kbd> Blitz zerbricht sie.']]},
-  4:{goal:'Das Finale. Hol dir nur <b>3 Herzen</b>. Folge dem Pochen. Jeder Gegner hat seinen <b>eigenen Bereich</b>.',
+  4:{goal:'Das Finale. Hol dir nur <b>3 Herzen</b>. Folge dem Pochen. Jeder Gegner bleibt in seinem <b>eigenen Bereich</b>. Wenn das Portal aufgeht, kommt <b>nur das Monster</b> raus, und du bekommst 2 Blitze.',
      foes:[['mon','Das Monster','Im <b>Haus</b> (oben links). Er <b>sieht</b> dich.','<kbd>Q</kbd> blendet ihn. <kbd>E</kbd> im Spind verstecken.'],
            ['blind','Der Blinde','Im <b>Krankenhaus</b> (oben rechts). Er <b>hört</b> dich.','<kbd>C</kbd> halten = schleichen. Nicht anfassen.'],
            ['shd','Der Schatten','Im <b>Wald</b> (unten links). Kommt im <b>Dunkeln</b>.','<b>Anleuchten</b>, dann flieht er. <kbd>Q</kbd> verjagt ihn.'],
@@ -1356,7 +1358,7 @@ function applyState(m){
   (m.h||[]).forEach((q,i)=>{const z=SHD[i];if(!z)return;Object.assign(z,{tx:q[0],ty:q[1],frame:q[2],state:STC[q[3]]||'wander'})});
   for(const i of m.g)if(objs[i])objs[i].gone=true;
   if(m.e>P.eyes){P.eyes=m.e;pickSfx();objective();if(P.eyes<EYES_N)msg(P.eyes<EYES_N-1?`Noch ${EYES_N-P.eyes}.`:'Noch eins.',2.5)}
-  if(m.f&&!finale){finale=true;sfx.portal();shakeT=1.8;flickT=2.5;objective();later(1.2,()=>msg(LVLS[LVL].fin,5))}
+  if(m.f&&!finale){finale=true;if(LVL===4)P.film+=2;sfx.portal();shakeT=1.8;flickT=2.5;objective();later(1.2,()=>msg(LVLS[LVL].fin,5))}
 }
 function lerpEnt(e,dt){if(e.tx===undefined)return 0;const ox=e.x,oy=e.y,k=Math.min(1,dt*12);if(Math.hypot(e.tx-e.x,e.ty-e.y)>3){e.x=e.tx;e.y=e.ty}else{e.x+=(e.tx-e.x)*k;e.y+=(e.ty-e.y)*k}return Math.hypot(e.x-ox,e.y-oy)}
 function remoteFx(dt){
@@ -1412,6 +1414,7 @@ if(isTouch){
   addEventListener('touchend',end);addEventListener('touchcancel',end);
   const tap=(id,f)=>$(id).addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();f()},{passive:false});
   tap('t-flash',()=>useFlash());
+  tap('t-light',()=>{if(P.hidden||P.spec)return;P.light=!P.light;sfx.click()});
   tap('t-sneak',()=>{touch.sneak=!touch.sneak;$('t-sneak').classList.toggle('on',touch.sneak);sfx.click()});
   tap('t-use',()=>interact());
   tap('t-pause',()=>{if(state!=='play')return;touch.paused=true;show('pause')});
@@ -1421,7 +1424,7 @@ if(isTouch){
 // Touch-Knöpfe an die Situation anpassen (Blitz nur wo er hilft, Verstecken nur am Spind)
 function touchHud(){if(!isTouch)return;document.body.classList.toggle('ingame',state==='play');
   const near=!!findTarget(),hid=!!P.hidden;$('t-use').classList.toggle('hide',!(near||hid)||P.spec);$('t-uset').textContent=hid?'Raus':'Verstecken';
-  $('t-flash').classList.toggle('hide',LVL===2||hid||!!P.spec);$('t-film').textContent=P.film;$('t-sneak').classList.toggle('hide',hid||!!P.spec)}
+  $('t-flash').classList.toggle('hide',LVL===2||hid||!!P.spec);$('t-film').textContent=P.film;$('t-sneak').classList.toggle('hide',hid||!!P.spec);$('t-light').classList.toggle('hide',hid||!!P.spec);$('t-light').classList.toggle('on',!!P.light)}
 
 // ================= LOOP =================
 let last=performance.now();
