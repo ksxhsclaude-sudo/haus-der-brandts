@@ -165,6 +165,16 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 body.touch #mini{width:112px;height:112px}
 body.touch:not(.ingame) #touch{display:none}
 body.touch #t-pause{right:142px}
+@media (min-width:700px) and (min-height:600px){
+  body.touch .tbtn{font-size:14px}body.touch .tbtn svg{width:50px;height:50px}
+  body.touch .tbtn i{min-width:34px;height:34px;border-radius:17px;font-size:18px;line-height:34px}
+  body.touch #t-flash{right:calc(30px + env(safe-area-inset-right));bottom:calc(32px + env(safe-area-inset-bottom));width:150px;height:150px}
+  body.touch #t-sneak{right:calc(202px + env(safe-area-inset-right));bottom:calc(26px + env(safe-area-inset-bottom));width:128px;height:128px}
+  body.touch #t-light{right:calc(214px + env(safe-area-inset-right));bottom:calc(176px + env(safe-area-inset-bottom));width:120px;height:120px}
+  body.touch #t-use{right:calc(32px + env(safe-area-inset-right));bottom:calc(206px + env(safe-area-inset-bottom));width:146px;height:146px}
+  body.touch #t-pause{width:66px;height:66px;font-size:22px;right:192px}
+  body.touch #mini{width:160px;height:160px}
+}
 @media (max-height:520px){
   #brief{padding:14px}#brief .big{font-size:34px}#bgoal{font-size:16px;margin:6px 0 12px}.bcard{padding:10px;grid-template-columns:64px 1fr;gap:12px}.bcard img{width:64px;height:86px}.bcard h4{font-size:19px;margin-bottom:4px}.bcard p{font-size:11px;margin-bottom:4px}.bnote{margin-top:10px;font-size:10px}#brief .nav{margin-top:8px}
   .logo{margin-bottom:18px}.logo .l1{font-size:52px}.logo .l2{font-size:30px}.nav button{padding:7px 0}.foot{bottom:12px}
