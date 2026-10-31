@@ -141,6 +141,10 @@ input[type=range]::-moz-range-thumb{width:9px;height:20px;background:var(--ink);
 .row2{display:flex;gap:14px;align-items:flex-end}
 #card{position:fixed;inset:0;z-index:8;background:#000;display:flex;align-items:center;justify-content:center;flex-direction:column;pointer-events:none;opacity:0;text-align:center;padding:24px}
 #card.on{animation:card 4.6s ease forwards}
+#note{position:fixed;left:50%;top:46%;transform:translate(-50%,-50%) rotate(-1.2deg);z-index:7;width:min(500px,86vw);padding:22px 26px 18px;background:linear-gradient(#d8ccb2,#c4b694);color:#2b1c10;box-shadow:0 10px 40px rgba(0,0,0,.8);font:italic 19px/1.5 var(--serif);opacity:0;pointer-events:none;transition:opacity .5s}
+#note.on{opacity:.96}
+#note b{display:block;font:500 10px var(--mono);letter-spacing:.3em;text-transform:uppercase;color:#6a1a10;margin-bottom:10px;font-style:normal}
+#note small{display:block;margin-top:12px;font:500 9px var(--mono);letter-spacing:.24em;text-transform:uppercase;color:#6a5a44;font-style:normal}
 @keyframes card{0%,55%{opacity:1}100%{opacity:0}}
 #card p{font:italic 400 clamp(30px,4.6vw,56px) var(--serif);color:var(--ink);animation:blurin 1.4s ease both}
 #card small{font:500 11px var(--mono);letter-spacing:.4em;text-transform:uppercase;color:var(--dim);margin-top:20px;animation:fin 1s .9s both;opacity:0}
@@ -216,6 +220,7 @@ body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
   <button class="tbtn hide" id="t-use"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="1"/><path d="M12 3v18M9 7h1M9 9h1M14 7h1M14 9h1"/></svg><span id="t-uset">Verstecken</span></button>
   <button class="tbtn" id="t-pause">II</button>
 </div>
+<div id="note"><b></b><p></p><small></small></div>
 <div id="rotate">Dreh dein Gerät quer.<small>Querformat spielt sich viel besser</small><button class="tog" id="rot-ok">Trotzdem hochkant</button></div>
 </div>
 <div id="splash" class="scr on">
@@ -229,7 +234,7 @@ body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
     <nav class="nav"><button data-go="levels">Spielen</button><button data-go="mp">Mit Freunden</button><button data-go="how">So geht's</button><button data-go="set">Einstellungen</button></nav>
   </div>
   <div id="langsw"><button data-l="de">DE</button><button data-l="en">EN</button></div>
-  <div class="foot"><span id="best">Noch nicht entkommen</span><span>v1.4</span></div>
+  <div class="foot"><span id="best">Noch nicht entkommen</span><span>v1.5</span></div>
 </div>
 <div id="pause" class="scr">
   <div class="side"><div class="kicker" id="pk">Spiel angehalten</div><div class="pausettl" id="pt">Pause</div>
@@ -243,6 +248,8 @@ body.touch .deskonly,body:not(.touch) .touchonly{display:none!important}
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#e9dfcf" stroke-width="1.4"><circle cx="21" cy="13" r="8"/><circle cx="18" cy="12" r="1.3" fill="#e9dfcf"/><circle cx="24" cy="12" r="1.3" fill="#e9dfcf"/><path d="M19 17h4M14 38l3-16h8l3 16z"/></svg><div><b>Die Puppen</b><span>Solange du sie anschaust, erstarren sie. Drehst du dich weg, kommen sie näher. Roter Rand am Bildschirm = eine ist hinter dir. Q zerbricht sie.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#9fb4b8" stroke-width="1.4"><ellipse cx="21" cy="14" rx="7" ry="9"/><path d="M14 12h14v4H14z" fill="#9fb4b8" fill-opacity=".25"/><path d="M19 20v3M23 20v3M13 40l3-17h10l3 17M15 25l-6 13M27 25l6 13"/></svg><div><b>Der Blinde <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 2</small></b><span>Sieht nichts, hört alles. Rennen hört er von weit weg. Halte C und schleich vorbei, aber fass ihn nicht an. Der Blitz bringt bei ihm nichts.</span></div></div>
   <div class="rule"><svg viewBox="0 0 42 42" fill="#0a0810" stroke="#5a5a7a" stroke-width="1"><path d="M13 40l3-22c0-8 3-12 5-12s5 4 5 12l3 22z"/><circle cx="18.5" cy="15" r="1.3" fill="#e8ecff"/><circle cx="23.5" cy="15" r="1.3" fill="#e8ecff"/></svg><div><b>Der Schatten <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 3</small></b><span>Kommt im Dunkeln. Leuchte ihn an, dann flieht er. An brennenden Laternen bist du sicher.</span></div></div>
+  <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#c9b48a" stroke-width="1.4"><path d="M6 30l6-8 6 2 6-2 6 2 6 6"/><path d="M12 22l-4 10M18 24l-2 10M24 22l3 10M30 24l4 9"/><circle cx="34" cy="20" r="4"/><circle cx="33" cy="19" r="1" fill="#ffdc8a"/><circle cx="36" cy="19" r="1" fill="#ffdc8a"/></svg><div><b>Der Kriecher <small style="font:500 9px var(--mono);letter-spacing:.2em;color:var(--dim)">LEVEL 5</small></b><span>Kriecht auf allen vieren und folgt deinem Licht. Mach die Taschenlampe aus, dann verliert er dich. Der Blitz betäubt ihn.</span></div></div>
+  <div class="rule"><svg viewBox="0 0 42 42" fill="none" stroke="#d8ccb2" stroke-width="1.4"><path d="M11 6h16l5 5v25H11z"/><path d="M27 6v5h5M15 16h12M15 21h12M15 26h8"/></svg><div><b>Tagebuchseiten</b><span>In jedem Level ist eine Seite versteckt. Sie erzählen, was mit den Brandts passiert ist.</span></div></div>
   <div class="keys touchonly" style="grid-template-columns:1fr"><span>Linker Daumen: wischen = laufen (ganz nach vorne = rennen)</span><span>Rechter Daumen: wischen = umschauen</span><span>BLITZ-Knopf: blendet das Monster, zerbricht Puppen</span><span>LEISE-Knopf: schleichen an/aus</span><span>LICHT-Knopf: Taschenlampe an/aus</span><span>Am Spind erscheint ein VERSTECKEN-Knopf</span><span>Minikarte antippen = große Karte</span></div>
   <div class="keys deskonly">
     <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><span>Laufen</span>
@@ -307,6 +314,20 @@ const $=id=>document.getElementById(id);
 // übersetzt automatisch jeden Text, den das Spiel ins HTML schreibt.
 let LANG='de';try{LANG=localStorage.getItem('brandt_lang')||((navigator.language||'de').toLowerCase().startsWith('de')?'de':'en')}catch(e){}
 const I18N={"Mit Kopfhörern spielen": "Play with headphones", "Klicke, um zu beginnen": "Click to begin", "Tippe, um zu beginnen": "Tap to begin", "Enthält Jumpscares, Blitzlicht und laute Geräusche": "Contains jumpscares, flashing lights and loud noises", "der Brandts": "of the Brandts", "Spielen": "Play", "Mit Freunden": "With friends", "So geht's": "How to play", "Einstellungen": "Settings", "Noch nicht entkommen": "Not escaped yet", "Spiel angehalten": "Game paused", "Pause": "Paused", "Weiterspielen": "Resume", "Hauptmenü": "Main menu", "Sammle fünf Spieluhren": "Collect five music boxes", "Du hörst ihre Melodie. Je lauter, desto näher. Die Karte zeigt sie dir auch.": "You can hear their melody. The louder, the closer. The map shows them too.", "Lauf ins Portal": "Run into the portal", "Nach der fünften Spieluhr öffnet es sich. Jetzt jagt er dich.": "It opens after the fifth music box. Then he hunts you.", "Er": "Him", "Blitz blendet ihn. Im Spind bist du sicher, solange er dich nicht reingehen sieht.": "The flash blinds him. In a locker you are safe, as long as he does not see you get in.", "Die Puppen": "The Dolls", "Solange du sie anschaust, erstarren sie. Drehst du dich weg, kommen sie näher. Roter Rand am Bildschirm = eine ist hinter dir. Q zerbricht sie.": "While you look at them, they freeze. Turn away and they come closer. Red screen edge = one is behind you. Q shatters them.", "Der Blinde": "The Blind One", "Sieht nichts, hört alles. Rennen hört er von weit weg. Halte C und schleich vorbei, aber fass ihn nicht an. Der Blitz bringt bei ihm nichts.": "Sees nothing, hears everything. He hears running from far away. Hold C and sneak past, but do not touch him. The flash does nothing to him.", "Der Schatten": "The Shadow", "Kommt im Dunkeln. Leuchte ihn an, dann flieht er. An brennenden Laternen bist du sicher.": "Comes in the dark. Shine your light on him and he flees. At burning lanterns you are safe.", "Linker Daumen: wischen = laufen (ganz nach vorne = rennen)": "Left thumb: swipe = walk (all the way forward = run)", "Rechter Daumen: wischen = umschauen": "Right thumb: swipe = look around", "BLITZ-Knopf: blendet das Monster, zerbricht Puppen": "FLASH button: blinds the monster, shatters dolls", "LEISE-Knopf: schleichen an/aus": "QUIET button: sneak on/off", "LICHT-Knopf: Taschenlampe an/aus": "LIGHT button: flashlight on/off", "Am Spind erscheint ein VERSTECKEN-Knopf": "At a locker a HIDE button appears", "Minikarte antippen = große Karte": "Tap the minimap = big map", "Laufen": "Walk", "Ohne Maus: laufen und drehen": "Without mouse: walk and turn", "Rennen": "Run", "Schleichen (lautlos)": "Sneak (silent)", "Taschenlampe": "Flashlight", "Kamerablitz": "Camera flash", "Spind": "Locker", "Karte": "Map", "Du hast 2 Leben (auf Leicht 3). Danach geht's von vorne los.": "You have 2 lives (3 on easy). After that you start over.", "Zurück": "Back", "Level wählen": "Choose level", "Schwierigkeit": "Difficulty", "Dein Name": "Your name", "Raum erstellen": "Create room", "Oder Raum beitreten": "Or join a room", "Beitreten": "Join", "Raum-Code": "Room code", "Einladungslink kopieren": "Copy invite link", "Spieler": "Players", "Level": "Level", "Spiel starten": "Start game", "Warte, bis der Host startet …": "Waiting for the host to start …", "Mausempfindlichkeit": "Mouse sensitivity", "Lautstärke": "Volume", "Helligkeit": "Brightness", "Leicht: 3 Leben, Gegner langsamer, der Blinde hört schlechter.": "Easy: 3 lives, slower enemies, the Blind One hears less.", "Kopfwackeln": "Head bob", "Du bist gestorben": "You died", "Weiter": "Continue", "Neues Spiel": "New game", "Zur Lobby": "To lobby", "Entkommen": "Escaped", "Du bist frei.": "You are free.", "Nochmal": "Again", "Teilen": "Share", "Los geht's": "Let's go", "Alle starten": "Start for everyone", "Warte auf den Host …": "Waiting for the host …", "Achtet auf": "Watch out", "Schwäche": "Weakness", "Dreh dein Gerät quer.": "Turn your device sideways.", "Querformat spielt sich viel besser": "Landscape plays much better", "Trotzdem hochkant": "Keep portrait", "Hier wischen zum Laufen": "Swipe here to walk", "Blitz": "Flash", "Licht": "Light", "Leise": "Quiet", "Verstecken": "Hide", "Raus": "Out", "Im Spind  ·": "In locker  ·", "Im Spind": "In locker", "raus": "out", "LICHT": "LIGHT", "AUSDAUER": "STAMINA", "GERÄUSCH": "NOISE", "Schleichen": "Sneaking", "Du schaust zu": "Spectating", "M — SCHLIESSEN": "M — CLOSE", "· Spinde (E) schützen dich · Roter Bildschirmrand = Gefahr aus dieser Richtung · M = große Karte": "· Lockers (E) protect you · Red screen edge = danger from that direction · M = big map", "· Spinde schützen dich · Roter Bildschirmrand = Gefahr aus dieser Richtung · Minikarte antippen = große Karte": "· Lockers protect you · Red screen edge = danger from that direction · Tap the minimap = big map", "AN": "ON", "AUS": "OFF", "LEICHT": "EASY", "NORMAL": "NORMAL", "Kommt bald": "Coming soon", "Neu": "New", "Host": "Host", "Keine Leben mehr": "No lives left", "Alle sind tot": "Everyone is dead", "Das Team ist gefallen.": "The team has fallen.", "Niemand ist entkommen.": "Nobody escaped.", "Alles von vorne.": "Start over.", "Der Host hat gestartet": "The host has started", "Los!": "Go!", "Klicken zum Spielen": "Click to play", "Zuschauen": "Spectate", "Raum verlassen": "Leave room", "Kopiert!": "Copied!", "Kopiert": "Copied", "(du)": "(you)", "· keine Verbindung": "· no connection", "(du) · keine Verbindung": "(you) · no connection", "Das Portal ist offen — lauf": "The portal is open — run", "Zeit": "Time", "Tode": "Deaths", "Bestzeit": "Best time", "Spieluhren": "Music boxes", "Röntgenbilder": "X-rays", "Laternen": "Lanterns", "Herzen": "Hearts", "Leben": "Lives", "Das Haus": "The House", "Das Krankenhaus": "The Hospital", "Der Wald": "The Forest", "Die Unterwelt": "The Underworld", "Das Krankenhaus.": "The Hospital.", "Der Wald.": "The Forest.", "Die Unterwelt.": "The Underworld.", "Finde die fünf Spieluhren.": "Find the five music boxes.", "Folge der Melodie": "Follow the melody", "Finde fünf Röntgenbilder · Sei leise": "Find five X-rays · Be quiet", "Zünde fünf Laternen an · Bleib im Licht": "Light five lanterns · Stay in the light", "Hol dir drei Herzen · Alle sind hier": "Take three hearts · They are all here", "Hörst du die Melodie? Folge ihr.": "Do you hear the melody? Follow it.", "Halte C, um lautlos zu schleichen.": "Hold C to sneak silently.", "Such die Laternen. Ihr Glockenspiel führt dich.": "Find the lanterns. Their chimes guide you.", "Hörst du das Pochen? Da sind die Herzen.": "Do you hear the pounding? That is where the hearts are.", "Das Portal spuckt dich aus. Kalte Fliesen. Neonlicht. Ein Krankenhausflur.": "The portal spits you out. Cold tiles. Neon light. A hospital corridor.", "Hinter dem Portal: Nebel. Bäume. Irgendwo knackt ein Ast.": "Behind the portal: fog. Trees. Somewhere a branch snaps.", "Das Portal zieht dich nach unten. Immer weiter nach unten.": "The portal pulls you down. Further and further down.", "Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne. Die Spieluhr spielt.": "You wake up. Your room. Morning light. On the nightstand: a music box, an X-ray, a lantern. The music box is playing.", "Das Portal ist offen. Er weiß, wo ihr seid. LAUFT!": "The portal is open. He knows where you are. RUN!", "Das Portal ist offen. Die Blinden kommen. Schleich hin!": "The portal is open. The Blind are coming. Sneak to it!", "Das Portal ist offen. Die Schatten werden wild. Bleib im Licht!": "The portal is open. The shadows go wild. Stay in the light!", "Das Portal ist offen. Das Monster ist los! +2 Blitze. LAUF!": "The portal is open. The monster is loose! +2 flashes. RUN!", "Er lächelt jetzt ein bisschen breiter.": "He smiles a little wider now.", "Die Puppen haben einen neuen Freund.": "The dolls have a new friend.", "Du warst so nah dran.": "You were so close.", "Das Haus behält dich.": "The house keeps you.", "Die Wände flüstern deinen Namen.": "The walls whisper your name.", "Er hat dich gehört.": "He heard you.", "Psst.": "Shh.", "Die Station hat einen neuen Patienten.": "The ward has a new patient.", "Er hat nicht mal hingesehen.": "He did not even look.", "Der Wald ist wieder still.": "The forest is silent again.", "Das Licht war so nah.": "The light was so close.", "Die Schatten haben dich verschluckt.": "The shadows swallowed you.", "Niemand hört dich hier schreien.": "Nobody hears you scream here.", "Die Unterwelt behält dich.": "The underworld keeps you.", "So kurz vor dem Ende.": "So close to the end.", "Sie haben zusammengearbeitet.": "They worked together.", "Alle haben dich gefunden.": "They all found you.", "Sammle <b>5 Spieluhren</b>. Folge ihrer Melodie, sie stehen auch auf der Karte. Danach öffnet sich ein <b>Portal</b>: renn rein.": "Collect <b>5 music boxes</b>. Follow their melody, they are on the map too. Then a <b>portal</b> opens: run into it.", "Sammle <b>5 Röntgenbilder</b>. Folge dem elektrischen Brummen. Danach öffnet sich das <b>Portal</b>.<br>Hier gibt es nur <b>2 Blinde</b>, sonst nichts. Merk dir nur: <b>C halten = schleichen</b>.": "Collect <b>5 X-rays</b>. Follow the electric hum. Then the <b>portal</b> opens.<br>There are only <b>2 Blind Ones</b> here, nothing else. Just remember: <b>hold C = sneak</b>.", "Zünde <b>5 Laternen</b> an. Folge dem leisen Glockenspiel. Danach öffnet sich das <b>Portal</b>.<br>Brennende Laternen sind <b>sichere Orte</b> und laden deine Taschenlampe.": "Light <b>5 lanterns</b>. Follow the soft chimes. Then the <b>portal</b> opens.<br>Burning lanterns are <b>safe places</b> and recharge your flashlight.", "Das Finale. Hol dir nur <b>3 Herzen</b>. Folge dem Pochen. Jeder Gegner bleibt in seinem <b>eigenen Bereich</b>. Wenn das Portal aufgeht, kommt <b>nur das Monster</b> raus, und du bekommst 2 Blitze.": "The finale. Take just <b>3 hearts</b>. Follow the pounding. Every enemy stays in its <b>own area</b>. When the portal opens, <b>only the monster</b> comes out, and you get 2 flashes.", "Das Monster": "The Monster", "Die Puppe": "The Doll", "Er <b>sieht</b> dich. Mit Taschenlampe an sieht er dich von weiter weg.": "He <b>sees</b> you. With your flashlight on he sees you from further away.", "<kbd>Q</kbd> Blitz blendet ihn kurz. <kbd>E</kbd> im Spind verstecken.": "<kbd>Q</kbd> flash blinds him briefly. <kbd>E</kbd> hide in a locker.", "Bewegen sich nur, wenn du <b>nicht hinschaust</b>.": "Only move when you are <b>not looking</b>.", "Anschauen, dann erstarren sie. <kbd>Q</kbd> Blitz zerbricht sie.": "Look at them and they freeze. <kbd>Q</kbd> flash shatters them.", "Er <b>hört</b> dich. Rennen hört er von weit weg, Laufen aus der Nähe.": "He <b>hears</b> you. Running from far away, walking from close by.", "<kbd>C</kbd> halten = schleichen, dann bist du lautlos. Nicht anfassen! Der Blitz bringt nichts.": "Hold <kbd>C</kbd> = sneak, then you are silent. Do not touch him! The flash does nothing.", "Kommt im <b>Dunkeln</b> näher. Du siehst nur seine Augen.": "Comes closer in the <b>dark</b>. You only see his eyes.", "<b>Anleuchten</b> mit der Taschenlampe, dann flieht er. <kbd>Q</kbd> Blitz verjagt ihn länger. Bei Laternen bist du sicher.": "<b>Shine</b> your flashlight on him and he flees. <kbd>Q</kbd> flash scares him away longer. At lanterns you are safe.", "Im <b>Haus</b> (oben links). Er <b>sieht</b> dich.": "In the <b>house</b> (top left). He <b>sees</b> you.", "<kbd>Q</kbd> blendet ihn. <kbd>E</kbd> im Spind verstecken.": "<kbd>Q</kbd> blinds him. <kbd>E</kbd> hide in a locker.", "Im <b>Krankenhaus</b> (oben rechts). Er <b>hört</b> dich.": "In the <b>hospital</b> (top right). He <b>hears</b> you.", "<kbd>C</kbd> halten = schleichen. Nicht anfassen.": "Hold <kbd>C</kbd> = sneak. Do not touch.", "Im <b>Wald</b> (unten links). Kommt im <b>Dunkeln</b>.": "In the <b>forest</b> (bottom left). Comes in the <b>dark</b>.", "<b>Anleuchten</b>, dann flieht er. <kbd>Q</kbd> verjagt ihn.": "<b>Shine</b> on him and he flees. <kbd>Q</kbd> scares him away.", "In der <b>Leere</b> (unten rechts). Kommt, wenn du <b>wegschaust</b>.": "In the <b>void</b> (bottom right). Comes when you <b>look away</b>.", "Anschauen, dann erstarrt sie. <kbd>Q</kbd> zerbricht sie.": "Look at her and she freezes. <kbd>Q</kbd> shatters her.", "Das Monster ist wach! Q = blenden · E am Spind = verstecken": "The monster is awake! Q = blind · E at a locker = hide", "+1 Blitz": "+1 flash", "Batterie +60%": "Battery +60%", "Noch eins.": "One more.", "Die Puppen werden unruhig...": "The dolls are getting restless...", "Das Portal kreischt. Die Blinden kommen hierher. Schleich weg!": "The portal screams. The Blind are coming here. Sneak away!", "Das Portal ist offen. Er weiß, wo du bist.": "The portal is open. He knows where you are.", "Kein Film mehr.": "No film left.", "Er ist blind. Der Blitz bringt nichts, er hört nur das Klicken!": "He is blind. The flash does nothing, he only hears the click!", "Die Puppe zerspringt!": "The doll shatters!", "Der Blitz blendet ihn! LAUF!": "The flash blinds him! RUN!", "Jetzt findet er dich überall. RAUS!": "Now he finds you anywhere. GET OUT!", "Er hat gesehen, wo du hin bist... bleib ruhig.": "He saw where you went... stay calm.", "...er geht weg.": "...he walks away.", "Der Blinde! Er hört dich. Halte C zum Schleichen, nicht rennen!": "The Blind One! He hears you. Hold C to sneak, do not run!", "Eine Puppe! Schau sie an, dann erstarrt sie.  Q = zerbrechen": "A doll! Look at her and she freezes.  Q = shatter", "Ein Schatten! Leuchte ihn an, dann flieht er.": "A shadow! Shine your light on him and he flees.", "Der Schatten flieht vor dem Licht!": "The shadow flees from the light!", "Die Laterne brennt. Hier bist du vor den Schatten sicher.": "The lantern is burning. Here you are safe from the shadows.", "Am Licht der Laterne lädt deine Taschenlampe.": "The lantern light recharges your flashlight.", "Die Puppe hat dich.": "The doll got you.", "Er hat dich im Spind gefunden.": "He found you in the locker.", "Er hat dich.": "He got you.", "Der Blinde hat dich gehört.": "The Blind One heard you.", "Der Schatten hat dich geholt.": "The shadow took you.", "Tipp: Halte C zum Schleichen. Dann hört er dich nicht. Nur nicht anfassen!": "Tip: Hold C to sneak. Then he cannot hear you. Just do not touch him!", "Tipp: Schau Puppen an, dann erstarren sie. Q zerbricht sie.": "Tip: Look at dolls and they freeze. Q shatters them.", "Tipp: Leuchte ihn mit der Taschenlampe an. Bei brennenden Laternen bist du sicher.": "Tip: Shine your flashlight on him. At burning lanterns you are safe.", "Letzter Checkpoint": "Last checkpoint", "Letztes Leben.": "Last life.", "Du schaust zu.": "You are spectating.", "Deine Freunde spielen weiter": "Your friends keep playing", "Zurück bei deinem Team": "Back with your team", "Zurück am Start": "Back at the start", "Raum wird erstellt …": "Creating room …", "Verbinde …": "Connecting …", "Gib den Raum-Code ein.": "Enter the room code.", "Raum nicht gefunden. Stimmt der Code?": "Room not found. Is the code right?", "Keine Antwort vom Raum. Stimmt der Code?": "No answer from the room. Is the code right?", "Das Spiel läuft schon. Warte, bis sie zurück in der Lobby sind.": "The game is already running. Wait until they are back in the lobby.", "Der Raum ist voll (6 Spieler).": "The room is full (6 players).", "Die Verbindung zum Host ist weg.": "The connection to the host is gone.", "Multiplayer geht nur online (Internet-Verbindung fehlt).": "Multiplayer only works online (no internet connection)."};
+Object.assign(I18N,{'Der Dachboden':'The Attic','Fotos':'Photos','Der Dachboden.':'The Attic.','Finde fünf Fotos · Licht lockt sie an':'Find five photos · Light attracts them','Hörst du das Ticken? Da sind die Fotos.':'Do you hear the ticking? That is where the photos are.',
+  'Das Portal spuckt dich nach oben. Staub. Holzbalken. Irgendwo tickt eine Uhr. Der Dachboden.':'The portal spits you upwards. Dust. Wooden beams. Somewhere a clock is ticking. The attic.',
+  'Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne, ein Herz. Und ein altes Foto der Brandts. Ganz hinten in der Reihe stehst du.':'You wake up. Your room. Morning light. On the nightstand: a music box, an X-ray, a lantern, a heart. And an old photo of the Brandts. In the back row, there you are.',
+  'Das Portal ist offen. Die Kriecher sehen jetzt jedes Licht. LAUF!':'The portal is open. The crawlers now see every light. RUN!','Der Dachboden knarrt zufrieden.':'The attic creaks with satisfaction.','Du hättest das Licht ausmachen sollen.':'You should have turned off the light.','Sie krabbeln schon wieder.':'They are crawling again.','Ein neues Foto für die Wand.':'A new photo for the wall.',
+  'Der Kriecher':'The Crawler','Er folgt deinem <b>Licht</b>. Ohne Licht merkt er dich nur direkt neben ihm. Schleichst du, kriecht er vorbei.':'He follows your <b>light</b>. Without light he only notices you right next to him. If you sneak, he crawls past.','<kbd>F</kbd> Licht aus, dann verliert er dich. <kbd>Q</kbd> betäubt ihn. <kbd>E</kbd> im Spind verstecken.':'<kbd>F</kbd> light off and he loses you. <kbd>Q</kbd> stuns him. <kbd>E</kbd> hide in a locker.',
+  'Sammle <b>5 Fotos</b> der Familie Brandt. Folge dem Ticken der Uhr. Danach öffnet sich das <b>Portal</b>.<br>Hier oben ist es stockdunkel. Deine Taschenlampe hilft dir, aber sie <b>lockt die Kriecher an</b>.':'Collect <b>5 photos</b> of the Brandt family. Follow the ticking of the clock. Then the <b>portal</b> opens.<br>Up here it is pitch dark. Your flashlight helps, but it <b>attracts the crawlers</b>.',
+  'Der Kriecher! Er folgt deinem Licht. Mach die Taschenlampe aus (F)!':'The Crawler! He follows your light. Turn off your flashlight (F)!','Der Blitz betäubt den Kriecher!':'The flash stuns the crawler!','Der Kriecher hat dich erwischt.':'The crawler got you.','Tipp: Mach das Licht aus, wenn er dich jagt (F). Der Blitz betäubt ihn.':'Tip: Turn off the light when he hunts you (F). The flash stuns him.',
+  'Kriecht auf allen vieren und folgt deinem Licht. Mach die Taschenlampe aus, dann verliert er dich. Der Blitz betäubt ihn.':'Crawls on all fours and follows your light. Turn off your flashlight and he loses you. The flash stuns him.','Tagebuchseiten':'Diary pages','In jedem Level ist eine Seite versteckt. Sie erzählen, was mit den Brandts passiert ist.':'A page is hidden in every level. They tell what happened to the Brandts.',
+  'Tagebuch':'Diary','Seite':'Page','Neue Seite gefunden':'New page found','Schon gefunden':'Already found','Seite gefunden':'Page found','Bestzeit Level 1':'Best time level 1',
+  'Wir sind heute eingezogen. Das Haus ist viel zu groß für uns drei. Lena sagt, im Keller singt nachts jemand. Ich habe ihr gesagt, dass das die Rohre sind.':'We moved in today. The house is far too big for the three of us. Lena says someone sings in the cellar at night. I told her it is the pipes.',
+  'Papa ist im Krankenhaus. Die Ärzte hier tragen Augenbinden und laufen ganz leise. Niemand sagt mir, warum. Ich soll nicht rennen, sagen sie.':'Dad is in the hospital. The doctors here wear blindfolds and walk very quietly. Nobody tells me why. I must not run, they say.',
+  'Hinter dem Haus ist ein Wald, den es auf keiner Karte gibt. Dort brennen Laternen, obwohl sie niemand anzündet. Gestern stand ein Schatten zwischen den Bäumen. Er hatte meine Augen.':'Behind the house is a forest that is on no map. Lanterns burn there although nobody lights them. Yesterday a shadow stood between the trees. It had my eyes.',
+  'Unter dem Haus ist eine Tür im Boden. Dahinter sind alle, die das Haus behalten hat. Mama ist auch dort. Sie hat mich angelächelt. Zu breit.':'Under the house is a door in the floor. Behind it are all the ones the house has kept. Mum is there too. She smiled at me. Too wide.',
+  'Wenn du das liest, bist du der Nächste. Das Haus sammelt uns wie Fotos. Mach das Licht aus. Die da oben sehen nur das Licht. Und lauf, wenn das Portal aufgeht.':'If you are reading this, you are next. The house collects us like photos. Turn off the light. The ones up there only see the light. And run when the portal opens.'});
 const I18R=[[/^Noch (\d+)\.$/,'$1 more.'],[/^Noch (\d+) Leben\.$/,'$1 lives left.'],
 [/^Das Portal ist verschlossen\. Noch (\d+) (.+)\.$/,(m,a,b)=>`The portal is sealed. ${a} more ${L(b).toLowerCase()}.`],
 [/^Du hast (\d+) Leben( \(Leicht\))?$/,(m,a,b)=>`You have ${a} lives${b?' (easy)':''}`],[/^Weiter · (\d+) Leben$/,(m,a)=>`Continue · ${a} ${a==='1'?'life':'lives'}`],
@@ -346,15 +367,26 @@ const LVLS={
      win:'Das Portal zieht dich nach unten. Immer weiter nach unten.',fin:'Das Portal ist offen. Die Schatten werden wild. Bleib im Licht!',
      death:['Der Wald ist wieder still.','Das Licht war so nah.','Die Schatten haben dich verschluckt.','Niemand hört dich hier schreien.']},
   4:{name:'Die Unterwelt',item:'Herzen',title:'Die Unterwelt.',sub:'Hol dir drei Herzen · Alle sind hier',hint:'Hörst du das Pochen? Da sind die Herzen.',
-     win:'Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne. Die Spieluhr spielt.',fin:'Das Portal ist offen. Das Monster ist los! +2 Blitze. LAUF!',
-     death:['Die Unterwelt behält dich.','So kurz vor dem Ende.','Sie haben zusammengearbeitet.','Alle haben dich gefunden.']}};
+     win:'Das Portal spuckt dich nach oben. Staub. Holzbalken. Irgendwo tickt eine Uhr. Der Dachboden.',fin:'Das Portal ist offen. Das Monster ist los! +2 Blitze. LAUF!',
+     death:['Die Unterwelt behält dich.','So kurz vor dem Ende.','Sie haben zusammengearbeitet.','Alle haben dich gefunden.']},
+  5:{name:'Der Dachboden',item:'Fotos',title:'Der Dachboden.',sub:'Finde fünf Fotos · Licht lockt sie an',hint:'Hörst du das Ticken? Da sind die Fotos.',
+     win:'Du wachst auf. Dein Zimmer. Morgenlicht. Auf dem Nachttisch: eine Spieluhr, ein Röntgenbild, eine Laterne, ein Herz. Und ein altes Foto der Brandts. Ganz hinten in der Reihe stehst du.',fin:'Das Portal ist offen. Die Kriecher sehen jetzt jedes Licht. LAUF!',
+     death:['Der Dachboden knarrt zufrieden.','Du hättest das Licht ausmachen sollen.','Sie krabbeln schon wieder.','Ein neues Foto für die Wand.']}};
+// Tagebuchseiten: eine pro Level versteckt
+const NOTES={1:'Wir sind heute eingezogen. Das Haus ist viel zu groß für uns drei. Lena sagt, im Keller singt nachts jemand. Ich habe ihr gesagt, dass das die Rohre sind.',
+  2:'Papa ist im Krankenhaus. Die Ärzte hier tragen Augenbinden und laufen ganz leise. Niemand sagt mir, warum. Ich soll nicht rennen, sagen sie.',
+  3:'Hinter dem Haus ist ein Wald, den es auf keiner Karte gibt. Dort brennen Laternen, obwohl sie niemand anzündet. Gestern stand ein Schatten zwischen den Bäumen. Er hatte meine Augen.',
+  4:'Unter dem Haus ist eine Tür im Boden. Dahinter sind alle, die das Haus behalten hat. Mama ist auch dort. Sie hat mich angelächelt. Zu breit.',
+  5:'Wenn du das liest, bist du der Nächste. Das Haus sammelt uns wie Fotos. Mach das Licht aus. Die da oben sehen nur das Licht. Und lauf, wenn das Portal aufgeht.'};
+const noteBits=()=>{try{return +localStorage.getItem('brandt_notes')||0}catch(e){return 0}};
+const noteCount=()=>{let n=0,b=noteBits();for(let i=1;i<=5;i++)if(b&(1<<i))n++;return n};
 let grid=new Uint8Array(MW*MH),texIdx=new Uint8Array(MW*MH),ROOMS=[],START={x:2.5,y:2.5},PORTAL={x:30.5,y:30.5};
 // Level 1: 0 Haus, 1 Keller, 2 Hecken  ·  Level 2: 3 Station, 4 Leichenhalle
 // Level 3/4: Zone pro Feld (5 Wald, 6 Hütte, 7 Leere, 0 Haus, 3 Station)
 let ZMAP=new Uint8Array(MW*MH),TREES=[];
-const zoneAt=(x,y)=>LVL>=3?(ZMAP[y*MW+x]??5):LVL===2?(x>=21&&y>=24?4:3):x>=22?2:y>=20?1:0;
+const zoneAt=(x,y)=>LVL>=3?(ZMAP[y*MW+x]??(LVL===5?8:5)):LVL===2?(x>=21&&y>=24?4:3):x>=22?2:y>=20?1:0;
 function cell(x,y){x=Math.floor(x);y=Math.floor(y);if(x<0||y<0||x>=MW||y>=MH)return 1;return grid[y*MW+x]}
-const solid=(x,y)=>{const v=cell(x,y);if(v!==2)return v!==0;const fx=x-Math.floor(x)-.5,fy=y-Math.floor(y)-.5;return fx*fx+fy*fy<.033};
+const solid=(x,y)=>{const v=cell(x,y);if(v!==2)return v!==0;const fx=x-Math.floor(x)-.5,fy=y-Math.floor(y)-.5;return fx*fx+fy*fy<(LVL===5?.1:.033)};
 function bfsDist(sx,sy){const D=new Int16Array(MW*MH).fill(-1),s=sy*MW+sx;D[s]=0;const q=[s];for(let i=0;i<q.length;i++){const c=q[i],cx=c%MW,cy=c/MW|0;for(const[dx,dy]of DIRS){const nx=cx+dx,ny=cy+dy,n=ny*MW+nx;if(!cell(nx,ny)&&D[n]<0){D[n]=D[c]+1;q.push(n)}}}return D}
 // Krankenhaus: lange Flure (2 breit) mit Zimmern links und rechts
 function genHospital(r,open){
@@ -410,12 +442,24 @@ function genUnder(r,open){
   for(const o of k.slice(0,2)){for(let x=20;x<=o.cx;x++)open(x,o.cy);for(let y=o.cy;y<=19;y++)open(o.cx,y)}
   corrFn(r,open,19,21,9,29);
 }
+// Dachboden: viele kleine Kammern, schmale Gänge, Kisten an den Wänden
+function genAttic(r,open){
+  ZMAP.fill(8);ROOMS=[];
+  const R=roomsIn(r,open,1,1,38,38,17);
+  for(let i=0;i<5;i++){const a=R[r()*R.length|0],b=R[r()*R.length|0];corrFn(r,open,a.cx,a.cy,b.cx,b.cy)}
+  for(const o of R)for(let y=o.y;y<o.y+o.h;y++)for(let x=o.x;x<o.x+o.w;x++){
+    const edge=x===o.x||y===o.y||x===o.x+o.w-1||y===o.y+o.h-1;if(!edge||r()>.28)continue;
+    // nicht vor Durchgänge stellen: Nachbarfeld außerhalb der Kammer muss Wand sein
+    let ok=true;for(const[dx,dy]of DIRS){const nx=x+dx,ny=y+dy,inside=nx>=o.x&&nx<o.x+o.w&&ny>=o.y&&ny<o.y+o.h;if(!inside&&!cell(nx,ny))ok=false}
+    if(ok&&!(x===o.cx&&y===o.cy))grid[y*MW+x]=2}
+}
 function genMap(sd){
   const r=rng(sd);grid=new Uint8Array(MW*MH).fill(1);
   const open=(x,y)=>{if(x>0&&y>0&&x<MW-1&&y<MH-1)grid[y*MW+x]=0};
   if(LVL===2){genHospital(r,open);return finishMap(open)}
   if(LVL===3){genWood(r,open);return finishMap(open)}
   if(LVL===4){genUnder(r,open);return finishMap(open)}
+  if(LVL===5){genAttic(r,open);return finishMap(open)}
   // Hecken-Labyrinth
   const vis=new Set(['23,1']),st=[[23,1]];open(23,1);
   while(st.length){const[cx,cy]=st[st.length-1];const nb=[[2,0],[-2,0],[0,2],[0,-2]].map(([dx,dy])=>[cx+dx,cy+dy]).filter(([x,y])=>x>=23&&x<=37&&y>=1&&y<=37&&!vis.has(x+','+y));
@@ -443,7 +487,7 @@ function finishMap(open){
   if(LVL>=3){for(let i=0;i<MW*MH;i++)if(!grid[i]&&D[i]<0)grid[i]=2;D=bfsDist(s0.cx,s0.cy)}let bi=s0.cy*MW+s0.cx;for(let i=0;i<D.length;i++)if(D[i]>D[bi])bi=i;
   const px=bi%MW,py=bi/MW|0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++)open(px+dx,py+dy);PORTAL={x:px+.5,y:py+.5};
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){const z=zoneAt(x,y),h=((x*73856093)^(y*19349663))>>>0;
-    texIdx[y*MW+x]=z===5?13:z===6?(h%5===0?15:14):z===7?(h%4===0?17:16):z===4?(h%5===0?12:11):z===3?(h%7===0?9:h%19===0?10:8):z===2?(h%7===0?7:6):z===1?(h%5===0?1:h%13===0?2:0):(h%6===0?4:h%17===0?5:3)}
+    texIdx[y*MW+x]=z===8?(h%17===0?19:h%11===0?20:18):z===5?13:z===6?(h%5===0?15:14):z===7?(h%4===0?17:16):z===4?(h%5===0?12:11):z===3?(h%7===0?9:h%19===0?10:8):z===2?(h%7===0?7:6):z===1?(h%5===0?1:h%13===0?2:0):(h%6===0?4:h%17===0?5:3)}
   TREES=[];for(let i=0;i<MW*MH;i++)if(grid[i]===2)TREES.push({x:i%MW+.5,y:(i/MW|0)+.5,v:((i*2654435761)>>>0)%3})
 }
 function los(a,b){const d=dist(a,b),n=Math.ceil(d/.12);for(let i=1;i<n;i++){const t=i/n;if(solid(a.x+(b.x-a.x)*t,a.y+(b.y-a.y)*t))return false}return true}
@@ -506,9 +550,17 @@ function wordTex(){const en=LANG==='en';
   TEX[2]=variant(brick,(c)=>{const w=en?['HE','SEES','YOU']:['ER','SIEHT','DICH'];scrawl(c,w[0],10,24,15,-.08);scrawl(c,w[1],4,41,13,.05);scrawl(c,w[2],9,57,13,-.04)});
   TEX[5]=variant(paper,(c,w,h)=>{scrawl(c,en?'RUN':'LAUF',en?8:3,38,19,-.1);blood(c,w,h,2)});
   TEX[10]=variant(tile,(c)=>{scrawl(c,en?'BE':'SEI',14,22,15,-.05);scrawl(c,en?'QUIET':'LEISE',en?4:2,52,17,.04)});
-  TEX[15]=variant(TEX[14],(c,w,h)=>{blood(c,w,h,6);scrawl(c,en?'LIGHT':'LICHT',4,40,17,-.06)})}
+  TEX[15]=variant(TEX[14],(c,w,h)=>{blood(c,w,h,6);scrawl(c,en?'LIGHT':'LICHT',4,40,17,-.06)});
+  if(TEX[18])TEX[19]=variant(TEX[18],(c,w,h)=>{scrawl(c,en?'LIGHTS':'LICHT',en?2:6,26,en?14:16,-.06);scrawl(c,en?'OFF':'AUS',14,50,18,.05);blood(c,w,h,2)})}
 wordTex();
 TEX[17]=variant(TEX[16],(c,w,h)=>{for(const[x,y,r]of[[16,20,4],[44,14,3],[34,44,5],[12,50,3]]){c.fillStyle='#e8dcd0';c.beginPath();c.ellipse(x,y,r*1.4,r,0,0,7);c.fill();c.fillStyle='#6a0a0a';c.beginPath();c.arc(x,y,r*.6,0,7);c.fill();c.fillStyle='#000';c.beginPath();c.arc(x,y,r*.3,0,7);c.fill()}});
+// Dachboden: alte Holzbretter mit Nägeln
+TEX[18]=mk(64,64,(c,w,h)=>{for(let x=0;x<64;x+=11){const v=34+TR()*18|0;c.fillStyle=`rgb(${v+16},${v+6},${v-6})`;c.fillRect(x,0,10,64);c.fillStyle='#0c0805';c.fillRect(x+10,0,1,64);
+  c.strokeStyle=`rgba(20,12,6,.5)`;c.lineWidth=.6;for(let k=0;k<4;k++){c.beginPath();const y0=TR()*64;c.moveTo(x+1,y0);c.quadraticCurveTo(x+5,y0+6,x+9,y0+2);c.stroke()}c.fillStyle='#8a8070';c.fillRect(x+4,6,1.5,1.5);c.fillRect(x+4,56,1.5,1.5)}
+  c.fillStyle='#120c07';c.fillRect(0,0,64,5);c.fillStyle='#2a1c10';c.fillRect(0,5,64,2);grime(c,w,h,450,.55);for(let i=0;i<4;i++)stain(c,w,h);
+  c.strokeStyle='rgba(200,200,200,.18)';c.lineWidth=.4;for(let i=0;i<3;i++){c.beginPath();c.moveTo(0,7);c.quadraticCurveTo(8+i*4,12+i*3,0,18+i*5);c.stroke()}});
+TEX[20]=variant(TEX[18],(c,w,h)=>{blood(c,w,h,4);hand(c,22+TR()*20,30,1.1);for(let i=0;i<6;i++){c.fillStyle='rgba(225,215,190,.9)';c.fillRect(8+i*8,40+TR()*8,5,7);c.fillStyle='#2a1a10';c.fillRect(9+i*8,41+TR()*6,3,3)}});
+wordTex();
 TEX[7]=variant(hedge,(c,w,h)=>{c.strokeStyle='#2a1a10';c.lineWidth=1;for(let i=0;i<6;i++){c.beginPath();let x=TR()*64,y=TR()*64;c.moveTo(x,y);for(let k=0;k<4;k++){x+=(TR()-.5)*14;y+=(TR()-.5)*14;c.lineTo(x,y)}c.stroke()}c.fillStyle='#8a0010';for(let i=0;i<14;i++){c.beginPath();c.arc(TR()*64,TR()*64,1.2,0,7);c.fill()}hand(c,30,38,.9)});
 
 // ================= SPRITES =================
@@ -544,7 +596,17 @@ SPR.heart=mk(32,40,c=>{let g=c.createRadialGradient(16,20,2,16,20,18);g.addColor
 for(let v=0;v<3;v++)SPR['tree'+v]=mk(64,128,c=>{const R=rng(77+v);const tx=32+(v-1)*4;c.fillStyle='#1d140d';c.beginPath();c.moveTo(tx-8,128);c.lineTo(tx-4,40);c.lineTo(tx+4,40);c.lineTo(tx+8,128);c.fill();
   c.fillStyle='#120c08';c.fillRect(tx-1,60,2,60);c.strokeStyle='#1d140d';c.lineWidth=2;for(let i=0;i<5;i++){c.beginPath();c.moveTo(tx,70-i*8);c.lineTo(tx+(R()-.5)*40,50-i*10);c.stroke()}
   for(let i=0;i<70;i++){const x=tx+(R()-.5)*(54-i*.2),y=8+R()*62,r=4+R()*7;c.fillStyle=`rgb(${8+R()*10|0},${18+R()*22|0},${8+R()*10|0})`;c.beginPath();c.arc(x,y,r,0,7);c.fill()}});
+SPR.photo=mk(32,48,c=>{let g=c.createRadialGradient(16,24,2,16,24,18);g.addColorStop(0,'rgba(255,240,210,.45)');g.addColorStop(1,'rgba(255,220,170,0)');c.fillStyle=g;c.fillRect(0,0,32,48);
+  c.fillStyle='#2a1a0e';c.fillRect(5,12,22,28);c.fillStyle='#8a6a3a';c.fillRect(6,13,20,26);c.fillStyle='#c8b896';c.fillRect(8,15,16,22);
+  c.fillStyle='#5a4a38';for(let i=0;i<4;i++){const x=10+i*3.6;c.beginPath();c.arc(x,22,1.5,0,7);c.fill();c.fillRect(x-1.4,23.5,2.8,7)}c.fillStyle='#3a2a1c';c.beginPath();c.arc(21.5,24,1.2,0,7);c.fill();c.fillRect(20.5,25,2,5);
+  c.fillStyle='rgba(120,0,0,.8)';c.fillRect(19.8,22.6,3.4,.9);c.fillStyle='#2a1a0e';c.fillRect(14,40,4,5);c.fillRect(10,44,12,2)});
+SPR.note=mk(32,32,c=>{let g=c.createRadialGradient(16,22,1,16,22,15);g.addColorStop(0,'rgba(255,245,215,.5)');g.addColorStop(1,'rgba(255,240,200,0)');c.fillStyle=g;c.fillRect(0,0,32,32);
+  c.save();c.translate(16,25);c.rotate(-.25);c.fillStyle='#d8ccb2';c.fillRect(-8,-6,16,11);c.strokeStyle='#5a4030';c.lineWidth=.5;for(let i=0;i<4;i++){c.beginPath();c.moveTo(-6,-3.5+i*2.4);c.lineTo(5-i%2*3,-3.5+i*2.4);c.stroke()}c.fillStyle='rgba(120,0,0,.6)';c.beginPath();c.arc(4,2,1.4,0,7);c.fill();c.restore()});
+for(let v=0;v<3;v++)SPR['crate'+v]=mk(64,64,c=>{const R=rng(31+v);const h=v===2?60:40,y0=64-h;c.fillStyle='#24180e';c.fillRect(6,y0,52,h);
+  for(let k=0;k<(v===2?2:1);k++){const yy=y0+k*30;const g=c.createLinearGradient(8,0,56,0);g.addColorStop(0,'#3e2a16');g.addColorStop(.5,'#5e4426');g.addColorStop(1,'#3a2614');c.fillStyle=g;c.fillRect(8,yy+2,48,26);c.fillStyle='#24180e';c.fillRect(8,yy+10,48,1.2);c.fillRect(8,yy+19,48,1.2);c.save();c.beginPath();c.rect(8,yy+2,48,26);c.clip();c.strokeStyle='#2a1c10';c.lineWidth=3;c.beginPath();c.moveTo(8,yy+2);c.lineTo(56,yy+28);c.stroke();c.restore()}
+  if(v===1){c.fillStyle='rgba(210,205,190,.75)';c.fillRect(14,y0-3,30,4)}grime(c,64,64,160,.5)});
 const SH={};for(const k in SPR)SH[k]=shades(SPR[k]);
+SH.photo=bright(SPR.photo);SH.note=bright(SPR.note);const CRATESH=[0,1,2].map(v=>SH['crate'+v]);
 SH.lampOn=bright(SPR.lampOn);SH.heart=bright(SPR.heart);const TREESH=[0,1,2].map(v=>SH['tree'+v]);
 SH.xray=bright(SPR.xray);
 SH.eye=bright(SPR.eye);
@@ -601,6 +663,27 @@ function drawShadow(c,fr){const R=rng(5+fr);
   c.strokeStyle='rgba(3,2,5,.9)';c.lineWidth=3;c.beginPath();c.moveTo(23,34);c.quadraticCurveTo(14,60,12+fr*2,96);c.moveTo(41,34);c.quadraticCurveTo(50,60,52-fr*2,96);c.stroke();
   c.lineWidth=1.2;for(let i=0;i<8;i++){c.beginPath();c.moveTo(28+i*1.2,100);c.quadraticCurveTo(26+i*2+(R()-.5)*10,112,24+i*2.4+(R()-.5)*8,126);c.stroke()}}
 const SHDIMG=[0,1].map(f=>mk(64,128,c=>drawShadow(c,f))),SHDSH=SHDIMG.map(shades),SHEYES=[[28.5,20],[35.5,20]];
+// Der Kriecher: abgemagert, auf allen vieren, viel zu lange Glieder, Kopf nach oben verdreht
+function drawCrawler(c,fr){
+  const sk='#bdb3a0',dk='#16110c';c.lineCap='round';c.lineJoin='round';
+  const limb=(pts,w)=>{for(const pass of[0,1]){c.strokeStyle=pass?sk:dk;c.lineWidth=w+(pass?0:2);c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(const q of pts.slice(1))c.lineTo(q[0],q[1]);c.stroke()}};
+  const a=fr?6:-6;
+  limb([[44,30],[30+a,14],[18+a,58]],3.4);limb([[52,32],[60-a,16],[70-a,60]],3.4);
+  limb([[88,30],[100-a,12],[112-a,58]],3.4);limb([[82,32],[74+a,16],[66+a,60]],3.4);
+  for(const[x,y]of[[18+a,58],[70-a,60],[112-a,58],[66+a,60]]){c.strokeStyle=dk;c.lineWidth=1.4;for(let k=0;k<3;k++){c.beginPath();c.moveTo(x,y);c.lineTo(x+(k-1)*4,y+3);c.stroke()}}
+  c.beginPath();c.moveTo(40,34);c.quadraticCurveTo(66,16,94,30);c.quadraticCurveTo(66,40,40,34);const g=c.createLinearGradient(0,20,0,40);g.addColorStop(0,'#cfc6b2');g.addColorStop(1,'#5a5246');c.fillStyle=g;c.fill();c.strokeStyle=dk;c.lineWidth=1.5;c.stroke();
+  c.strokeStyle='rgba(40,28,20,.7)';c.lineWidth=.8;for(let i=0;i<7;i++){const x=50+i*5.5;c.beginPath();c.moveTo(x,25-Math.sin(i*.45)*3);c.lineTo(x+1,33);c.stroke()}
+  c.fillStyle='rgba(110,0,0,.8)';c.beginPath();c.ellipse(70,30,5,2,0,0,7);c.fill();
+  c.strokeStyle=sk;c.lineWidth=5;c.beginPath();c.moveTo(42,32);c.lineTo(30,26);c.stroke();
+  c.save();c.translate(26,22);c.rotate(-.5);
+  c.fillStyle='#0c0806';c.beginPath();c.ellipse(0,-1,10,12,0,0,7);c.fill();
+  const hg=c.createRadialGradient(-2,-3,1,0,0,11);hg.addColorStop(0,'#e0d8c6');hg.addColorStop(1,'#7c7262');c.fillStyle=hg;c.beginPath();c.ellipse(0,1,8,10,0,0,7);c.fill();
+  c.fillStyle='#000';for(const sx of[-3.2,3.2]){c.beginPath();c.ellipse(sx,-1,2.4,3,0,0,7);c.fill()}
+  c.fillStyle='#1a0000';c.beginPath();c.ellipse(0,6.5,4,fr?4.5:3,0,0,7);c.fill();c.fillStyle='#d8cfb0';for(let i=-3;i<=3;i+=1.5){c.fillRect(i-.4,3.4,.8,1.6);c.fillRect(i-.4,8.2+(fr?1.4:0),.8,1.4)}
+  c.strokeStyle='rgba(8,5,3,.95)';c.lineWidth=.7;for(let i=0;i<9;i++){c.beginPath();c.moveTo(-6+i*1.5,-9);c.quadraticCurveTo(-7+i*1.6,0,-8+i*2,10+i%3*3);c.stroke()}
+  c.restore();
+}
+const CRIMG=[0,1].map(f=>mk(128,64,c=>drawCrawler(c,f))),CRSH=CRIMG.map(shades),CREYES=[[23.5,20.5],[29,17.5]];
 // Mitspieler: Hoodie in Spielerfarbe, Jeans, Taschenlampe
 const PCOL=['#d9483b','#3b8fd9','#4cb86a','#e0b23a','#9b6ad9','#e07a3a'];
 function drawPlayer(c,col,fr){
@@ -735,7 +818,12 @@ const sfx={
   ignite(){nz({f:900,q:.6,vol:.25,a:.05,dec:.5});tone({f:330,vol:.06,a:.2,dec:1.4});tone({f:495,vol:.04,a:.3,dec:1.4})},
   hpick(){tone({f:55,slide:30,vol:.4,dec:.6});[262,330,392,523].forEach((f,i)=>tone({f,type:'triangle',vol:.05,a:.1,dec:1.4,when:i*.1}))},
   hiss(pan){nz({f:2500,q:1,vol:.25,a:.02,dec:.7,pan});nz({f:6000,type:'highpass',vol:.1,dec:.4,pan,when:.1})},
-  laugh(pan){for(let i=0;i<5;i++)tone({f:620-i*30,type:'triangle',vol:.03,a:.02,dec:.12,pan,when:i*.15,vib:30,vibF:9})}
+  laugh(pan){for(let i=0;i<5;i++)tone({f:620-i*30,type:'triangle',vol:.03,a:.02,dec:.12,pan,when:i*.15,vib:30,vibF:9})},
+  skitter(v,pan){if(v<.02)return;for(let i=0;i<4;i++)nz({f:2600+Math.random()*1800,q:8,vol:v*.16,dec:.025,pan,when:i*.045+Math.random()*.02})},
+  cshriek(pan){tone({f:1300,slide:2600,type:'sawtooth',vol:.1,a:.01,dec:.45,vib:200,vibF:40,pan});tone({f:180,slide:90,type:'square',vol:.06,dec:.5,pan});nz({f:4200,q:3,vol:.18,dec:.35,pan})},
+  ptick(v,pan){if(v<.02)return;nz({f:3200,q:12,vol:.22*v,dec:.02,pan});nz({f:2400,q:12,vol:.18*v,dec:.02,pan,when:.5})},
+  ppick(){nz({f:5000,type:'highpass',vol:.25,dec:.12});[392,494,587,784].forEach((f,i)=>tone({f,type:'triangle',vol:.05,a:.01,dec:1.2,when:i*.09}))},
+  page(){nz({f:2200,q:.7,vol:.18,a:.05,dec:.35});nz({f:3500,q:.8,vol:.1,a:.02,dec:.25,when:.25});tone({f:330,vol:.04,a:.3,dec:1.6,vib:2})}
 };
 function spatial(src){const d=dist(src,P);const v=Math.pow(clamp(1-d/15,0,1),1.6);const rx=-Math.sin(P.a),ry=Math.cos(P.a);const pan=d>.01?((src.x-P.x)*rx+(src.y-P.y)*ry)/d:0;return{v,pan}}
 
@@ -743,19 +831,20 @@ function spatial(src){const d=dist(src,P);const v=Math.pow(clamp(1-d/15,0,1),1.6
 const EZ=()=>NET&&NET.game?NET.easy:CFG.easy,EASY=()=>!!EZ(),ES=()=>EZ()?.75:1,maxLives=()=>EZ()?3:2;
 let NET=null,RP={};
 const ISCLIENT=()=>!!(NET&&!NET.host);
-let lives=2,objs=[],DOLLS=[],BL=[],SHD=[],neon=1,P,M,state='menu',T=0,playT=0,seed=1,finale=false,flags={},timers=[],cp=null,deaths=0,wakeT=0;
+let lives=2,objs=[],DOLLS=[],BL=[],SHD=[],KR=[],neon=1,P,M,state='menu',T=0,playT=0,seed=1,finale=false,flags={},timers=[],cp=null,deaths=0,wakeT=0;
 let flashT=0,flashCD=0,flickT=0,shakeT=0,evT=20,jsT=0,deathKind='',hbT=0,humT=0,mapOpen=false,visited=new Uint8Array(MW*MH),flick=1,msgT=0;
 const later=(t,f)=>timers.push({t,f});
 function makeObjs(r){
-  objs=[];DOLLS=[];BL=[];SHD=[];
+  objs=[];DOLLS=[];BL=[];SHD=[];KR=[];
   const D=bfsDist(Math.floor(START.x),Math.floor(START.y)),floor=[];for(let i=0;i<MW*MH;i++)if(D[i]>=0)floor.push(i);
   const used=[{x:START.x,y:START.y},{x:PORTAL.x,y:PORTAL.y}];
   const pick=(filter,tries=40)=>{let best=null,bs=-1;for(let t=0;t<tries;t++){const i=floor[r()*floor.length|0];if(!filter(i))continue;const x=i%MW+.5,y=(i/MW|0)+.5,sep=Math.min(...used.map(u=>Math.hypot(u.x-x,u.y-y)));if(sep>bs){bs=sep;best={x,y}}}if(best)used.push(best);return best};
   const add=(type,p,extra)=>{if(p)objs.push(Object.assign({i:objs.length,type,x:p.x,y:p.y,gone:false,img:type,h:.3},extra))};
   const inZone=(z,minD)=>i=>zoneAt(i%MW,i/MW|0)===z&&D[i]>=minD;
-  ({1:[2,2,1,1,0],2:[3,3,3,4,4],3:[5,5,5,5,5],4:[0,3,5]})[LVL].forEach(z=>add('eye',pick(inZone(z,10))||pick(i=>D[i]>=10),{h:.6,lift:0}));
+  ({1:[2,2,1,1,0],2:[3,3,3,4,4],3:[5,5,5,5,5],4:[0,3,5],5:[8,8,8,8,8]})[LVL].forEach(z=>add('eye',pick(inZone(z,10))||pick(i=>D[i]>=10),{h:.6,lift:0}));
   for(let k=0;k<(LVL===3?5:9);k++)add('battery',pick(i=>D[i]>=4,15));
   for(let k=0;k<5;k++)add('film',pick(i=>D[i]>=5,15));
+  add('note',pick(i=>D[i]>=12,60),{h:.3,lift:0});
   const lockerAt=(x,y)=>{for(const[dx,dy]of DIRS)if(cell(x+dx,y+dy)){objs.push({i:objs.length,type:'locker',x:x+.5+dx*.28,y:y+.5+dy*.28,face:Math.atan2(-dy,-dx),gone:false,img:'locker',h:1});return}};
   for(const o of ROOMS){if(LVL===2&&r()<.55)continue;const c=[];for(let y=o.y;y<o.y+o.h;y++)for(let x=o.x;x<o.x+o.w;x++)if((x===o.x||y===o.y||x===o.x+o.w-1||y===o.y+o.h-1)&&DIRS.some(([dx,dy])=>cell(x+dx,y+dy)))c.push([x,y]);if(c.length){const[x,y]=c[r()*c.length|0];lockerAt(x,y)}}
   const de=[];if(LVL===1)for(let y=1;y<MH-1;y++)for(let x=23;x<38;x++)if(!cell(x,y)&&DIRS.filter(([dx,dy])=>cell(x+dx,y+dy)).length===3)de.push([x,y]);
@@ -769,6 +858,7 @@ function makeObjs(r){
   }
   ({1:[2,2,1],3:[5,5],4:[7]})[LVL]?.forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14&&farBox(i),80)||pick(inZone(z,14));if(p)DOLLS.push({x:p.x,y:p.y,pose:0,seen:-9,path:[],pathT:0,active:false,moving:false,scrT:0})});
   ({3:[5,5,5],4:[5]})[LVL]?.forEach(z=>{const p=pick(i=>inZone(z,14)(i)&&farBox(i),80)||pick(i=>D[i]>=14&&farBox(i),80);if(p)SHD.push({x:p.x,y:p.y,a:0,state:'wander',target:null,path:[],pathT:0,frame:0,anim:0,fleeT:0,hissT:3,enr:false})});
+  if(LVL===5)for(let k=0;k<3;k++){const p=pick(i=>D[i]>=16&&farBox(i),80)||pick(i=>D[i]>=12,80);if(p)KR.push({x:p.x,y:p.y,a:0,state:'wander',target:null,path:[],pathT:0,frame:0,anim:0,skT:Math.random(),stun:0,searchT:0,lastT:-9,enr:false})}
   if(LVL===4){BL.forEach(b=>b.home=3);DOLLS.forEach(d=>d.home=7);SHD.forEach(z=>z.home=5)}
   objs.push({i:objs.length,type:'portal',x:PORTAL.x,y:PORTAL.y,gone:false,h:1.15});
 }
@@ -789,7 +879,8 @@ function loadCP(){
   if(s.mA||(finale&&(LVL===1||LVL===4))){M.active=true;placeMonsterFar();M.state=finale?'hunt':'wander';M.enraged=finale}
   (s.dd||[]).forEach((x,i)=>{if(DOLLS[i])DOLLS[i].dead=x});
   const D=bfsDist(Math.floor(P.x),Math.floor(P.y));
-  for(const d of[...DOLLS,...BL,...SHD]){if(D[Math.floor(d.y)*MW+Math.floor(d.x)]>=14)continue;let best=null,bd=-1;for(let k=0;k<120;k++){const c=randCell(0,0,0),v=D[Math.floor(c.y)*MW+Math.floor(c.x)];if(v>bd&&inHome(d,c.x,c.y)){bd=v;best=c}}if(best){d.x=best.x;d.y=best.y;d.active=false;d.path=[];if(d.state)d.state='wander',d.target=null}}
+  for(const k of KR)k.enr=finale;
+  for(const d of[...DOLLS,...BL,...SHD,...KR]){if(D[Math.floor(d.y)*MW+Math.floor(d.x)]>=14)continue;let best=null,bd=-1;for(let k=0;k<120;k++){const c=randCell(0,0,0),v=D[Math.floor(c.y)*MW+Math.floor(c.x)];if(v>bd&&inHome(d,c.x,c.y)){bd=v;best=c}}if(best){d.x=best.x;d.y=best.y;d.active=false;d.path=[];if(d.state)d.state='wander',d.target=null}}
   objective();
 }
 function placeMonsterFar(){const ps=PLAYERS(),Ds=(ps.length?ps:[P]).map(p=>bfsDist(Math.floor(p.x),Math.floor(p.y)));let best=null,bd=-1e9;
@@ -799,16 +890,16 @@ function placeMonsterFar(){const ps=PLAYERS(),Ds=(ps.length?ps:[P]).map(p=>bfsDi
 // Auf Touch-Geräten Tastennamen durch Knopf-Namen ersetzen
 function tx(t){if(!isTouch)return t;
   if(LANG==='en')return t.replace(/Hold <kbd>C<\/kbd> = sneak/g,'QUIET button = sneak').replace(/hold C = sneak/g,'QUIET button = sneak').replace(/Hold C to sneak/g,'Tap QUIET to sneak').replace(/<kbd>Q<\/kbd>/g,'FLASH').replace(/<kbd>E<\/kbd> hide in a locker/g,'Hide in a locker')
-    .replace(/Q = blind/g,'FLASH = blind').replace(/E at a locker = hide/g,'Locker = hide').replace(/Q = shatter/g,'FLASH = shatter').replace(/Q shatters/g,'FLASH shatters');
+    .replace(/<kbd>F<\/kbd> light off/g,'LIGHT button off').replace(/\(F\)/g,'(LIGHT button)').replace(/Q = blind/g,'FLASH = blind').replace(/E at a locker = hide/g,'Locker = hide').replace(/Q = shatter/g,'FLASH = shatter').replace(/Q shatters/g,'FLASH shatters');
 return t.replace(/<kbd>C<\/kbd> halten = schleichen/g,'LEISE-Knopf = schleichen').replace(/Halte C zum Schleichen/g,'Tippe LEISE zum Schleichen').replace(/Halte C, um lautlos zu schleichen/g,'Tippe LEISE, um lautlos zu schleichen').replace(/C halten = schleichen/g,'LEISE-Knopf = schleichen')
-  .replace(/<kbd>Q<\/kbd>/g,'BLITZ').replace(/<kbd>E<\/kbd> im Spind/g,'Im Spind').replace(/Q = blenden/g,'BLITZ = blenden').replace(/Q = zerbrechen/g,'BLITZ = zerbrechen').replace(/E am Spind = verstecken/g,'Spind = verstecken').replace(/Q zerbricht/g,'BLITZ zerbricht').replace(/Spinde \(E\)/g,'Spinde').replace(/ · M = große Karte/g,' · Minikarte antippen = große Karte')}
+  .replace(/<kbd>F<\/kbd> Licht aus/g,'LICHT-Knopf aus').replace(/\(F\)/g,'(LICHT-Knopf)').replace(/<kbd>Q<\/kbd>/g,'BLITZ').replace(/<kbd>E<\/kbd> im Spind/g,'Im Spind').replace(/Q = blenden/g,'BLITZ = blenden').replace(/Q = zerbrechen/g,'BLITZ = zerbrechen').replace(/E am Spind = verstecken/g,'Spind = verstecken').replace(/Q zerbricht/g,'BLITZ zerbricht').replace(/Spinde \(E\)/g,'Spinde').replace(/ · M = große Karte/g,' · Minikarte antippen = große Karte')}
 function msg(t,d=3){const m=$('msg');m.textContent=tx(L(t));m.style.opacity=1;msgT=d}
 function objective(){$('obj').innerHTML=(finale?'<span class="fin">Das Portal ist offen — lauf</span>':LVLS[LVL].item+Array.from({length:EYES_N},(_,i)=>`<i class="pip${i<P.eyes?' f':''}"></i>`).join(''))+'<span class="lv">Leben'+Array.from({length:maxLives()},(_,i)=>`<i class="lf${i<lives?'':' x'}"></i>`).join('')+'</span>'}
 
 // ================= GAMEPLAY =================
 // Alle lebenden Spieler, auf die die Monster reagieren (im Einzelspieler nur du)
-function PLAYERS(){const a=[];if(state==='play'&&!P.spec)a.push({id:'me',x:P.x,y:P.y,a:P.a,hid:!!P.hidden,lk:P.hidden?P.hidden.i:-1,lit:lightOn(),spr:!!P.sprinting});
-  if(NET&&NET.host)for(const id in RP){const r=RP[id];if(r.al)a.push({id,x:r.x,y:r.y,a:r.a,hid:r.lk>=0,lk:r.lk,lit:!!r.l,spr:!!r.sp})}return a}
+function PLAYERS(){const a=[];if(state==='play'&&!P.spec)a.push({id:'me',x:P.x,y:P.y,a:P.a,hid:!!P.hidden,lk:P.hidden?P.hidden.i:-1,lit:lightOn(),spr:!!P.sprinting,cr:!!P.crouch});
+  if(NET&&NET.host)for(const id in RP){const r=RP[id];if(r.al)a.push({id,x:r.x,y:r.y,a:r.a,hid:r.lk>=0,lk:r.lk,lit:!!r.l,spr:!!r.sp,cr:!!r.cr})}return a}
 function nearestPl(e,f){let b=null,bd=1e9;for(const p of PLAYERS()){if(f&&!f(p))continue;const d=dist(e,p);if(d<bd){bd=d;b=p}}return b}
 function kill(p,kind){if(p.id==='me')die(kind);else{const r=RP[p.id];if(r&&r.al){r.al=false;netTo(p.id,{t:'die',k:kind})}}}
 function noise(x,y,r,m){if(ISCLIENT())netSend({t:'n',x,y,r,m});else{hearNoise(x,y,r);if(m)noiseAt(x,y,m)}}
@@ -831,11 +922,12 @@ function eyeGot(){{
     else{msg(P.eyes<EYES_N-1?`Noch ${EYES_N-P.eyes}.`:'Noch eins.',2.5);if(!M.active&&LVL===1)later(2,wakeMonster);if(LVL===1&&P.eyes===3)later(1,()=>{sfx.laugh(0);msg('Die Puppen werden unruhig...',3)});saveCP()}
   }
 }
-function pickSfx(){({2:sfx.xpick,3:sfx.ignite,4:sfx.hpick})[LVL]?.()??sfx.eye()}
+function pickSfx(){({2:sfx.xpick,3:sfx.ignite,4:sfx.hpick,5:sfx.ppick})[LVL]?.()??sfx.eye()}
 function openPortal(){
   finale=true;sfx.portal();shakeT=1.8;flickT=2.5;
   if(LVL===3){for(const z of SHD)z.enr=true;later(1.2,()=>msg(LVLS[3].fin,5));objective();saveCP();return}
   if(LVL===4){P.film+=2}
+  if(LVL===5){for(const k of KR)k.enr=true;later(1.2,()=>{sfx.sting();msg(LVLS[5].fin,5)});objective();saveCP();return}
   if(LVL===2){later(1.2,()=>{hearNoise(P.x,P.y,99);msg('Das Portal kreischt. Die Blinden kommen hierher. Schleich weg!',5)});objective();saveCP();return}
   if(!M.active){M.active=true;placeMonsterFar()}M.state='hunt';M.enraged=true;M.stun=0;M.locker=null;
   later(1.2,()=>{sfx.sting();sfx.growl(.9,0);msg(LVL===4?LVLS[4].fin:'Das Portal ist offen. Er weiß, wo du bist.',5)});objective();saveCP();
@@ -849,6 +941,7 @@ function useFlash(){
 function flashAt(p,mine){hearNoise(p.x,p.y,8);
   for(const z of SHD){if(dist(z,p)<8&&angDiff(p.a,Math.atan2(z.y-p.y,z.x-p.x))<.5&&los(p,z)){z.state='flee';z.fleeT=3;fx('hiss',z);if(mine)later(.2,()=>msg('Der Schatten flieht vor dem Licht!',2.5))}}
   for(const d of DOLLS){if(d.dead)continue;const dd=dist(d,p);if(dd<7.5&&angDiff(p.a,Math.atan2(d.y-p.y,d.x-p.x))<.5&&los(p,d)){d.dead=true;fx('shatter',d);if(mine){shakeT=.3;later(.2,()=>msg('Die Puppe zerspringt!',2.5))}}}
+  for(const k of KR){if(k.state==='stun')continue;if(dist(k,p)<7.5&&angDiff(p.a,Math.atan2(k.y-p.y,k.x-p.x))<.5&&los(p,k)){k.state='stun';k.stun=k.enr?2.5:4;fx('cshriek',k);if(mine)later(.2,()=>msg('Der Blitz betäubt den Kriecher!',2.5))}}
   if(M.active&&M.state!=='stun'){const d=dist(M,p),an=angDiff(p.a,Math.atan2(M.y-p.y,M.x-p.x));
     if(d<7.5&&an<.5&&los(p,M)){M.state='stun';M.stun=M.enraged?3.5:5;fx('shriek',M);if(mine)msg('Der Blitz blendet ihn! LAUF!',2.5)}}
 }
@@ -939,7 +1032,7 @@ function updBlind(dt){
 }
 function awayCell(b){let best=null,bs=-1;const ps=PLAYERS();for(let k=0;k<12;k++){const c=homeCell(b,b.x,b.y,11),sc=ps.length?Math.min(...ps.map(p=>dist(c,p))):0;if(sc>bs){bs=sc;best=c}}return best}
 // Der Schatten: kommt im Dunkeln näher. Taschenlampe drauf = er flieht. Bei brennenden Laternen kann er nichts.
-const safeAt=(x,y)=>(LVL===3||LVL===4)&&objs.some(o=>o.type==='eye'&&o.gone&&LVL===3&&Math.hypot(o.x-x,o.y-y)<2.6);
+const safeAt=(x,y)=>LVL===3&&objs.some(o=>o.type==='eye'&&o.gone&&Math.hypot(o.x-x,o.y-y)<2.6);
 const litBy=(p,z)=>p.lit&&dist(p,z)<9&&angDiff(p.a,Math.atan2(z.y-p.y,z.x-p.x))<.33&&los(p,z);
 function updShadow(dt){
   for(const z of SHD){
@@ -961,6 +1054,35 @@ function updShadow(dt){
     if(z.state!=='flee')for(const p of ps)if(dist(z,p)<.6&&!safeAt(p.x,p.y))kill(p,'shadow');
   }
 }
+// Der Kriecher: folgt jedem Licht, das er sieht. Ohne Licht merkt er dich nur ganz aus der Nähe. Blitz betäubt ihn.
+function updCrawler(dt){
+  for(const k of KR){
+    const sp=spatial(k);
+    k.skT-=dt;if(k.skT<=0){k.skT=k.state==='hunt'?.3:k.state==='stun'?1:.8;sfx.skitter(sp.v,sp.pan)}
+    if(k.state==='stun'){k.stun-=dt;k.frame=(T*14|0)%2;if(k.stun<=0){k.state='search';k.searchT=4;k.target={x:k.x,y:k.y}}continue}
+    if(!flags.hKr&&state==='play'&&dist(k,P)<9&&los(k,P)){flags.hKr=1;later(.2,()=>msg('Der Kriecher! Er folgt deinem Licht. Mach die Taschenlampe aus (F)!',6))}
+    let tgt=null;const range=k.enr?24:13;
+    for(const p of PLAYERS())if(!p.hid&&((p.lit&&dist(k,p)<range&&los(k,p))||(dist(k,p)<1.7&&!p.cr))&&(!tgt||dist(k,p)<dist(k,tgt)))tgt=p;
+    // merkt dich nicht: kriecht nicht in dich rein, sondern dreht um
+    if(!tgt&&k.state!=='hunt'&&T>(k.avoid||0)&&PLAYERS().some(p=>!p.hid&&dist(k,p)<1.8)){k.avoid=T+2.5;k.state='wander';k.target=awayCell(k);k.path=[];k.pathT=0}
+    let speed=.9;
+    if(tgt){if(k.state!=='hunt')fx('cshriek',k);k.state='hunt';k.target={x:tgt.x,y:tgt.y};k.lastT=T}
+    if(k.state==='hunt'){speed=(k.enr?3:2.55)*ES();if(!tgt&&T-k.lastT>1.2){k.state='search';k.searchT=5}}
+    else if(k.state==='search'){speed=1.3;k.searchT-=dt;if(dist(k,k.target)<.6)k.target=randCell(k.target.x,k.target.y,3);if(k.searchT<=0){k.state='wander';k.target=null}}
+    if(k.state==='wander'&&(!k.target||dist(k,k.target)<.6))k.target=randCell(k.x,k.y,10);
+    if(!k.target)k.target=randCell(0,0,0);
+    const tc=Math.floor(k.target.x)+Math.floor(k.target.y)*MW;if(T>k.pathT||tc!==k.pathC){k.path=bfs(k.x,k.y,k.target.x,k.target.y)||[];k.pathT=T+.4;k.pathC=tc}
+    while(k.path.length&&Math.hypot(k.path[0].x+.5-k.x,k.path[0].y+.5-k.y)<.2)k.path.shift();
+    const close=tgt&&dist(k,tgt)<1.3,tx=close?tgt.x:k.path.length?k.path[0].x+.5:k.target.x,ty=close?tgt.y:k.path.length?k.path[0].y+.5:k.target.y,a=Math.atan2(ty-k.y,tx-k.x),dd=Math.hypot(tx-k.x,ty-k.y);
+    if(dd>.05){const s=Math.min(dd,speed*dt),ox=k.x,oy=k.y;moveEnt(k,Math.cos(a)*s,Math.sin(a)*s,.2);if(Math.hypot(k.x-ox,k.y-oy)<s*.3){moveEnt(k,clamp(Math.floor(k.x)+.5-k.x,-s,s),clamp(Math.floor(k.y)+.5-k.y,-s,s),.2);k.pathT=0}k.a=a}
+    k.anim+=dt*speed;k.frame=(k.anim*2.2|0)%2;
+    if(k.state==='hunt')for(const p of PLAYERS())if(!p.hid&&dist(k,p)<.55)kill(p,'crawler');
+  }
+}
+// Tagebuchseite lesen: Text zeigen und für immer merken
+function readNote(o){o.read=true;sfx.page();const first=!(noteBits()&(1<<LVL));try{localStorage.setItem('brandt_notes',noteBits()|(1<<LVL))}catch(e){}
+  const n=$('note');n.querySelector('b').textContent=L('Tagebuch')+' · '+L('Seite')+' '+LVL;n.querySelector('p').textContent=L(NOTES[LVL]);n.querySelector('small').textContent=(first?L('Neue Seite gefunden'):L('Schon gefunden'))+' · '+noteCount()+' / 5';
+  n.classList.add('on');clearTimeout(readNote.t);readNote.t=setTimeout(()=>n.classList.remove('on'),9000)}
 // Puppen: bewegen sich nur, wenn du sie NICHT siehst
 function updDolls(dt){
   for(const d of DOLLS){
@@ -984,7 +1106,7 @@ function randomEvent(){
 }
 function worldTick(dt){
   if(!M.active){wakeT-=dt;if(wakeT<=0)wakeMonster()}
-  updMonster(dt);updDolls(dt);updBlind(dt);updShadow(dt);
+  updMonster(dt);updDolls(dt);updBlind(dt);updShadow(dt);updCrawler(dt);
 }
 // Spieluhr-Melodie (leicht schief, damit sie unheimlich klingt): [Frequenz, Pause danach]
 const MELODY=[[659,.4],[784,.4],[988,.4],[880,.8],[784,.4],[740,.4],[659,.8],[494,.4],[523,.4],[659,.4],[622,1.2],[0,1.6]];let melI=0;
@@ -1009,7 +1131,7 @@ function update(dt){
     P.moving+=((moving?1:0)-P.moving)*Math.min(1,dt*8);
     if(moving){P.bob+=dt*(P.sprinting?13:P.crouch?5:9);P.stepT-=dt;if(P.stepT<=0){P.stepT=P.sprinting?.3:P.crouch?.7:.48;if(!P.crouch){sfx.step();noise(P.x,P.y,P.sprinting?12:4.2,P.sprinting?7.5:0)}}}
     P.sta=clamp(P.sta+(P.sprinting?-26:14)*dt,0,100);
-    for(const o of objs)if(!o.gone&&(o.type==='eye'||o.type==='battery'||o.type==='film')&&dist(o,P)<.6)pickup(o);
+    for(const o of objs){if(o.type==='note'){if(!o.read&&dist(o,P)<.7)readNote(o);continue}if(!o.gone&&(o.type==='eye'||o.type==='battery'||o.type==='film')&&dist(o,P)<.6)pickup(o)}
     const pd=dist(P,PORTAL);
     if(finale&&pd<.8){if(!NET)return winGame();if(!NET.won){NET.won=1;NET.host?netWin():netSend({t:'win'})}}
     if(!finale&&pd<1.6&&T>(flags.pHint||0)){flags.pHint=T+6;msg(`Das Portal ist verschlossen. Noch ${EYES_N-P.eyes} ${LVLS[LVL].item}.`,3)}
@@ -1021,11 +1143,12 @@ function update(dt){
   P.noise=P.hidden||P.crouch||P.moving<.3?0:P.sprinting?100:35;
   P.eye=(P.eye||.5)+((P.crouch?.3:.5)-(P.eye||.5))*Math.min(1,dt*10);
   if(LVL===2)neon=Math.random()<.015?.25:Math.min(1,neon+dt*3);
-  if(lightOn())P.bat=Math.max(0,P.bat-(LVL===3?1.6:.7)*dt);
+  if(lightOn())P.bat=Math.max(0,P.bat-(LVL===3?1.6:LVL===5?.9:.7)*dt);
   if(safeAt(P.x,P.y)){P.bat=Math.min(100,P.bat+8*dt);if(!flags.hCharge&&P.bat<90){flags.hCharge=1;msg('Am Licht der Laterne lädt deine Taschenlampe.',3)}}
   for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const x=Math.floor(P.x)+dx,y=Math.floor(P.y)+dy;if(x>=0&&y>=0&&x<MW&&y<MH)visited[y*MW+x]=1}
   if(ISCLIENT())remoteFx(dt);else{worldTick(dt);if(state!=='play')return}
-  if(LVL>=3){humT-=dt;if(humT<=0){humT=LVL===3?1.8:1.2;let ne=null,nd=1e9;for(const o of objs)if(o.type==='eye'&&!o.gone){const d=dist(o,P);if(d<nd){nd=d;ne=o}}if(ne){const s=spatial(ne);(LVL===3?sfx.chime:sfx.thump)(Math.max(s.v,.05),s.pan)}}}
+  if(LVL===5){humT-=dt;if(humT<=0){humT=1;let ne=null,nd=1e9;for(const o of objs)if(o.type==='eye'&&!o.gone){const d=dist(o,P);if(d<nd){nd=d;ne=o}}if(ne){const s=spatial(ne);sfx.ptick(Math.max(s.v,.06),s.pan)}}}
+  else if(LVL>=3){humT-=dt;if(humT<=0){humT=LVL===3?1.8:1.2;let ne=null,nd=1e9;for(const o of objs)if(o.type==='eye'&&!o.gone){const d=dist(o,P);if(d<nd){nd=d;ne=o}}if(ne){const s=spatial(ne);(LVL===3?sfx.chime:sfx.thump)(Math.max(s.v,.05),s.pan)}}}
   else if(LVL===2){humT-=dt;if(humT<=0){humT=1.3;let ne=null,nd=1e9;for(const o of objs)if(o.type==='eye'&&!o.gone){const d=dist(o,P);if(d<nd){nd=d;ne=o}}if(ne){const s=spatial(ne);sfx.buzz(Math.max(s.v,.05),s.pan)}}}
   else{humT-=dt;if(humT<=0){const n=MELODY[melI++%MELODY.length];humT=n[1];let ne=null,nd=1e9;for(const o of objs)if(o.type==='eye'&&!o.gone){const d=dist(o,P);if(d<nd){nd=d;ne=o}}if(ne&&n[0]){const s=spatial(ne);sfx.box(n[0]*(1-Math.min(.03,nd*.001)),Math.max(s.v,.05),s.pan)}}}
   evT-=dt;if(evT<=0){evT=14+Math.random()*18;randomEvent()}
@@ -1033,6 +1156,7 @@ function update(dt){
   for(const z of SHD)fear=Math.max(fear,clamp(1-dist(z,P)/8,0,1)*(z.state==='stalk'?1:.4));
   for(const b of BL)fear=Math.max(fear,clamp(1-dist(b,P)/8,0,1)*(b.state==='hunt'?1:.55));
   for(const d of DOLLS)if(d.active&&!d.dead)fear=Math.max(fear,clamp(1-dist(d,P)/6,0,1)*.8);
+  for(const k of KR)fear=Math.max(fear,clamp(1-dist(k,P)/9,0,1)*(k.state==='hunt'?1:.5));
   hbT-=dt;if(fear>.08&&hbT<=0){hbT=1.15-fear*.75;sfx.heart(.06+fear*.4)}
   if(amb.tense)amb.tense.gain.setTargetAtTime(M.active&&M.state==='hunt'?.035:0,AC.currentTime,.4);
   updHud();
@@ -1063,15 +1187,15 @@ function resize(){
 }
 addEventListener('resize',resize);resize();
 let pz=0;
-function light(d,sx){let l=P.hidden?.85*Math.max(.15,1-d/12):pz===5?.1*Math.max(0,1-d/7):pz===6?.12*Math.max(0,1-d/5):pz===7?.2*Math.max(0,1-d/8):pz===3?.22*Math.max(0,1-d/6.5)*neon:pz===4?.07*Math.max(0,1-d/5):pz===2?.3*Math.max(0,1-d/8):pz===1?.08*Math.max(0,1-d/5):.15*Math.max(0,1-d/5.5);if(lightOn()){const c=(sx-.5)/.3;l+=Math.max(0,1.05-d/8.5)*Math.exp(-c*c)*flick}if(flashT>0)l+=flashT*6;return clamp(l,0,1)}
+function light(d,sx){let l=P.hidden?.85*Math.max(.15,1-d/12):pz===8?.07*Math.max(0,1-d/4.5):pz===5?.1*Math.max(0,1-d/7):pz===6?.12*Math.max(0,1-d/5):pz===7?.2*Math.max(0,1-d/8):pz===3?.22*Math.max(0,1-d/6.5)*neon:pz===4?.07*Math.max(0,1-d/5):pz===2?.3*Math.max(0,1-d/8):pz===1?.08*Math.max(0,1-d/5):.15*Math.max(0,1-d/5.5);if(lightOn()){const c=(sx-.5)/.3;l+=Math.max(0,1.05-d/8.5)*Math.exp(-c*c)*flick}if(flashT>0)l+=flashT*6;return clamp(l,0,1)}
 function render(){
   pz=zoneAt(Math.floor(P.x),Math.floor(P.y));
   const bob=P.hidden?0:Math.sin(P.bob)*2.2*S*P.moving*(CFG.bob?1:0),sh=shakeT>0?(Math.random()-.5)*shakeT*14*S:0,hor=(H/2+P.pitch*H+bob+sh)|0,mid=H/2+bob;
   g.globalAlpha=1;g.globalCompositeOperation='source-over';
   let gr=g.createLinearGradient(0,0,0,hor);
   if(pz===2||pz===5||pz===7){gr.addColorStop(0,pz===7?'#0a0010':'#02030a');gr.addColorStop(1,pz===7?'#3a0a4a':pz===5?'#141c22':'#0e1830');g.fillStyle=gr;g.fillRect(0,0,W,hor);const sw=stars.width,off=((-P.a/(Math.PI*2))*sw%sw+sw)%sw;for(let sy=hor-stars.height;sy>-stars.height;sy-=stars.height){g.drawImage(stars,off-sw,sy);g.drawImage(stars,off,sy)}}
-  else{gr.addColorStop(0,pz===6?'#140d08':pz>=3?'#0b0e0e':pz===1?'#0c0303':'#0b0807');gr.addColorStop(1,'#000');g.fillStyle=gr;g.fillRect(0,0,W,hor)}
-  gr=g.createLinearGradient(0,hor,0,H);gr.addColorStop(0,'#000');gr.addColorStop(1,finale?'#2a0a2a':pz===5?'#0e140b':pz===6?'#1a130d':pz===7?'#1c0a24':pz===3?'#1f2826':pz===4?'#0f1a1e':pz===2?'#0d160c':pz===1?'#2a0c08':'#1a130d');g.fillStyle=gr;g.fillRect(0,hor,W,H-hor);
+  else{gr.addColorStop(0,pz===8?'#0e0905':pz===6?'#140d08':pz>=3?'#0b0e0e':pz===1?'#0c0303':'#0b0807');gr.addColorStop(1,'#000');g.fillStyle=gr;g.fillRect(0,0,W,hor)}
+  gr=g.createLinearGradient(0,hor,0,H);gr.addColorStop(0,'#000');gr.addColorStop(1,finale?'#2a0a2a':pz===8?'#1a120b':pz===5?'#0e140b':pz===6?'#1a130d':pz===7?'#1c0a24':pz===3?'#1f2826':pz===4?'#0f1a1e':pz===2?'#0d160c':pz===1?'#2a0c08':'#1a130d');g.fillStyle=gr;g.fillRect(0,hor,W,H-hor);
   if(lightOn()){gr=g.createRadialGradient(W/2,H,0,W/2,H,H*.7);gr.addColorStop(0,`rgba(255,220,170,${.12*flick})`);gr.addColorStop(1,'rgba(255,220,170,0)');g.fillStyle=gr;g.fillRect(0,hor,W,H-hor)}
   const dx=Math.cos(P.a),dy=Math.sin(P.a),plx=-dy*PL,ply=dx*PL;
   for(let x=0;x<W;x++){
@@ -1090,12 +1214,14 @@ function render(){
   // Sprites
   const inv=1/(plx*dy-dx*ply),list=[];
   const add=(x,y,sh,h,extra)=>{const sx=x-P.x,sy=y-P.y,tX=inv*(dy*sx-dx*sy),tY=inv*(-ply*sx+plx*sy);if(tY>.15)list.push(Object.assign({tY,sx:W/2*(1+tX/tY),sh,h},extra))};
-  for(const t of TREES){const dx=t.x-P.x,dy=t.y-P.y;if(dx*dx+dy*dy<196)add(t.x,t.y,TREESH[t.v],2.1,{})}
+  for(const t of TREES){const dx=t.x-P.x,dy=t.y-P.y;if(dx*dx+dy*dy<196)add(t.x,t.y,LVL===5?CRATESH[t.v]:TREESH[t.v],LVL===5?(t.v===2?.95:.62):2.1,{})}
+  for(const k of KR)add(k.x,k.y,CRSH[k.frame],.5,{kr:k,lift:-.02})
   for(const z of SHD)add(z.x,z.y,SHDSH[z.frame],1.3,{shd:z});
-  for(const o of objs){if((o.gone&&!(o.type==='eye'&&LVL===3))||o===P.hidden)continue;
+  for(const o of objs){if(o.type==='note'){if(!o.read)add(o.x,o.y,SH.note,.3,{min:.35,glow:'255,240,200'});continue}
+    if((o.gone&&!(o.type==='eye'&&LVL===3))||o===P.hidden)continue;
     if(o.type==='eye'&&LVL===3){add(o.x,o.y,o.gone?SH.lampOn:SH.lampOff,.6,{min:o.gone?1:.12,glow:o.gone?'255,170,70':'255,200,120'});continue}
     if(o.type==='portal')add(o.x,o.y,finale?PORT_O[(T*10|0)%6]:PORT_C,o.h,{min:.25,glow:finale&&'170,60,255'});
-    else if(o.type==='eye')add(o.x,o.y,LVL===4?SH.heart:LVL===2?SH.xray:SH.eye,LVL===4?.45:o.h,{lift:LVL===4?.25+Math.sin(T*4+o.i)*.03:o.lift,glow:LVL===4?'255,30,30':LVL===2?'150,200,255':'255,170,60'});
+    else if(o.type==='eye')add(o.x,o.y,LVL===5?SH.photo:LVL===4?SH.heart:LVL===2?SH.xray:SH.eye,LVL===4?.45:LVL===5?.5:o.h,{lift:LVL===4?.25+Math.sin(T*4+o.i)*.03:o.lift,glow:LVL===5?'255,235,200':LVL===4?'255,30,30':LVL===2?'150,200,255':'255,170,60'});
     else add(o.x,o.y,SH[o.img],o.h,{min:o.type==='locker'?0:.15})}
   for(const d of DOLLS)if(!d.dead)add(d.x,d.y,DOLLSH[d.pose],.85,{doll:d});
   for(const b of BL)add(b.x,b.y,BLSH[b.frame],1.25,{});
@@ -1112,6 +1238,7 @@ function render(){
     if(s.doll&&vis&&l>.1)s.doll.seen=T;
     if(s.pl&&vis)tags.push([s.sx,top,s.pl.n,PCOL[s.pl.c%PCOL.length],s.tY]);
     if(s.glow&&vis){g.globalCompositeOperation='lighter';const r=sw*.9,gg=g.createRadialGradient(s.sx,top+sh*.38,0,s.sx,top+sh*.38,r);gg.addColorStop(0,`rgba(${s.glow},.35)`);gg.addColorStop(1,`rgba(${s.glow},0)`);g.fillStyle=gg;g.fillRect(s.sx-r,top+sh*.38-r,r*2,r*2);g.globalCompositeOperation='source-over'}
+    if(s.kr&&vis){g.globalCompositeOperation='lighter';const fl=s.kr.state==='stun'?Math.random():1;for(const[ex,ey]of CREYES){const px=left+ex/128*sw,py=top+ey/64*sh,c=px|0;if(c>=0&&c<W&&s.tY<zbuf[c]){const r=Math.max(.8,sh*.03),e=g.createRadialGradient(px,py,0,px,py,r*2.4);e.addColorStop(0,`rgba(255,240,190,${.95*fl})`);e.addColorStop(.35,`rgba(255,190,60,${.55*fl})`);e.addColorStop(1,'rgba(255,160,40,0)');g.fillStyle=e;g.fillRect(px-r*3,py-r*3,r*6,r*6)}}g.globalCompositeOperation='source-over'}
     if(s.shd&&vis){g.globalCompositeOperation='lighter';const fl=s.shd.state==='flee'?Math.random():1;for(const[ex,ey]of SHEYES){const px=left+ex/64*sw,py=top+ey/128*sh,c=px|0;if(c>=0&&c<W&&s.tY<zbuf[c]){const r=Math.max(.8,sh*.012),e=g.createRadialGradient(px,py,0,px,py,r*2.4);e.addColorStop(0,`rgba(235,240,255,${.95*fl})`);e.addColorStop(.35,`rgba(150,170,255,${.5*fl})`);e.addColorStop(1,'rgba(120,140,255,0)');g.fillStyle=e;g.fillRect(px-r*3,py-r*3,r*6,r*6)}}g.globalCompositeOperation='source-over'}
     if(s.mon&&vis){M.onScreen=true;
       g.globalCompositeOperation='lighter';for(const[ex,ey]of MEYES){const px=left+ex/128*sw,py=top+ey/256*sh,c=px|0;if(c>=0&&c<W&&s.tY<zbuf[c]){const r=Math.max(.8,sh*.007),e=g.createRadialGradient(px,py,0,px,py,r*2.2);e.addColorStop(0,'rgba(255,230,220,.95)');e.addColorStop(.3,'rgba(255,30,10,.7)');e.addColorStop(1,'rgba(255,0,0,0)');g.fillStyle=e;g.fillRect(px-r*3,py-r*3,r*6,r*6)}}g.globalCompositeOperation='source-over'}
@@ -1120,8 +1247,8 @@ function render(){
   gr=g.createRadialGradient(W/2,mid,H*.12,W/2,mid,Math.max(W,H)*.75);
   if(P.hidden){gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(0,0,0,.6)')}else if(lightOn()){gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.45,'rgba(0,0,0,.35)');gr.addColorStop(1,'rgba(0,0,0,.95)')}else{gr.addColorStop(0,'rgba(0,0,0,.25)');gr.addColorStop(1,'rgba(0,0,0,.97)')}
   g.fillStyle=gr;g.fillRect(0,0,W,H);
-  if(pz===5||pz===7){const fg=g.createLinearGradient(0,hor-H*.25,0,hor+H*.25);const fc=pz===7?'80,20,100':'60,75,85';fg.addColorStop(0,`rgba(${fc},0)`);fg.addColorStop(.5,`rgba(${fc},.22)`);fg.addColorStop(1,`rgba(${fc},0)`);g.fillStyle=fg;g.fillRect(0,hor-H*.25,W,H*.5);g.fillStyle=pz===7?'rgba(90,0,120,.12)':'rgba(20,40,30,.1)';g.fillRect(0,0,W,H)}else if(pz===6){g.fillStyle='rgba(60,30,10,.1)';g.fillRect(0,0,W,H)}else if(pz===3){g.fillStyle='rgba(60,110,100,.07)';g.fillRect(0,0,W,H)}else if(pz===4){g.fillStyle='rgba(30,70,100,.15)';g.fillRect(0,0,W,H)}else if(pz===2){g.fillStyle='rgba(30,50,110,.13)';g.fillRect(0,0,W,H)}else if(pz===1){g.fillStyle='rgba(120,0,0,.12)';g.fillRect(0,0,W,H)}
-  for(const d of[...DOLLS,...BL,...SHD]){if(P.hidden||(d.state?d.state!=='hunt'&&d.state!=='stalk':!d.active||d.dead))continue;const dd=dist(d,P);if(dd>6.5)continue;
+  if(pz===5||pz===7){const fg=g.createLinearGradient(0,hor-H*.25,0,hor+H*.25);const fc=pz===7?'80,20,100':'60,75,85';fg.addColorStop(0,`rgba(${fc},0)`);fg.addColorStop(.5,`rgba(${fc},.22)`);fg.addColorStop(1,`rgba(${fc},0)`);g.fillStyle=fg;g.fillRect(0,hor-H*.25,W,H*.5);g.fillStyle=pz===7?'rgba(90,0,120,.12)':'rgba(20,40,30,.1)';g.fillRect(0,0,W,H)}else if(pz===6){g.fillStyle='rgba(60,30,10,.1)';g.fillRect(0,0,W,H)}else if(pz===8){g.fillStyle='rgba(70,42,15,.12)';g.fillRect(0,0,W,H)}else if(pz===3){g.fillStyle='rgba(60,110,100,.07)';g.fillRect(0,0,W,H)}else if(pz===4){g.fillStyle='rgba(30,70,100,.15)';g.fillRect(0,0,W,H)}else if(pz===2){g.fillStyle='rgba(30,50,110,.13)';g.fillRect(0,0,W,H)}else if(pz===1){g.fillStyle='rgba(120,0,0,.12)';g.fillRect(0,0,W,H)}
+  for(const d of[...DOLLS,...BL,...SHD,...KR]){if(P.hidden||(d.state?d.state!=='hunt'&&d.state!=='stalk':!d.active||d.dead))continue;const dd=dist(d,P);if(dd>6.5)continue;
     const rel=Math.atan2(Math.sin(Math.atan2(d.y-P.y,d.x-P.x)-P.a),Math.cos(Math.atan2(d.y-P.y,d.x-P.x)-P.a));if(Math.abs(rel)<.55&&(d.state||T-d.seen<.3))continue;
     const k=(1-dd/6.5)*(.55+Math.sin(T*9)*.15),beh=Math.abs(rel)>2.2,w=W*.22;let gw;
     if(beh){gw=g.createLinearGradient(0,H,0,H-H*.35);g.fillStyle=gw;gw.addColorStop(0,`rgba(200,10,10,${k})`);gw.addColorStop(1,'rgba(200,10,10,0)');g.fillRect(0,H*.65,W,H*.35)}
@@ -1143,6 +1270,7 @@ function drawJumpscare(t){
   X.translate(w/2+(Math.random()-.5)*w*.04,h/2+(Math.random()-.5)*h*.04+s*.1);X.rotate((Math.random()-.5)*.14);
   if(deathKind==='doll'){X.save();X.scale(s/40,s/40);X.translate(-32,-36);drawDoll(X,1);X.restore()}
   else if(deathKind==='blind'){const k=s/24;X.drawImage(BLIMG[1],-32*k,-18*k,64*k,128*k)}
+  else if(deathKind==='crawler'){const k=s/16;X.drawImage(CRIMG[1],-26*k,-20*k,128*k,64*k);X.globalCompositeOperation='lighter';for(const[ex,ey]of CREYES){const px=(ex-26)*k,py=(ey-20)*k,e=X.createRadialGradient(px,py,0,px,py,k*2.2);e.addColorStop(0,'#fff');e.addColorStop(.4,'rgba(255,190,60,.7)');e.addColorStop(1,'rgba(0,0,0,0)');X.fillStyle=e;X.fillRect(px-k*3,py-k*3,k*6,k*6)}X.globalCompositeOperation='source-over'}
   else if(deathKind==='shadow'){const k=s/22;X.fillStyle='#14080c';X.fillRect(-w,-h,w*2,h*2);X.drawImage(SHDIMG[0],-32*k,-18*k,64*k,128*k);X.globalCompositeOperation='lighter';for(const[ex,ey]of SHEYES){const px=(ex-32)*k,py=(ey-18)*k,e=X.createRadialGradient(px,py,0,px,py,k*3);e.addColorStop(0,'#fff');e.addColorStop(.4,'rgba(150,170,255,.6)');e.addColorStop(1,'rgba(0,0,0,0)');X.fillStyle=e;X.fillRect(px-k*3,py-k*3,k*6,k*6)}X.globalCompositeOperation='source-over'}
   else{const r=rng(9);X.save();X.translate(0,-s*.05);hair(X,40,s*.8,s*1.8,r,false);X.restore();drawFace(X,0,0,s*.66,s*1.05,777,true)}
   X.restore();
@@ -1155,7 +1283,8 @@ function drawMap(cid='mapc'){
   const cvs=$(cid),c=cvs.getContext('2d'),s=cvs.width/MW,mini=cid==='mini';
   c.fillStyle=mini?'rgba(8,6,5,.8)':'#0d0a08';c.fillRect(0,0,cvs.width,cvs.height);
   for(let y=0;y<MH;y++)for(let x=0;x<MW;x++){const z=zoneAt(x,y);
-    if(grid[y*MW+x])continue;c.fillStyle=z===5?'#2e4a26':z===6?'#6a4a2a':z===7?'#5a2a6a':z===4?'#3c5a66':z===3?'#7d8a85':z===2?'#3f6a36':z===1?'#7a3428':'#8a755c';c.fillRect(x*s,y*s,s+.5,s+.5)}
+    if(grid[y*MW+x])continue;c.globalAlpha=visited[y*MW+x]?1:.28;c.fillStyle=z===8?'#6a5236':z===5?'#2e4a26':z===6?'#6a4a2a':z===7?'#5a2a6a':z===4?'#3c5a66':z===3?'#7d8a85':z===2?'#3f6a36':z===1?'#7a3428':'#8a755c';c.fillRect(x*s,y*s,s+.5,s+.5)}
+  c.globalAlpha=1;
   const pulse=.6+Math.sin(T*5)*.4;
   for(const o of objs)if(o.type==='eye'&&!o.gone){c.fillStyle=`rgba(255,190,60,${.5+pulse*.5})`;c.strokeStyle='#000';c.lineWidth=1.5;c.beginPath();c.arc(o.x*s,o.y*s,s*1.05,0,7);c.stroke();c.fill()}
   if(LVL===3)for(const o of objs)if(o.type==='eye'&&o.gone){c.strokeStyle='rgba(255,170,70,.7)';c.lineWidth=1;c.beginPath();c.arc(o.x*s,o.y*s,s*2.6,0,7);c.stroke()}
@@ -1180,16 +1309,16 @@ function stats(el,rows){$(el).innerHTML=rows.map(([k,v])=>`<div>${k}<b>${v}</b><
 function card(a,b){const c=$('card');c.querySelector('p').textContent=a;c.querySelector('small').textContent=b;c.classList.remove('on');void c.offsetWidth;c.classList.add('on')}
 function showDeath(){const over=lives<=0;$('bagain').textContent='Neues Spiel';$('dk').textContent=over?'Keine Leben mehr':'Du bist gestorben';$('bretry').classList.toggle('hide',over&&!NET);$('bagain').classList.toggle('hide',!over||!!NET);$('bretry').textContent=NET&&over?'Zuschauen':`Weiter · ${lives} Leben`;mpButtons();
   const DL=LVLS[LVL].death;
-  $('dt').textContent=deathKind==='shadow'?'Der Schatten hat dich geholt.':deathKind==='blind'?'Der Blinde hat dich gehört.':deathKind==='doll'?'Die Puppe hat dich.':deathKind==='locker'?'Er hat dich im Spind gefunden.':'Er hat dich.';
-  $('ds').textContent=tx(L(deathKind==='shadow'?'Tipp: Leuchte ihn mit der Taschenlampe an. Bei brennenden Laternen bist du sicher.':deathKind==='blind'?'Tipp: Halte C zum Schleichen. Dann hört er dich nicht. Nur nicht anfassen!':deathKind==='doll'?'Tipp: Schau Puppen an, dann erstarren sie. Q zerbricht sie.':over?'Alles von vorne.':DL[Math.random()*DL.length|0]));stats('dstats',[[LVLS[LVL].item,`${P.eyes}/${EYES_N}`],['Zeit',fmt(playT)],['Tode',deaths]]);show('dead')}
+  $('dt').textContent=deathKind==='crawler'?'Der Kriecher hat dich erwischt.':deathKind==='shadow'?'Der Schatten hat dich geholt.':deathKind==='blind'?'Der Blinde hat dich gehört.':deathKind==='doll'?'Die Puppe hat dich.':deathKind==='locker'?'Er hat dich im Spind gefunden.':'Er hat dich.';
+  $('ds').textContent=tx(L(deathKind==='crawler'?'Tipp: Mach das Licht aus, wenn er dich jagt (F). Der Blitz betäubt ihn.':deathKind==='shadow'?'Tipp: Leuchte ihn mit der Taschenlampe an. Bei brennenden Laternen bist du sicher.':deathKind==='blind'?'Tipp: Halte C zum Schleichen. Dann hört er dich nicht. Nur nicht anfassen!':deathKind==='doll'?'Tipp: Schau Puppen an, dann erstarren sie. Q zerbricht sie.':over?'Alles von vorne.':DL[Math.random()*DL.length|0]));stats('dstats',[[LVLS[LVL].item,`${P.eyes}/${EYES_N}`],['Zeit',fmt(playT)],['Tode',deaths]]);show('dead')}
 function fmt(t){return`${t/60|0}:${String(t%60|0).padStart(2,'0')}`}
 const bestKey=n=>n===1?'brandt_best':'brandt_best_'+n;
 function getBest(n){try{return +localStorage.getItem(bestKey(n))||0}catch(e){return 0}}
 function unlocked(){let u=1;try{u=+localStorage.getItem('brandt_unl')||1}catch(e){}if(getBest(1))u=Math.max(u,2);return u}
-function bestTxt(){const b=getBest(1);$('best').textContent=b?'Bestzeit Level 1 · '+fmt(b):'Noch nicht entkommen'}
-const LNAMES=['Das Haus','Das Krankenhaus','Der Wald','Die Unterwelt'];
-function lvlList(){const u=unlocked();$('lvlist').innerHTML=LNAMES.map((nm,i)=>{const n=i+1,soon=n>4,lock=soon||n>u,b=getBest(n);
-  return`<button class="lvb" data-lv="${n}" ${lock?'disabled':''}><span class="n">0${n}</span><span class="t">${nm}<small>${soon?'Kommt bald':lock?`Schaffe Level ${n-1}`:b?'Bestzeit '+fmt(b):'Neu'}</small></span></button>`}).join('')}
+function bestTxt(){const b=getBest(1),n=noteCount();$('best').textContent=(b?L('Bestzeit Level 1')+' · '+fmt(b):L('Noch nicht entkommen'))+(n?' · '+L('Tagebuch')+' '+n+'/5':'')}
+const LNAMES=Object.keys(LVLS).map(k=>LVLS[k].name);
+function lvlList(){const u=unlocked();$('lvlist').innerHTML=LNAMES.map((nm,i)=>{const n=i+1,soon=false,lock=soon||n>u,b=getBest(n),pg=noteBits()&(1<<n);
+  return`<button class="lvb" data-lv="${n}" ${lock?'disabled':''}><span class="n">0${n}</span><span class="t">${nm}<small>${soon?'Kommt bald':lock?`Schaffe Level ${n-1}`:b?'Bestzeit '+fmt(b):'Neu'}${pg?' · '+L('Seite gefunden'):''}</small></span></button>`}).join('')}
 $('lvlist').addEventListener('click',e=>{const b=e.target.closest('.lvb');if(b&&!b.disabled){sfx.sel();startLevel(+b.dataset.lv)}});
 $('lvlist').addEventListener('mouseover',e=>{const b=e.target.closest('.lvb');if(b&&!b.disabled&&b!==lvlList.h){lvlList.h=b;sfx.hover()}});
 function winGame(){state='win';if(document.pointerLockElement)document.exitPointerLock();$('hud').classList.add('hide');sfx.portal();
@@ -1200,7 +1329,7 @@ function startPlay(){mapOpen=false;$('mapov').classList.add('hide');touch.paused
 // Einleitung vor jedem Level: Ziel + jeder Gegner mit Bild, worauf er achtet und seiner Schwäche
 const portrait=(img,sx,sy,sw,sh)=>mk(96,128,c=>{c.drawImage(img,sx,sy,sw,sh,0,0,96,128)}).toDataURL();
 let PORTRAITS=null;
-function portraits(){return PORTRAITS||(PORTRAITS={mon:portrait(MON[0],16,0,96,128),doll:portrait(DOLLIMG[0],0,0,64,128),blind:portrait(BLIMG[0],8,0,48,64),shd:mk(96,128,c=>{const g=c.createRadialGradient(48,50,4,48,50,70);g.addColorStop(0,'#5a5470');g.addColorStop(1,'#120f18');c.fillStyle=g;c.fillRect(0,0,96,128);c.drawImage(SHDIMG[0],8,0,48,64,0,0,96,128);for(const[ex,ey]of SHEYES){const x=(ex-8)*2,y=ey*2,e=c.createRadialGradient(x,y,0,x,y,6);e.addColorStop(0,'#fff');e.addColorStop(.5,'rgba(160,180,255,.7)');e.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=e;c.fillRect(x-6,y-6,12,12)}}).toDataURL()})}
+function portraits(){return PORTRAITS||(PORTRAITS={crawl:mk(96,128,c=>{const g=c.createRadialGradient(48,64,4,48,64,70);g.addColorStop(0,'#4a3a28');g.addColorStop(1,'#120c08');c.fillStyle=g;c.fillRect(0,0,96,128);c.drawImage(CRIMG[0],4,0,52,64,-30,10,124,152);for(const[ex,ey]of CREYES){const x=(ex-4)*124/52-30,y=ey*152/64+10,e=c.createRadialGradient(x,y,0,x,y,7);e.addColorStop(0,'#fff');e.addColorStop(.5,'rgba(255,190,60,.7)');e.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=e;c.fillRect(x-7,y-7,14,14)}}).toDataURL(),mon:portrait(MON[0],16,0,96,128),doll:portrait(DOLLIMG[0],0,0,64,128),blind:portrait(BLIMG[0],8,0,48,64),shd:mk(96,128,c=>{const g=c.createRadialGradient(48,50,4,48,50,70);g.addColorStop(0,'#5a5470');g.addColorStop(1,'#120f18');c.fillStyle=g;c.fillRect(0,0,96,128);c.drawImage(SHDIMG[0],8,0,48,64,0,0,96,128);for(const[ex,ey]of SHEYES){const x=(ex-8)*2,y=ey*2,e=c.createRadialGradient(x,y,0,x,y,6);e.addColorStop(0,'#fff');e.addColorStop(.5,'rgba(160,180,255,.7)');e.addColorStop(1,'rgba(0,0,0,0)');c.fillStyle=e;c.fillRect(x-6,y-6,12,12)}}).toDataURL()})}
 const BRIEF={
   1:{goal:'Sammle <b>5 Spieluhren</b>. Folge ihrer Melodie, sie stehen auch auf der Karte. Danach öffnet sich ein <b>Portal</b>: renn rein.',
      foes:[['mon','Das Monster','Er <b>sieht</b> dich. Mit Taschenlampe an sieht er dich von weiter weg.','<kbd>Q</kbd> Blitz blendet ihn kurz. <kbd>E</kbd> im Spind verstecken.'],
@@ -1215,7 +1344,9 @@ const BRIEF={
      foes:[['mon','Das Monster','Im <b>Haus</b> (oben links). Er <b>sieht</b> dich.','<kbd>Q</kbd> blendet ihn. <kbd>E</kbd> im Spind verstecken.'],
            ['blind','Der Blinde','Im <b>Krankenhaus</b> (oben rechts). Er <b>hört</b> dich.','<kbd>C</kbd> halten = schleichen. Nicht anfassen.'],
            ['shd','Der Schatten','Im <b>Wald</b> (unten links). Kommt im <b>Dunkeln</b>.','<b>Anleuchten</b>, dann flieht er. <kbd>Q</kbd> verjagt ihn.'],
-           ['doll','Die Puppe','In der <b>Leere</b> (unten rechts). Kommt, wenn du <b>wegschaust</b>.','Anschauen, dann erstarrt sie. <kbd>Q</kbd> zerbricht sie.']]}};
+           ['doll','Die Puppe','In der <b>Leere</b> (unten rechts). Kommt, wenn du <b>wegschaust</b>.','Anschauen, dann erstarrt sie. <kbd>Q</kbd> zerbricht sie.']]},
+  5:{goal:'Sammle <b>5 Fotos</b> der Familie Brandt. Folge dem Ticken der Uhr. Danach öffnet sich das <b>Portal</b>.<br>Hier oben ist es stockdunkel. Deine Taschenlampe hilft dir, aber sie <b>lockt die Kriecher an</b>.',
+     foes:[['crawl','Der Kriecher','Er folgt deinem <b>Licht</b>. Ohne Licht merkt er dich nur direkt neben ihm. Schleichst du, kriecht er vorbei.','<kbd>F</kbd> Licht aus, dann verliert er dich. <kbd>Q</kbd> betäubt ihn. <kbd>E</kbd> im Spind verstecken.']]}};
 function showBrief(n){const B=BRIEF[n],P_=portraits();$('bk').textContent='Level '+n;$('bt').textContent=LVLS[n].name;$('bgoal').innerHTML=tx(L(B.goal));
   $('bgrid').innerHTML=B.foes.map(([k,nm,w,st])=>`<div class="bcard"><img src="${P_[k]}" alt=""><div><h4>${L(nm)}</h4><p class="w"><i>Achtet auf</i>${L(w)}</p><p class="s"><i>Schwäche</i>${tx(L(st))}</p></div></div>`).join('');$('bnote').innerHTML=tx($('bnote').dataset.t||($('bnote').dataset.t=$('bnote').innerHTML));
   show('brief');$('blives').textContent=`Du hast ${maxLives()} Leben`+(EASY()?' (Leicht)':'');const wait=NET&&!NET.host;$('bgo').disabled=!!wait;$('bgo').textContent=wait?'Warte auf den Host …':NET?'Alle starten':"Los geht's";if(!wait)setTimeout(()=>$('bgo').focus({preventScroll:true}),50)}
@@ -1322,7 +1453,7 @@ function mpJoin(){
 }
 $('mp-join').onclick=()=>{sfx.sel();mpJoin()};
 $('mp-copy').onclick=()=>{if(!NET)return;const u=location.origin+location.pathname+'#join='+NET.code;navigator.clipboard?.writeText(u).then(()=>{$('mp-copy').textContent='Kopiert!';setTimeout(()=>$('mp-copy').textContent='Einladungslink kopieren',1500)})};
-$('mp-lvl').onclick=()=>{if(!NET||!NET.host)return;NET.lvl=NET.lvl%Math.min(4,unlocked())+1;sfx.hover();lobbyBroadcast()};
+$('mp-lvl').onclick=()=>{if(!NET||!NET.host)return;NET.lvl=NET.lvl%Math.min(LNAMES.length,unlocked())+1;sfx.hover();lobbyBroadcast()};
 $('o-easy3').onclick=()=>{CFG.easy=!CFG.easy;sfx.hover();applyCfg();lobbyBroadcast()};
 function hostDrop(id){if(!NET||!RP[id])return;const n=RP[id].n;delete RP[id];delete NET.conns[id];lobbyBroadcast();if(NET.game)msg(n+' hat das Spiel verlassen.',3)}
 function hostMsg(conn,m){
@@ -1361,7 +1492,7 @@ function mpBegin(m){
 }
 function mpRespawn(){
   if(lives<=0){P.spec=true;P.hidden=null;startPlay();card('Du schaust zu.','Deine Freunde spielen weiter');return}
-  const safe=p=>(!M.active||dist(M,p)>8)&&BL.every(b=>dist(b,p)>5)&&SHD.every(z=>dist(z,p)>5)&&DOLLS.every(d=>d.dead||dist(d,p)>5);
+  const safe=p=>(!M.active||dist(M,p)>8)&&BL.every(b=>dist(b,p)>5)&&SHD.every(z=>dist(z,p)>5)&&KR.every(k=>dist(k,p)>5)&&DOLLS.every(d=>d.dead||dist(d,p)>5);
   const t=Object.values(RP).find(r=>r.al&&r.lk<0&&safe(r));const s=t||START;P.x=s.x;P.y=s.y;P.hidden=null;P.spec=false;P.sta=100;P.bat=Math.max(P.bat,40);
   startPlay();card(lives===1?'Letztes Leben.':`Noch ${lives} Leben.`,t?'Zurück bei deinem Team':'Zurück am Start');
 }
@@ -1386,7 +1517,7 @@ function netTick(dt){
   if(!NET.host){netSend(Object.assign({t:'p',sd:DOLLS.map((d,i)=>T-d.seen<.15?i:-1).filter(i=>i>=0)},me));return}
   bc({t:'s',pl:[{id:'host',n:NET.name,c:0,...me},...Object.entries(RP).map(([id,r])=>({id,n:r.n,c:r.c,x:r.x,y:r.y,a:r.a,cr:r.cr,lk:r.lk,l:r.l,al:r.al?1:0}))],
     m:[M.active?1:0,r2(M.x),r2(M.y),r2(M.a),M.frame,STC.indexOf(M.state),M.enraged?1:0],
-    d:DOLLS.map(d=>[r2(d.x),r2(d.y),d.pose,d.active?1:0,d.dead?1:0]),b:BL.map(b=>[r2(b.x),r2(b.y),b.frame,STC.indexOf(b.state)]),h:SHD.map(z=>[r2(z.x),r2(z.y),z.frame,STC.indexOf(z.state)]),
+    d:DOLLS.map(d=>[r2(d.x),r2(d.y),d.pose,d.active?1:0,d.dead?1:0]),b:BL.map(b=>[r2(b.x),r2(b.y),b.frame,STC.indexOf(b.state)]),h:SHD.map(z=>[r2(z.x),r2(z.y),z.frame,STC.indexOf(z.state)]),k:KR.map(k=>[r2(k.x),r2(k.y),k.frame,STC.indexOf(k.state)]),
     g:objs.filter(o=>o.gone).map(o=>o.i),e:P.eyes,f:finale?1:0});
   NET.t0+=1/15;
   if(!NET.over&&NET.t0>3&&!(state==='play'&&!P.spec)&&lives<=0&&Object.values(RP).every(r=>!r.al&&r.lv<=0)){bc({t:'over'});gameOverAll()}
@@ -1400,6 +1531,7 @@ function applyState(m){
   Object.assign(M,{active:!!ma,tx:mx,ty:my,a:mA,frame:mf,state:STC[ms]||'wander',enraged:!!me});
   m.d.forEach((q,i)=>{const d=DOLLS[i];if(!d)return;if(q[3]&&!d.active&&T-d.seen<1&&!flags.hDoll){flags.hDoll=1;msg('Eine Puppe! Schau sie an, dann erstarrt sie.  Q = zerbrechen',6)}Object.assign(d,{tx:q[0],ty:q[1],pose:q[2],active:!!q[3],dead:!!q[4]})});
   m.b.forEach((q,i)=>{const b=BL[i];if(!b)return;Object.assign(b,{tx:q[0],ty:q[1],frame:q[2],state:STC[q[3]]||'wander'})});
+  (m.k||[]).forEach((q,i)=>{const k=KR[i];if(!k)return;Object.assign(k,{tx:q[0],ty:q[1],frame:q[2],state:STC[q[3]]||'wander'})});
   (m.h||[]).forEach((q,i)=>{const z=SHD[i];if(!z)return;Object.assign(z,{tx:q[0],ty:q[1],frame:q[2],state:STC[q[3]]||'wander'})});
   for(const i of m.g)if(objs[i])objs[i].gone=true;
   if(m.e>P.eyes){P.eyes=m.e;pickSfx();objective();if(P.eyes<EYES_N)msg(P.eyes<EYES_N-1?`Noch ${EYES_N-P.eyes}.`:'Noch eins.',2.5)}
@@ -1411,6 +1543,7 @@ function remoteFx(dt){
     M.growlT-=dt;if(M.growlT<=0){M.growlT=M.state==='hunt'?3+Math.random()*3:7+Math.random()*8;if(sp.v>.02)sfx.growl(.15+sp.v*.5,sp.pan)}}
   for(const d of DOLLS){const mv=lerpEnt(d,dt);if(mv>.002){d.scrT=(d.scrT||0)-dt;if(d.scrT<=0){d.scrT=.55;const sp=spatial(d);sfx.scrape(sp.v*.6,sp.pan)}}}
   for(const z of SHD){lerpEnt(z,dt);z.hissT-=dt;if(z.hissT<=0){z.hissT=4+Math.random()*4;const sp=spatial(z);if(sp.v>.05)sfx.whisper(sp.pan)}if(!flags.hShd&&dist(z,P)<8&&los(z,P)){flags.hShd=1;msg('Ein Schatten! Leuchte ihn an, dann flieht er.',6)}}
+  for(const k of KR){lerpEnt(k,dt);const sp=spatial(k);k.skT=(k.skT||0)-dt;if(k.skT<=0){k.skT=k.state==='hunt'?.3:.8;sfx.skitter(sp.v,sp.pan)}if(!flags.hKr&&dist(k,P)<9&&los(k,P)){flags.hKr=1;msg('Der Kriecher! Er folgt deinem Licht. Mach die Taschenlampe aus (F)!',6)}}
   for(const b of BL){const mv=lerpEnt(b,dt),sp=spatial(b);b.stepAcc=(b.stepAcc||0)+mv;if(b.stepAcc>.8){b.stepAcc=0;sfx.bstep(sp.v,sp.pan)}
     b.breathT-=dt;if(b.breathT<=0){b.breathT=b.state==='hunt'?1.3:2.8;sfx.breathe(sp.v,sp.pan)}
     if(!flags.hBlind&&dist(b,P)<9&&los(b,P)){flags.hBlind=1;msg('Der Blinde! Er hört dich. Halte C zum Schleichen, nicht rennen!',6)}}
@@ -1495,6 +1628,11 @@ else if(TEST==='#test-l2'){startLevel(2);beginLevel()}
 else if(TEST==='#test-l3'){startLevel(3);beginLevel()}
 else if(TEST==='#test-l4'){startLevel(4);beginLevel()}
 else if(TEST==='#test-brief4'){startLevel(4)}
+else if(TEST==='#test-brief5'){startLevel(5)}
+else if(TEST==='#test-l5'){startLevel(5);beginLevel()}
+else if(TEST==='#test-kr'){startLevel(5);beginLevel();const k=KR[0];faceOpen();k.x=P.x+Math.cos(P.a)*2.2;k.y=P.y+Math.sin(P.a)*2.2;k.state='stun';k.stun=99}
+else if(TEST==='#test-jkr'){startLevel(5);beginLevel();die('crawler')}
+else if(TEST==='#test-note'){startLevel(1);beginLevel();const o=objs.find(o=>o.type==='note');readNote(o)}
 else if(TEST==='#test-shd'){startLevel(3);beginLevel();const z=SHD[0];faceOpen();z.x=P.x+Math.cos(P.a)*2.5;z.y=P.y+Math.sin(P.a)*2.5;P.light=false}
 else if(TEST==='#test-jsh'){startLevel(3);beginLevel();die('shadow')}
 else if(TEST==='#test-blind'){startLevel(2);beginLevel();const b=BL[0];faceOpen();b.x=P.x+Math.cos(P.a)*2.2;b.y=P.y+Math.sin(P.a)*2.2;b.state='search';b.searchT=99}
