@@ -1462,7 +1462,7 @@ function hostMsg(conn,m){
   if(m.t==='hello'){if(NET.game||Object.keys(RP).length>=5){conn.send({t:'full',busy:NET.game});setTimeout(()=>conn.close(),400);return}
     NET.conns[id]=conn;RP[id]={n:String(m.n||'Spieler').slice(0,14),c:freeColor(),al:false,x:0,y:0,a:0,lk:-1,lv:2};conn.send({t:'welcome',id,c:RP[id].c});lobbyBroadcast();return}
   if(!r)return;
-  if(m.t==='p'){r.rx=performance.now();Object.assign(r,{x:+m.x||0,y:+m.y||0,a:+m.a||0,cr:m.cr,lk:m.lk|0,l:m.l,sp:m.sp,al:!!m.al,lv:m.lv|0});if(Array.isArray(m.sd))for(const i of m.sd)if(DOLLS[i])DOLLS[i].seenR=T}
+  if(m.t==='p'){r.rx=performance.now();Object.assign(r,{tx:+m.x||0,ty:+m.y||0,ta:+m.a||0,cr:m.cr,lk:m.lk|0,l:m.l,sp:m.sp,al:!!m.al,lv:m.lv|0});if(Array.isArray(m.sd))for(const i of m.sd)if(DOLLS[i])DOLLS[i].seenR=T}
   else if(m.t==='pk'){const o=objs[m.i];if(o&&!o.gone){o.gone=true;if(o.type==='eye')eyeGot()}}
   else if(m.t==='hd'){const o=objs[m.i];if(o)hideReact(r,o,false)}
   else if(m.t==='fl')flashAt(r,false);
@@ -1509,7 +1509,7 @@ function mpButtons(){document.querySelectorAll('.mph').forEach(b=>b.classList.to
 function myState(){return{x:r2(P.x),y:r2(P.y),a:r2(P.a),cr:P.crouch?1:0,lk:P.hidden?P.hidden.i:-1,l:lightOn()?1:0,sp:P.sprinting?1:0,al:state==='play'&&!P.spec?1:0,lv:lives}}
 setInterval(()=>{if(!NET||!NET.game)return;
   if(NET.host&&document.hidden){const now=performance.now();let d=Math.min(2,(now-last)/1000);last=now;while(d>0){const st=Math.min(.05,d);update(st);if(state!=='play'&&state!=='brief')worldTick(st);d-=st}}
-  try{netTick(1/15)}catch(e){netErr(e)}},1000/15);
+  try{netTick(1/30)}catch(e){netErr(e)}},1000/30);
 function netTick(dt){
   const now=performance.now();
   if(NET.host){for(const id in RP)if(RP[id].rx&&now-RP[id].rx>15000)hostDrop(id)}
@@ -1520,11 +1520,11 @@ function netTick(dt){
     m:[M.active?1:0,r2(M.x),r2(M.y),r2(M.a),M.frame,STC.indexOf(M.state),M.enraged?1:0],
     d:DOLLS.map(d=>[r2(d.x),r2(d.y),d.pose,d.active?1:0,d.dead?1:0]),b:BL.map(b=>[r2(b.x),r2(b.y),b.frame,STC.indexOf(b.state)]),h:SHD.map(z=>[r2(z.x),r2(z.y),z.frame,STC.indexOf(z.state)]),k:KR.map(k=>[r2(k.x),r2(k.y),k.frame,STC.indexOf(k.state)]),
     g:objs.filter(o=>o.gone).map(o=>o.i),e:P.eyes,f:finale?1:0});
-  NET.t0+=1/15;
+  NET.t0+=1/30;
   if(!NET.over&&NET.t0>3&&!(state==='play'&&!P.spec)&&lives<=0&&Object.values(RP).every(r=>!r.al&&r.lv<=0)){bc({t:'over'});gameOverAll()}
 }
 // Client: Zustand vom Host übernehmen (weich nachziehen) + Geräusche selbst erzeugen
-function setRemote(id,q){let r=RP[id];if(!r)r=RP[id]={x:q.x,y:q.y,f:0,anim:0,stT:0};Object.assign(r,{n:String(q.n).slice(0,14),c:q.c|0,tx:q.x,ty:q.y,a:q.a,cr:q.cr,lk:q.lk,l:q.l,al:!!q.al})}
+function setRemote(id,q){let r=RP[id];if(!r)r=RP[id]={x:q.x,y:q.y,f:0,anim:0,stT:0};if(r.a===undefined)r.a=q.a;Object.assign(r,{n:String(q.n).slice(0,14),c:q.c|0,tx:q.x,ty:q.y,ta:q.a,cr:q.cr,lk:q.lk,l:q.l,al:!!q.al})}
 function applyState(m){
   if(!NET||!NET.game)return;NET.rx=performance.now();const seen={};
   for(const q of m.pl){if(q.id===NET.id)continue;seen[q.id]=1;setRemote(q.id,q)}for(const id in RP)if(!seen[id])delete RP[id];
@@ -1538,7 +1538,15 @@ function applyState(m){
   if(m.e>P.eyes){P.eyes=m.e;pickSfx();objective();if(P.eyes<EYES_N)msg(P.eyes<EYES_N-1?`Noch ${EYES_N-P.eyes}.`:'Noch eins.',2.5)}
   if(m.f&&!finale){finale=true;if(LVL===4)P.film+=2;sfx.portal();shakeT=1.8;flickT=2.5;objective();later(1.2,()=>msg(LVLS[LVL].fin,5))}
 }
-function lerpEnt(e,dt){if(e.tx===undefined)return 0;const ox=e.x,oy=e.y,k=Math.min(1,dt*12);if(Math.hypot(e.tx-e.x,e.ty-e.y)>3){e.x=e.tx;e.y=e.ty}else{e.x+=(e.tx-e.x)*k;e.y+=(e.ty-e.y)*k}return Math.hypot(e.x-ox,e.y-oy)}
+// Flüssige Bewegung trotz Netzwerk: Geschwindigkeit aus den letzten Updates schätzen, kurz vorausrechnen, weich nachziehen
+function lerpEnt(e,dt){if(e.tx===undefined)return 0;const now=performance.now();
+  if(e.tx!==e._lx||e.ty!==e._ly){const gap=Math.max(.03,Math.min(.3,(now-(e._lt||now))/1000));if(e._lx!==undefined&&e._lt){const vx=(e.tx-e._lx)/gap,vy=(e.ty-e._ly)/gap,sp=Math.hypot(vx,vy);
+      if(sp<8){e.vx=(e.vx||0)*.4+vx*.6;e.vy=(e.vy||0)*.4+vy*.6}else{e.vx=e.vy=0}}e._lx=e.tx;e._ly=e.ty;e._lt=now}
+  const age=Math.min(.12,(now-(e._lt||now))/1000),px=e.tx+(e.vx||0)*age,py=e.ty+(e.vy||0)*age;
+  if(age>=.12){e.vx=(e.vx||0)*.85;e.vy=(e.vy||0)*.85}
+  const ox=e.x,oy=e.y;if(e.x===undefined||Math.hypot(px-e.x,py-e.y)>3){e.x=px;e.y=py}else{const k=Math.min(1,dt*16);e.x+=(px-e.x)*k;e.y+=(py-e.y)*k}
+  if(e.ta!==undefined){let da=e.ta-e.a;da=Math.atan2(Math.sin(da),Math.cos(da));e.a+=da*Math.min(1,dt*14)}
+  return Math.hypot(e.x-ox,e.y-oy)}
 function remoteFx(dt){
   if(M.active){const mv=lerpEnt(M,dt),sp=spatial(M);M.stepAcc=(M.stepAcc||0)+mv;if(M.stepAcc>.9){M.stepAcc=0;sfx.mstep(sp.v,sp.pan)}
     M.growlT-=dt;if(M.growlT<=0){M.growlT=M.state==='hunt'?3+Math.random()*3:7+Math.random()*8;if(sp.v>.02)sfx.growl(.15+sp.v*.5,sp.pan)}}
@@ -1550,7 +1558,7 @@ function remoteFx(dt){
     if(!flags.hBlind&&dist(b,P)<9&&los(b,P)){flags.hBlind=1;msg('Der Blinde! Er hört dich. Halte C zum Schleichen, nicht rennen!',6)}}
 }
 // Mitspieler animieren + Schritte hören (Host und Client)
-function animRemote(dt){for(const id in RP){const r=RP[id];const mv=ISCLIENT()?lerpEnt(r,dt):Math.hypot(r.x-(r.px??r.x),r.y-(r.py??r.y));r.px=r.x;r.py=r.y;
+function animRemote(dt){for(const id in RP){const r=RP[id];const mv=lerpEnt(r,dt);r.px=r.x;r.py=r.y;
   r.anim=(r.anim||0)+mv*2.2;r.f=(r.anim|0)%2;r.stT=(r.stT||0)+mv;if(r.stT>1&&r.al&&!r.cr){r.stT=0;const sp=spatial(r);if(sp.v>.03)nz({f:350,type:'lowpass',vol:.04*sp.v,dec:.07,pan:sp.pan})}}}
 function teamHud(){if(!NET||!NET.game){if(teamHud.h){teamHud.h='';$('team').innerHTML=''}return}
   const now=performance.now(),lost=r=>NET.host?now-(r.rx||0)>3000:now-(NET.rx||0)>3000;
