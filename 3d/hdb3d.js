@@ -79,7 +79,7 @@ function cyl(rt,rb,h,m,x=0,y=0,z=0,par,seg=10){const o=new TH.Mesh(new TH.Cylind
 function sph(r,m,x=0,y=0,z=0,par,sx=1,sy=1,sz=1){const o=new TH.Mesh(new TH.SphereGeometry(r,14,10),m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;if(par)par.add(o);return o}
 // Glied: Pivot oben, hängt nach unten (Länge l)
 function limb(par,x,y,z,l,r0,r1,m){const p=new TH.Group();p.position.set(x,y,z);par.add(p);const c=new TH.Mesh(new TH.CylinderGeometry(r0,r1,l,8),m);c.position.y=-l/2;c.castShadow=true;p.add(c);const j=sph(r1*1.05,m,0,-l,0,p);return p}
-function faceCap(r,tex,par,y,z){const g=new TH.SphereGeometry(r,24,16,Math.PI/2-.95,1.9,.45,1.95);const m=new TH.MeshStandardMaterial({map:tex,transparent:true,roughness:.7,alphaTest:.05});const o=new TH.Mesh(g,m);o.position.set(0,y,z);par.add(o);return o}
+function faceCap(r,tex,par,y,z,sx=1,sy=1,sz=1){const g=new TH.SphereGeometry(r*1.05,32,24,Math.PI/2-.95,1.9,.45,1.95);const m=new TH.MeshStandardMaterial({map:tex,transparent:true,roughness:.7,alphaTest:.05,polygonOffset:true,polygonOffsetFactor:-2});const o=new TH.Mesh(g,m);o.position.set(0,y,z);o.scale.set(sx,sy,sz);par.add(o);return o}
 const facing=(o,a)=>{o.rotation.y=Math.PI/2-a};
 
 // ---------- Monster-Modelle ----------
@@ -87,9 +87,9 @@ const facing=(o,a)=>{o.rotation.y=Math.PI/2-a};
 function skinCanvas(base,blotch,vein){return mk(64,64,(c,w,h)=>{c.fillStyle=base;c.fillRect(0,0,w,h);for(let i=0;i<260;i++){c.fillStyle=`rgba(${blotch},${R()*.35})`;c.beginPath();c.arc(R()*64,R()*64,1+R()*5,0,7);c.fill()}
   c.strokeStyle=vein;c.lineWidth=.6;for(let i=0;i<9;i++){c.beginPath();let x=R()*64,y=R()*64;c.moveTo(x,y);for(let k=0;k<6;k++){x+=(R()-.5)*12;y+=R()*8;c.lineTo(x,y)}c.stroke()}noiseDots(c,w,h,400,.35);
   for(let i=0;i<4;i++){c.fillStyle='rgba(90,10,10,.55)';c.beginPath();c.arc(R()*64,R()*64,1+R()*2.5,0,7);c.fill()}})}
-const skinTex=ctex(skinCanvas('#8a8274','40,30,25','rgba(60,30,60,.5)'),2);
+const skinTex=ctex(skinCanvas('#8a8274','40,30,25','rgba(60,30,60,.5)'),4);
 const skinM=std(0xffffff,.7,{map:skinTex,bumpMap:skinTex,bumpScale:.5}),darkM=std(0x15110d,.9),boneM=std(0xd8cfb0,.6);
-const paleTex=ctex(skinCanvas('#a49a88','50,40,30','rgba(70,40,70,.45)'),2),paleM=std(0xffffff,.7,{map:paleTex,bumpMap:paleTex,bumpScale:.5});
+const paleTex=ctex(skinCanvas('#a49a88','50,40,30','rgba(70,40,70,.45)'),4),paleM=std(0xffffff,.7,{map:paleTex,bumpMap:paleTex,bumpScale:.5});
 // Knochen zwischen zwei Punkten
 function bone(par,a,b,r0,r1,m){const d=new TH.Vector3().subVectors(b,a),l=d.length();const c=new TH.Mesh(new TH.CylinderGeometry(r1,r0,l,7),m);c.position.copy(a).addScaledVector(d,.5);c.quaternion.setFromUnitVectors(new TH.Vector3(0,1,0),d.normalize());c.castShadow=true;par.add(c);return c}
 const MFACE=ctex(mk(256,320,c=>drawFace(c,128,160,236,310,42,true)),1,false);
@@ -112,7 +112,7 @@ function buildMonster(){
   for(const f of[foreL,foreR])for(let k=0;k<4;k++){const cl=new TH.Mesh(new TH.ConeGeometry(.007,.1,4),darkM);cl.position.set((k-1.5)*.014,-.41,.01);cl.rotation.x=.25;f.add(cl)}
   const neck=new TH.Group();neck.position.y=.46;spine.add(neck);neck.rotation.x=.35;cyl(.02,.025,.1,skinM,0,.04,0,neck);
   const head=new TH.Group();head.position.set(0,.14,.02);neck.add(head);
-  sph(.09,skinM,0,0,0,head,.9,1.15,1);faceCap(.092,MFACE,head,0,.004);
+  sph(.09,skinM,0,0,0,head,.9,1.15,1);faceCap(.09,MFACE,head,0,.004,.9,1.15,1);
   const hairM=std(0x050403,.9);const hair=[];
   for(let i=0;i<34;i++){const a=(i/34)*Math.PI*2,len=.35+Math.random()*.45;const h=new TH.Mesh(new TH.BoxGeometry(.006,len,.006),hairM);const p=new TH.Group();p.position.set(Math.sin(a)*.075,.07,Math.cos(a)*.07-.01);p.rotation.z=Math.sin(a)*.12;
     const front=Math.cos(a)>.5;if(front&&Math.random()<.6)continue;h.position.y=-len/2;p.add(h);head.add(p);hair.push(p)}
@@ -131,7 +131,7 @@ function animMonster(g,m,mv,dt){
   for(const h of u.hair)h.rotation.x=-.1-s*.06*(hunt?2:1);
   for(const e of u.eyes)e.material.opacity=stun?Math.random():(.6+Math.random()*.25)}
 
-const DOLLFACE=ctex(mk(128,128,c=>{const g=c.createRadialGradient(54,50,4,64,64,60);g.addColorStop(0,'#fbf6ee');g.addColorStop(1,'#b0a696');c.fillStyle=g;c.fillRect(0,0,128,128);
+const DOLLFACE=ctex(mk(256,256,c=>{c.scale(2,2);const g=c.createRadialGradient(54,50,4,64,64,60);g.addColorStop(0,'#fbf6ee');g.addColorStop(1,'#b0a696');c.fillStyle=g;c.fillRect(0,0,128,128);
   for(const s of[-1,1]){c.fillStyle='#000';c.beginPath();c.ellipse(64+s*20,58,11,14,0,0,7);c.fill();c.fillStyle='#fff';c.beginPath();c.arc(64+s*20+2,56,2.5,0,7);c.fill();c.fillStyle='rgba(210,40,60,.45)';c.beginPath();c.arc(64+s*30,80,8,0,7);c.fill();c.strokeStyle='#000';c.lineWidth=2;c.beginPath();c.moveTo(64+s*20,72);c.lineTo(64+s*21,92);c.stroke()}
   c.strokeStyle='#8a0010';c.lineWidth=4;c.beginPath();c.moveTo(36,90);c.quadraticCurveTo(64,112,92,90);c.stroke();c.strokeStyle='#2a1a14';c.lineWidth=1.5;for(let i=40;i<=88;i+=6){c.beginPath();c.moveTo(i,93+(1-Math.abs(i-64)/30)*6);c.lineTo(i,101+(1-Math.abs(i-64)/30)*6);c.stroke()}
   c.strokeStyle='#3a2a20';c.lineWidth=1.5;c.beginPath();c.moveTo(74,26);c.lineTo(80,40);c.lineTo(74,48);c.stroke()}),1,false);
@@ -141,14 +141,19 @@ function buildDoll(){
   const sk=new TH.Mesh(new TH.ConeGeometry(.13,.34,12,1,true),dress);sk.position.y=.38;sk.castShadow=true;g.add(sk);
   cyl(.05,.07,.18,dress,0,.6,0,g);box(.1,.02,.06,std(0xe8e0d0,.8),0,.69,0,g);
   const aL=limb(g,-.075,.66,0,.2,.013,.011,porc),aR=limb(g,.075,.66,0,.2,.013,.011,porc);
-  const head=new TH.Group();head.position.y=.8;g.add(head);sph(.08,porc,0,0,0,head,1,1.08,1);faceCap(.082,DOLLFACE,head,0,.003);
+  const head=new TH.Group();head.position.y=.8;g.add(head);sph(.08,porc,0,0,0,head,1,1.08,1);faceCap(.08,DOLLFACE,head,0,.003,1,1.08,1);
   sph(.085,std(0x100606,.9),0,.035,-.012,head,1.02,.75,1.05);for(const sx of[-.07,.07])box(.03,.16,.04,std(0x100606,.9),sx,-.05,-.02,head);
   g.userData={aL,aR,head};return g}
 function animDoll(g,d){const u=g.userData,p=d.pose;u.aL.rotation.set(p?-2.3:0,0,p?-.4:-.1);u.aR.rotation.set(p?-2:0,0,p?.5:.1);u.head.rotation.z=p?.38:-.08;
   g.position.y=d.moving?(Math.random()-.5)*.01:0}
 
-const BLINDF=ctex(mk(128,128,c=>{const g=c.createRadialGradient(60,50,4,64,64,64);g.addColorStop(0,'#cfc6b8');g.addColorStop(1,'#8e8578');c.fillStyle=g;c.fillRect(0,0,128,128);c.fillStyle='#d4ccbb';c.fillRect(0,34,128,30);c.strokeStyle='rgba(110,100,80,.6)';for(let i=0;i<8;i++){c.beginPath();c.moveTo(i*18,34);c.lineTo(i*18+14,64);c.stroke()}
-  c.fillStyle='rgba(135,0,0,.9)';c.beginPath();c.arc(46,50,8,0,7);c.arc(82,50,8,0,7);c.fill();c.fillRect(44,52,3,30);c.fillRect(82,52,3,20);c.fillStyle='#120606';c.beginPath();c.ellipse(64,90,9,15,0,0,7);c.fill()}),1,false);
+const BLINDF=ctex(mk(256,256,c=>{c.scale(2,2);const g=c.createRadialGradient(60,50,4,64,64,64);g.addColorStop(0,'#cfc6b8');g.addColorStop(1,'#7e7568');c.fillStyle=g;c.fillRect(0,0,128,128);
+  c.fillStyle='#d8d0bf';c.fillRect(0,32,128,30);c.strokeStyle='rgba(110,100,80,.7)';c.lineWidth=1;for(let i=0;i<9;i++){c.beginPath();c.moveTo(i*16,32);c.lineTo(i*16+12,62);c.stroke()}
+  c.fillStyle='rgba(120,0,0,.95)';c.beginPath();c.ellipse(44,48,10,8,0,0,7);c.ellipse(84,48,10,8,0,0,7);c.fill();
+  for(const[x,l]of[[40,42],[47,30],[82,46],[88,26]]){c.fillRect(x,54,2.5,l);c.beginPath();c.arc(x+1.2,54+l,2.2,0,7);c.fill()}
+  c.fillStyle='#0a0202';c.beginPath();c.moveTo(42,80);c.quadraticCurveTo(64,72,86,80);c.quadraticCurveTo(90,112,64,122);c.quadraticCurveTo(38,112,42,80);c.fill();
+  c.fillStyle='#d8cfb0';for(let i=0;i<8;i++){const x=46+i*5;c.beginPath();c.moveTo(x,80-(i%2));c.lineTo(x+4,80-(i%2));c.lineTo(x+2,89+(i%3)*2);c.fill();c.beginPath();c.moveTo(x,116);c.lineTo(x+4,116);c.lineTo(x+2,108-(i%2)*3);c.fill()}
+  c.strokeStyle='rgba(60,20,20,.6)';c.lineWidth=.8;for(let i=0;i<6;i++){c.beginPath();c.moveTo(20+i*16,70);c.lineTo(24+i*15,78);c.stroke()}}),1,false);
 const gownTex=ctex(mk(64,64,(c,w,h)=>{c.fillStyle='#7a8a8c';c.fillRect(0,0,w,h);c.fillStyle='rgba(50,60,62,.6)';for(let y=0;y<64;y+=6)for(let x=0;x<64;x+=6)c.fillRect(x+(y%12?3:0),y,1.5,1.5);
   blot(c,w,h,'rgba(110,90,30,.5)',3);blot(c,w,h,'rgba(90,0,0,.55)',2);c.fillStyle='rgba(110,0,0,.8)';for(let i=0;i<5;i++)c.fillRect(20+R()*20,R()*20,1.5,10+R()*30);noiseDots(c,w,h,400,.4)}),2);
 function buildBlind(){
@@ -162,9 +167,7 @@ function buildBlind(){
   const fL=limb(aL,0,-.38,0,.46,.02,.014,paleM),fR=limb(aR,0,-.38,0,.46,.02,.014,paleM);
   for(const f of[fL,fR])for(let k=0;k<4;k++){const fi=new TH.Mesh(new TH.CylinderGeometry(.004,.003,.09,4),paleM);fi.position.set((k-1.5)*.012,-.5,.0);fi.rotation.x=.2;f.add(fi)}
   const neck=new TH.Group();neck.position.y=.5;sp.add(neck);neck.rotation.x=.5;cyl(.03,.035,.12,paleM,0,.05,0,neck);
-  const head=new TH.Group();head.position.y=.17;neck.add(head);sph(.1,paleM,0,0,0,head,.95,1.15,1);faceCap(.102,BLINDF,head,0,.003);
-  const band=new TH.Mesh(new TH.TorusGeometry(.098,.022,6,20),std(0xd4ccbb,.9));band.rotation.x=Math.PI/2;band.scale.set(1,1.05,1);band.position.y=.03;head.add(band);
-  for(const sx of[-.035,.035]){const st=sph(.016,std(0x7a0000,.5),sx,.03,.105,head,1,1,.4);st.castShadow=false}
+  const head=new TH.Group();head.position.y=.17;neck.add(head);sph(.1,paleM,0,0,0,head,.95,1.15,1);faceCap(.1,BLINDF,head,0,.003,.95,1.15,1);
   g.userData={hip,lL,lR,sp,aL,aR,fL,fR,head,phase:0};return g}
 function animBlind(g,b,mv){const u=g.userData;u.phase+=mv*8;const s=Math.sin(u.phase);u.lL.rotation.x=s*.4;u.lR.rotation.x=-s*.4;u.aL.rotation.x=.2-s*.15;u.aR.rotation.x=.2+s*.15;u.aL.rotation.z=-.25;u.aR.rotation.z=.25;
   u.fL.rotation.x=-.3;u.fR.rotation.x=-.3;u.head.rotation.y=b.state==='search'?Math.sin(T*3)*.7:Math.sin(T*.7)*.2;u.head.rotation.x=b.state==='hunt'?-.5:-.2;u.sp.rotation.x=.45+Math.sin(T*1.4)*.04}
@@ -179,8 +182,13 @@ function buildShadow(){
 function animShadow(g,z){const u=g.userData;for(const p of u.puffs){p.m.position.set(p.b.x+Math.sin(T*2+p.ph)*.03,p.b.y+Math.sin(T*1.3+p.ph)*.02,p.b.z+Math.cos(T*1.7+p.ph)*.03)}
   for(const e of u.eyes)e.material.opacity=z.state==='flee'?Math.random():.95}
 
-const CRF=ctex(mk(128,128,c=>{const g=c.createRadialGradient(56,50,4,64,64,62);g.addColorStop(0,'#e0d8c6');g.addColorStop(1,'#6c6252');c.fillStyle=g;c.fillRect(0,0,128,128);c.fillStyle='#000';for(const s of[-1,1]){c.beginPath();c.ellipse(64+s*22,56,14,18,0,0,7);c.fill()}
-  c.fillStyle='#1a0000';c.beginPath();c.ellipse(64,98,20,22,0,0,7);c.fill();c.fillStyle='#d8cfb0';for(let i=-18;i<=18;i+=6){c.fillRect(64+i-1.5,78,3,8);c.fillRect(64+i-1.5,110,3,7)}}),1,false);
+const CRF=ctex(mk(256,256,c=>{c.scale(2,2);const g=c.createRadialGradient(56,46,4,64,64,64);g.addColorStop(0,'#d6cdb8');g.addColorStop(1,'#5e5446');c.fillStyle=g;c.fillRect(0,0,128,128);
+  c.strokeStyle='rgba(90,10,20,.6)';c.lineWidth=1;for(let i=0;i<10;i++){c.beginPath();let x=20+Math.random()*88,y=8+Math.random()*30;c.moveTo(x,y);for(let k=0;k<5;k++){x+=(Math.random()-.5)*12;y+=Math.random()*7;c.lineTo(x,y)}c.stroke()}
+  for(const s of[-1,1]){const eg=c.createRadialGradient(64+s*20,46,0,64+s*20,46,13);eg.addColorStop(0,'#000');eg.addColorStop(.7,'#050000');eg.addColorStop(1,'rgba(40,20,10,0)');c.fillStyle=eg;c.beginPath();c.ellipse(64+s*20,46,13,10,s*.25,0,7);c.fill();c.fillStyle='#ffd27a';c.beginPath();c.arc(64+s*20,47,2.4,0,7);c.fill()}
+  c.fillStyle='#140000';c.beginPath();c.moveTo(30,68);c.quadraticCurveTo(64,60,98,68);c.quadraticCurveTo(100,124,64,126);c.quadraticCurveTo(28,124,30,68);c.fill();
+  c.fillStyle='#6a0606';c.beginPath();c.ellipse(64,104,18,12,0,0,7);c.fill();
+  c.fillStyle='#e0d6b4';for(let i=0;i<11;i++){const x=33+i*6;c.beginPath();c.moveTo(x,67);c.lineTo(x+5,67);c.lineTo(x+2.5,80+(i%3)*4);c.fill();c.beginPath();c.moveTo(x,123);c.lineTo(x+5,123);c.lineTo(x+2.5,111-(i%2)*4);c.fill()}
+  c.fillStyle='rgba(110,0,0,.85)';for(let i=0;i<5;i++){const x=40+Math.random()*48;c.fillRect(x,82,2,10+Math.random()*16)}}),1,false);
 function buildCrawler(){
   const g=new TH.Group(),V=(x,y,z)=>new TH.Vector3(x,y,z);
   const body=new TH.Group();g.add(body);
@@ -201,10 +209,10 @@ function buildCrawler(){
     legs.push({root,ph:(sx>0?0:Math.PI)+(fz>0?0:Math.PI/2)})}
   // Hals nach oben, Kopf verdreht
   const neck=new TH.Group();neck.position.set(0,.3,.22);body.add(neck);bone(neck,V(0,0,0),V(0,.16,.08),.03,.025,skinM);
-  const head=new TH.Group();head.position.set(0,.2,.11);neck.add(head);sph(.075,paleM,0,0,0,head,1,1.15,1);faceCap(.077,CRF,head,0,.003);
+  const head=new TH.Group();head.position.set(0,.2,.11);neck.add(head);sph(.075,paleM,0,0,0,head,1,1.15,1);faceCap(.075,CRF,head,0,.003,1,1.15,1);
   sph(.079,std(0x0a0806,.9),0,.035,-.025,head,1,.75,1.05);for(let i=0;i<14;i++){const h=new TH.Mesh(new TH.BoxGeometry(.005,.16+Math.random()*.1,.005),std(0x050403,.9));h.position.set((Math.random()-.5)*.12,-.06,-.04+Math.random()*.05);head.add(h)}
   head.rotation.set(-.3,0,2.6);
-  const eyes=[];for(const sx of[-.03,.03]){const e=glow(0xffc040,.07,.95);e.position.set(sx,.012,.075);head.add(e);eyes.push(e)}
+  const eyes=[];for(const sx of[-.025,.025]){const e=glow(0xffc040,.05,.95);e.position.set(sx,.022,.08);head.add(e);eyes.push(e)}
   g.userData={legs,head,eyes,body,phase:0};return g}
 function animCrawler(g,k,mv){const u=g.userData;u.phase+=mv*16;
   for(const L of u.legs){const s=Math.sin(u.phase+L.ph);L.root.rotation.y=s*.28;L.root.rotation.z=Math.max(0,Math.cos(u.phase+L.ph))*.12*(L.root.position.x>0?-1:1)}
@@ -393,6 +401,39 @@ function overlay(){
   for(const id in RP){const r=RP[id];if(!r.al||r.lk>=0)continue;const p=onScreen(r.x,1.0,r.y);if(!p||!los(P,r))continue;const d=dist(P,r),px=(p.x+1)/2*cv.width,py=(1-p.y)/2*cv.height;
     const fs=Math.round(clamp(15-d*.6,10,15)*dp);X.font=`500 ${fs}px "IBM Plex Mono",monospace`;const n=r.n||'',tw=X.measureText(n).width;X.globalAlpha=clamp(1.4-d/14,.35,1);
     X.fillStyle='rgba(0,0,0,.55)';X.fillRect(px-tw/2-6*dp,py-fs-4*dp,tw+12*dp,fs+6*dp);X.fillStyle=PCOL[r.c%PCOL.length];X.fillRect(px-tw/2-6*dp,py,tw+12*dp,2*dp);X.fillStyle='#fff';X.fillText(n,px,py);X.globalAlpha=1}}
+
+// ---------- 3D-Jumpscare: das Monster springt dich an ----------
+const jsScene=new TH.Scene(),jsCam=new TH.PerspectiveCamera(70,1,.01,20);jsScene.background=new TH.Color(0x000000);
+const jsKey=new TH.PointLight(0xffe6d0,0,6,1.2),jsRed=new TH.PointLight(0xff1a08,0,6,1.2),jsAmb=new TH.HemisphereLight(0x402020,0x000000,.25);jsScene.add(jsKey,jsRed,jsAmb);
+let JS=null;const jsSmoke=new TH.MeshBasicMaterial({color:0x000000,transparent:true,opacity:.85,depthWrite:false});
+const JSKIND={monster:buildMonster,locker:buildMonster,doll:buildDoll,blind:buildBlind,shadow:buildShadow,crawler:buildCrawler};
+const wp=new TH.Vector3();
+function jsHead(m){const u=m.userData,h=u.head||(u.eyes&&u.eyes[0]&&u.eyes[0].parent)||m;m.updateMatrixWorld(true);h.getWorldPosition(wp);if(!u.head&&u.eyes){wp.y=1.13}return wp.clone()}
+function jsPose(m,k,t){const u=m.userData,j=()=>(Math.random()-.5);
+  if(k==='monster'||k==='locker'){u.armL.rotation.set(-1.9+j()*.2,0,-.35);u.armR.rotation.set(-1.7+j()*.2,0,.35);u.foreL.rotation.x=-.6;u.foreR.rotation.x=-.5;u.spine.rotation.x=.55;u.head.rotation.set(-.35+j()*.25,j()*.3,j()*.5);for(const h of u.hair){if(h.position.z>.02)h.visible=false;h.rotation.x=-.6+j()*.3}for(const e of u.eyes)e.material.opacity=.7+Math.random()*.3}
+  else if(k==='doll'){animDoll(m,{pose:1,moving:true});u.head.rotation.z=.38+j()*.6;u.head.rotation.x=j()*.3}
+  else if(k==='blind'){u.aL.rotation.set(-1.5+j()*.2,0,-.2);u.aR.rotation.set(-1.4+j()*.2,0,.2);u.fL.rotation.x=-.4;u.fR.rotation.x=-.4;u.sp.rotation.x=.6;u.head.rotation.set(-.6+j()*.2,j()*.4,j()*.4)}
+  else if(k==='shadow'){animShadow(m,{state:'stalk'});for(const p of u.puffs){p.m.material=jsSmoke;p.m.position.x+=j()*.02}for(const e of u.eyes){e.scale.setScalar(.11);e.material.opacity=1}}
+  else if(k==='crawler'){m.rotation.x=-.85;animCrawler(m,{state:'hunt'},.05);u.head.rotation.set(.35+j()*.2,j()*.3,.45+j()*.6);for(const e of u.eyes)e.material.opacity=1}}
+window.drawJumpscare=function(t){
+  if(!JS||t<JS.t||JS.k!==deathKind){if(JS)jsScene.remove(JS.m);const k=JSKIND[deathKind]?deathKind:'monster';const m=JSKIND[k]();jsScene.add(m);jsPose(m,k,0);
+    const h=jsHead(m);JS={m,k,hy:h.y,hz:h.z}}
+  JS.t=t;const k=JS.k,m=JS.m;jsPose(m,k,t);
+  const END={crawler:.34,blind:.34,shadow:.42,doll:.26}[k]||.24,a=Math.min(1,t/.28),ease=1-Math.pow(1-a,3),dHead=2.2-(2.2-END)*ease;
+  const shake=(t<.28?.01:.035)*(1+Math.random());
+  m.position.set((Math.random()-.5)*shake,(Math.random()-.5)*shake,-dHead-JS.hz);
+  jsCam.aspect=innerWidth/innerHeight;jsCam.fov=innerWidth/innerHeight<1.2?80:66;jsCam.updateProjectionMatrix();
+  jsCam.position.set((Math.random()-.5)*shake,JS.hy+(k==='crawler'?.1:0),0);jsCam.lookAt(0,JS.hy-.03,-dHead);jsCam.rotation.z+=(Math.random()-.5)*(t<.28?.04:.12);
+  const fl=Math.random();jsKey.position.set(.35,JS.hy+.5,-dHead+.6);jsKey.intensity=fl<.15?0:fl<.3?6:3;jsRed.position.set(0,JS.hy-.7,-dHead+.4);jsRed.intensity=4+Math.random()*4;
+  glc.style.transform=`translate(${(Math.random()-.5)*24}px,${(Math.random()-.5)*14}px) scale(${1+ease*.04})`;
+  R3.render(jsScene,jsCam);
+  // 2D: rotes Flackern, Bildstörung, Rauschen
+  const w=cv.width,h=cv.height;X.setTransform(1,0,0,1,0,0);X.clearRect(0,0,w,h);
+  X.fillStyle=`rgba(150,0,0,${.08+Math.random()*.22})`;X.fillRect(0,0,w,h);
+  for(let i=0;i<9;i++){const y=Math.random()*h,hh=Math.random()*h*.025;X.fillStyle=Math.random()<.5?'rgba(0,0,0,.75)':'rgba(255,255,255,.12)';X.fillRect(0,y,w,hh)}
+  X.globalAlpha=.16;X.drawImage(grain[(Math.random()*4)|0],0,0,w,h);X.globalAlpha=1;
+  if(t<.05||Math.random()<.05){X.fillStyle='rgba(255,255,255,.25)';X.fillRect(0,0,w,h)}
+  const vg=X.createRadialGradient(w/2,h/2,h*.2,w/2,h/2,Math.max(w,h)*.7);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.9)');X.fillStyle=vg;X.fillRect(0,0,w,h)};
 
 // ---------- Hauptfunktion: ersetzt render() ----------
 const fogC=new TH.Color(),tmpC=new TH.Color();let curZ=-1;
